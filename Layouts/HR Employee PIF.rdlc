@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description>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
+3eTiznBxx3m7iXzxbsc/hfTD/wA=
+</Description>
+  <Author>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
+</Author>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+      </Body>
+      <Width>6.5in</Width>
+      <Page></Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="CI_NameCaption">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>CI_NameCaption</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CI_NameCaption</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CI_AddressCaption">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>CI_AddressCaption</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CI_AddressCaption</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CI_Address2Caption">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>CI_Address2Caption</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CI_Address2Caption</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CI_CityCaption">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>CI_CityCaption</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CI_CityCaption</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CI_EMailCaption">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>CI_EMailCaption</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CI_EMailCaption</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CI_HomePageCaption">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>CI_HomePageCaption</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CI_HomePageCaption</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CI_PhoneNoCaption">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>CI_PhoneNoCaption</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CI_PhoneNoCaption</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CI_PictureCaption">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>CI_PictureCaption</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>CI_PictureCaption</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="ReportForNavId_6075">
+          <DataField>ReportForNavId_6075</DataField>
+        </Field>
+        <Field Name="FORMAT_TODAY_0_4_">
+          <DataField>FORMAT_TODAY_0_4_</DataField>
+        </Field>
+        <Field Name="COMPANYNAME">
+          <DataField>COMPANYNAME</DataField>
+        </Field>
+        <Field Name="UserId">
+          <DataField>UserId</DataField>
+        </Field>
+        <Field Name="HR_Employees__No__">
+          <DataField>HR_Employees__No__</DataField>
+        </Field>
+        <Field Name="HR_Employees__Date_Of_Joining_the_Company_">
+          <DataField>HR_Employees__Date_Of_Joining_the_Company_</DataField>
+        </Field>
+        <Field Name="HR_Employees__ID_Number_">
+          <DataField>HR_Employees__ID_Number_</DataField>
+        </Field>
+        <Field Name="HR_Employees__Date_Of_Birth_">
+          <DataField>HR_Employees__Date_Of_Birth_</DataField>
+        </Field>
+        <Field Name="HR_Employees__Marital_Status_">
+          <DataField>HR_Employees__Marital_Status_</DataField>
+        </Field>
+        <Field Name="HR_Employees__PIN_Number_">
+          <DataField>HR_Employees__PIN_Number_</DataField>
+        </Field>
+        <Field Name="HR_Employees__NSSF_No__">
+          <DataField>HR_Employees__NSSF_No__</DataField>
+        </Field>
+        <Field Name="HR_Employees__NHIF_No__">
+          <DataField>HR_Employees__NHIF_No__</DataField>
+        </Field>
+        <Field Name="HR_Employees__Cell_Phone_Number_">
+          <DataField>HR_Employees__Cell_Phone_Number_</DataField>
+        </Field>
+        <Field Name="HR_Employees__Postal_Address_">
+          <DataField>HR_Employees__Postal_Address_</DataField>
+        </Field>
+        <Field Name="HR_Employees_City">
+          <DataField>HR_Employees_City</DataField>
+        </Field>
+        <Field Name="joindate">
+          <DataField>joindate</DataField>
+        </Field>
+        <Field Name="HR_Employees__Post_Code_">
+          <DataField>HR_Employees__Post_Code_</DataField>
+        </Field>
+        <Field Name="HR_Employees__Main_Bank_">
+          <DataField>HR_Employees__Main_Bank_</DataField>
+        </Field>
+        <Field Name="HR_Employees__Branch_Bank_">
+          <DataField>HR_Employees__Branch_Bank_</DataField>
+        </Field>
+        <Field Name="HR_Employees__Bank_Account_Number_">
+          <DataField>HR_Employees__Bank_Account_Number_</DataField>
+        </Field>
+        <Field Name="HR_Employees__FullName">
+          <DataField>HR_Employees__FullName</DataField>
+        </Field>
+        <Field Name="EmployeeCaption">
+          <DataField>EmployeeCaption</DataField>
+        </Field>
+        <Field Name="pic">
+          <DataField>pic</DataField>
+        </Field>
+        <Field Name="CurrReport_PAGENOCaption">
+          <DataField>CurrReport_PAGENOCaption</DataField>
+        </Field>
+        <Field Name="Personal_Information_FormCaption">
+          <DataField>Personal_Information_FormCaption</DataField>
+        </Field>
+        <Field Name="Section_A__Personal_DetailsCaption">
+          <DataField>Section_A__Personal_DetailsCaption</DataField>
+        </Field>
+        <Field Name="HR_Employees__NHIF_No__Caption">
+          <DataField>HR_Employees__NHIF_No__Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__NSSF_No__Caption">
+          <DataField>HR_Employees__NSSF_No__Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__PIN_Number_Caption">
+          <DataField>HR_Employees__PIN_Number_Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__Marital_Status_Caption">
+          <DataField>HR_Employees__Marital_Status_Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__Date_Of_Birth_Caption">
+          <DataField>HR_Employees__Date_Of_Birth_Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__ID_Number_Caption">
+          <DataField>HR_Employees__ID_Number_Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__Date_Of_Joining_the_Company_Caption">
+          <DataField>HR_Employees__Date_Of_Joining_the_Company_Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__No__Caption">
+          <DataField>HR_Employees__No__Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__Cell_Phone_Number_Caption">
+          <DataField>HR_Employees__Cell_Phone_Number_Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__Postal_Address_Caption">
+          <DataField>HR_Employees__Postal_Address_Caption</DataField>
+        </Field>
+        <Field Name="Section_B__ContactsCaption">
+          <DataField>Section_B__ContactsCaption</DataField>
+        </Field>
+        <Field Name="HR_Employees_CityCaption">
+          <DataField>HR_Employees_CityCaption</DataField>
+        </Field>
+        <Field Name="HR_Employees__Post_Code_Caption">
+          <DataField>HR_Employees__Post_Code_Caption</DataField>
+        </Field>
+        <Field Name="Section_C__Bank_Account_DetailsCaption">
+          <DataField>Section_C__Bank_Account_DetailsCaption</DataField>
+        </Field>
+        <Field Name="HR_Employees__Main_Bank_Caption">
+          <DataField>HR_Employees__Main_Bank_Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__Branch_Bank_Caption">
+          <DataField>HR_Employees__Branch_Bank_Caption</DataField>
+        </Field>
+        <Field Name="HR_Employees__Bank_Account_Number_Caption">
+          <DataField>HR_Employees__Bank_Account_Number_Caption</DataField>
+        </Field>
+        <Field Name="PictureCaption">
+          <DataField>PictureCaption</DataField>
+        </Field>
+        <Field Name="NamesCaption">
+          <DataField>NamesCaption</DataField>
+        </Field>
+        <Field Name="CI_Name">
+          <DataField>CI_Name</DataField>
+        </Field>
+        <Field Name="CI_Address">
+          <DataField>CI_Address</DataField>
+        </Field>
+        <Field Name="CI_Address2">
+          <DataField>CI_Address2</DataField>
+        </Field>
+        <Field Name="CI_City">
+          <DataField>CI_City</DataField>
+        </Field>
+        <Field Name="CI_EMail">
+          <DataField>CI_EMail</DataField>
+        </Field>
+        <Field Name="CI_HomePage">
+          <DataField>CI_HomePage</DataField>
+        </Field>
+        <Field Name="CI_PhoneNo">
+          <DataField>CI_PhoneNo</DataField>
+        </Field>
+        <Field Name="CI_Picture">
+          <DataField>CI_Picture</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

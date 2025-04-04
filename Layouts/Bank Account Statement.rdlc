@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="BankCode">
+          <DataField>BankCode</DataField>
+        </Field>
+        <Field Name="BankAccountNo_BankAccReconciliation">
+          <DataField>BankAccountNo_BankAccReconciliation</DataField>
+        </Field>
+        <Field Name="StatementNo_BankAccReconciliation">
+          <DataField>StatementNo_BankAccReconciliation</DataField>
+        </Field>
+        <Field Name="StatementDate_BankAccReconciliation">
+          <DataField>StatementDate_BankAccReconciliation</DataField>
+        </Field>
+        <Field Name="TotalBalanceonBankAccount_BankAccReconciliation">
+          <DataField>TotalBalanceonBankAccount_BankAccReconciliation</DataField>
+        </Field>
+        <Field Name="TotalBalanceonBankAccount_BankAccReconciliationFormat">
+          <DataField>TotalBalanceonBankAccount_BankAccReconciliationFormat</DataField>
+        </Field>
+        <Field Name="TotalAppliedAmount_BankAccReconciliation">
+          <DataField>TotalAppliedAmount_BankAccReconciliation</DataField>
+        </Field>
+        <Field Name="TotalAppliedAmount_BankAccReconciliationFormat">
+          <DataField>TotalAppliedAmount_BankAccReconciliationFormat</DataField>
+        </Field>
+        <Field Name="TotalTransactionAmount_BankAccReconciliation">
+          <DataField>TotalTransactionAmount_BankAccReconciliation</DataField>
+        </Field>
+        <Field Name="TotalTransactionAmount_BankAccReconciliationFormat">
+          <DataField>TotalTransactionAmount_BankAccReconciliationFormat</DataField>
+        </Field>
+        <Field Name="BankAccountNo">
+          <DataField>BankAccountNo</DataField>
+        </Field>
+        <Field Name="StatementEndingBalance_BankAccReconciliation">
+          <DataField>StatementEndingBalance_BankAccReconciliation</DataField>
+        </Field>
+        <Field Name="StatementEndingBalance_BankAccReconciliationFormat">
+          <DataField>StatementEndingBalance_BankAccReconciliationFormat</DataField>
+        </Field>
+        <Field Name="BankName">
+          <DataField>BankName</DataField>
+        </Field>
+        <Field Name="DoneByname">
+          <DataField>DoneByname</DataField>
+        </Field>
+        <Field Name="BankAccountBalanceasperCashBook">
+          <DataField>BankAccountBalanceasperCashBook</DataField>
+        </Field>
+        <Field Name="BankAccountBalanceasperCashBookFormat">
+          <DataField>BankAccountBalanceasperCashBookFormat</DataField>
+        </Field>
+        <Field Name="UnpresentedChequesTotal">
+          <DataField>UnpresentedChequesTotal</DataField>
+        </Field>
+        <Field Name="UnpresentedChequesTotalFormat">
+          <DataField>UnpresentedChequesTotalFormat</DataField>
+        </Field>
+        <Field Name="UncreditedBanking">
+          <DataField>UncreditedBanking</DataField>
+        </Field>
+        <Field Name="UncreditedBankingFormat">
+          <DataField>UncreditedBankingFormat</DataField>
+        </Field>
+        <Field Name="ReconciliationStatement">
+          <DataField>ReconciliationStatement</DataField>
+        </Field>
+        <Field Name="CompanyInformation_Pic">
+          <DataField>CompanyInformation_Pic</DataField>
+        </Field>
+        <Field Name="CompanyInformation_address">
+          <DataField>CompanyInformation_address</DataField>
+        </Field>
+        <Field Name="CompanyInformation_Phone">
+          <DataField>CompanyInformation_Phone</DataField>
+        </Field>
+        <Field Name="CompanyInformation_name">
+          <DataField>CompanyInformation_name</DataField>
+        </Field>
+        <Field Name="CompanyInformation_Address2">
+          <DataField>CompanyInformation_Address2</DataField>
+        </Field>
+        <Field Name="CompanyInformation_homepage">
+          <DataField>CompanyInformation_homepage</DataField>
+        </Field>
+        <Field Name="CompanyInformation_Email">
+          <DataField>CompanyInformation_Email</DataField>
+        </Field>
+        <Field Name="CompanyName">
+          <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="CompanyAddress">
+          <DataField>CompanyAddress</DataField>
+        </Field>
+        <Field Name="CheckNo_BankAccReconciliationLine">
+          <DataField>CheckNo_BankAccReconciliationLine</DataField>
+        </Field>
+        <Field Name="DocumentNo_BankAccReconciliationLine">
+          <DataField>DocumentNo_BankAccReconciliationLine</DataField>
+        </Field>
+        <Field Name="TransactionDate_BankAccReconciliationLine">
+          <DataField>TransactionDate_BankAccReconciliationLine</DataField>
+        </Field>
+        <Field Name="StatementLineNo_BankAccReconciliationLine">
+          <DataField>StatementLineNo_BankAccReconciliationLine</DataField>
+        </Field>
+        <Field Name="Description_BankAccReconciliationLine">
+          <DataField>Description_BankAccReconciliationLine</DataField>
+        </Field>
+        <Field Name="StatementAmount_BankAccReconciliationLine">
+          <DataField>StatementAmount_BankAccReconciliationLine</DataField>
+        </Field>
+        <Field Name="StatementAmount_BankAccReconciliationLineFormat">
+          <DataField>StatementAmount_BankAccReconciliationLineFormat</DataField>
+        </Field>
+        <Field Name="CheckNo_BankAccReconciliationLine1">
+          <DataField>CheckNo_BankAccReconciliationLine1</DataField>
+        </Field>
+        <Field Name="StatementLineNo_BankAccReconciliationLn1">
+          <DataField>StatementLineNo_BankAccReconciliationLn1</DataField>
+        </Field>
+        <Field Name="DocumentNo_BankAccReconciliationLine1">
+          <DataField>DocumentNo_BankAccReconciliationLine1</DataField>
+        </Field>
+        <Field Name="TransactionDate_BankAccReconciliationLine1">
+          <DataField>TransactionDate_BankAccReconciliationLine1</DataField>
+        </Field>
+        <Field Name="Description_BankAccReconciliationLine1">
+          <DataField>Description_BankAccReconciliationLine1</DataField>
+        </Field>
+        <Field Name="StatementAmount_BankAccReconciliationLine1">
+          <DataField>StatementAmount_BankAccReconciliationLine1</DataField>
+        </Field>
+        <Field Name="StatementAmount_BankAccReconciliationLine1Format">
+          <DataField>StatementAmount_BankAccReconciliationLine1Format</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

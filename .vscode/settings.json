@@ -1,0 +1,12 @@
+{
+    "al.compilationOptions": {
+    
+    },
+    "al.assemblyProbingPaths": [
+        "C:\\Windows\\assembly",
+        "C:\\Program Files\\Microsoft Dynamics 365 Business Central\\200\\Service\\Add-ins\\ClientExtensions",
+        "D:\\SadoDbConverted\\Newtonsoft.Json"
+    ],
+    "CRS.FileNamePatternPageCustomizations": "<ObjectTypeShort><BaseId>-PageCust.<ObjectNameShort>.al",
+    "al-test-runner.sendDebugTelemetry": false
+}

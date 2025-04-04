@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="es-MX" original="Please update this value">
+    <body>
+      <group id="body">
+        <trans-unit id="Table 1846986929 - Field 1654823450 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fund No.</source>
+          <target>Fondo núm.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Purchase Quote Line - Field Fund No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1846986929 - Field 781257514 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shortcut Dimension 3 Code</source>
+          <target>Cód. dim. acceso directo 3</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Purchase Quote Line - Field Shortcut Dimension 3 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1846986929 - Field 2711388939 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shortcut Dimension 4 Code</source>
+          <target>Cód. dim. acceso directo 4</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Purchase Quote Line - Field Shortcut Dimension 4 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1846986929 - Field 405681708 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shortcut Dimension 5 Code</source>
+          <target>Cód. dim. acceso directo 5</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Purchase Quote Line - Field Shortcut Dimension 5 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1846986929 - Field 4126842061 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shortcut Dimension 6 Code</source>
+          <target>Cód. dim. acceso directo 6</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Purchase Quote Line - Field Shortcut Dimension 6 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1846986929 - Field 2765633070 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shortcut Dimension 7 Code</source>
+          <target>Cód. dim. acceso directo 7</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Purchase Quote Line - Field Shortcut Dimension 7 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1846986929 - Field 785667711 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shortcut Dimension 8 Code</source>
+          <target>Cód. dim. acceso directo 8</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Purchase Quote Line - Field Shortcut Dimension 8 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1846986929 - Field 1922703415 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dimension Speedkey Code</source>
+          <target>Código de acceso rápido a la dimensión </target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Purchase Quote Line - Field Dimension Speedkey Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2413581608 - Field 4198939294 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Currency Code</source>
+          <target>Cód. divisa</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Quotation Request Vendors - Field Currency Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2413581608 - Field 636392376 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Amount</source>
+          <target>Importe</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Quotation Request Vendors - Field Amount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Time Sheet Lines</source>
+          <target>L´┐¢neas de Hoja de Asistencia</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 883711285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Entry No.</source>
+          <target>N´┐¢ mov.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 2708250016 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>User ID</source>
+          <target>Id. usuario</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field User ID - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1552826244 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Week Start Date</source>
+          <target>Fecha de Inicio de la Semana</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Week Start Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 761880756 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Time Type Code</source>
+          <target>C´┐¢digo de Tipo de Tiempo</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Time Type Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <target>Descripci´┐¢n</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 2919003727 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Day 1</source>
+          <target>D´┐¢a 1</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Day 1 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 537126282 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Day 2</source>
+          <target>D´┐¢a 2</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Day 2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 4194396961 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Day 3</source>
+          <target>D´┐¢a 3</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Day 3 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1812519516 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Day 4</source>
+          <target>D´┐¢a 4</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Day 4 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1174822899 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Day 5</source>
+          <target>D´┐¢a 5</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Day 5 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 3087912750 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Day 6</source>
+          <target>D´┐¢a 6</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Day 6 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 2450216133 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Day 7</source>
+          <target>D´┐¢a 7</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Day 7 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1303377601 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 1 Code</source>
+          <target>C´┐¢d. dimensi´┐¢n global 1</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Global Dimension 1 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1337243520 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 2 Code</source>
+          <target>C´┐¢d. dimensi´┐¢n global 2</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Global Dimension 2 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 2308462143 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 3 Code</source>
+          <target>C´┐¢digo de dimens´┐¢n global 3</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Global Dimension 3 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1098789766 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 4 Code</source>
+          <target>C´┐¢digo de dimens´┐¢n global 4</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Global Dimension 4 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 3684128069 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 5 Code</source>
+          <target>C´┐¢digo de dimens´┐¢n global 5</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Global Dimension 5 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 3717993988 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 6 Code</source>
+          <target>C´┐¢digo de dimens´┐¢n global 6</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Global Dimension 6 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1836559811 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 7 Code</source>
+          <target>C´┐¢digo de dimens´┐¢n global 7</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Global Dimension 7 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 2453785066 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 8 Code</source>
+          <target>C´┐¢digo de dimens´┐¢n global 8</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Global Dimension 8 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1654823450 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fund No.</source>
+          <target>Fondo No.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Fund No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1922703415 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dimension Speedkey Code</source>
+          <target>C´┐¢digo de Dimensi´┐¢n de Speedkey</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Dimension Speedkey Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1290961796 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Chargeable</source>
+          <target>Facturable</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Chargeable - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 2720485332 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Code</source>
+          <target>C´┐¢d. origen</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Source Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 3439179113 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Internal Control No.</source>
+          <target>Control interno n´┐¢m.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Internal Control No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1717374642 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>DateDisplay</source>
+          <target>Presentaci´┐¢ndeFecha</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field DateDisplay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 3376669556 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>DayStatus</source>
+          <target>EstadodeD´┐¢a</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field DayStatus - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 3376669556 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve">
+          <source>New,Submitted,Approval Pending,Approved,Historical</source>
+          <target>New,Submitted,Approval Pending,Approved,Historical</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field DayStatus - Property OptionCaption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 995090288 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date Filter</source>
+          <target>Filtro fecha</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Date Filter - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1993896008 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Status Filter</source>
+          <target>Filtro estado</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Status Filter - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - Field 1993896008 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve">
+          <source>New,Submitted,,Approved,Posted</source>
+          <target>New,Submitted,,Approved,Posted</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - Field Status Filter - Property OptionCaption</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - NamedType 4178209543" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cannot change hours unless Day Status is New.</source>
+          <target>No puede cambiar horas a menos que Estado de D´┐¢a sea Nuevo.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - NamedType TEText001</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - NamedType 1796332098" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cannot change User ID. You must delete the line instead.</source>
+          <target>"No puede cambiar Identificaci´┐¢n de Usuario. En vez de eso, borre la l´┐¢nea."</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - NamedType TEText002</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - NamedType 1158635481" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cannot modify unless Day Status is New.</source>
+          <target>No puede modificar a menos que Estado de D´┐¢a sea Nuevo.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - NamedType TEText003</note>
+        </trans-unit>
+        <trans-unit id="Table 1321807390 - NamedType 3071725332" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fund %1 is blocked. </source>
+          <target>Fondo %1 est´┐¢ bloqueado.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table TE Time Sheet1 - NamedType TEText004</note>
+        </trans-unit>
+        <trans-unit id="Page 798837511 - Action 2364670106 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Request Approval</source>
+          <target>Aprobación solic.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Leave Journal Lines - Action Request Approval - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 798837511 - Action 383335270 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send A&amp;pproval Request</source>
+          <target>Enviar solicitud a&amp;probación</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Leave Journal Lines - Action SendApprovalRequest - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 798837511 - Action 858296388 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cancel Approval Re&amp;quest</source>
+          <target>&amp;Cancelar solicitud aprobación</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Leave Journal Lines - Action CancelApprovalRequest - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2260327238 - Action 2364670106 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Request Approval</source>
+          <target>Aprobación solic.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Jobs Card - Action Request Approval - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2260327238 - Action 383335270 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Set as Active</source>
+          <target>Enviar solicitud a&amp;probación</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Jobs Card - Action SendApprovalRequest - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2260327238 - Action 685580383 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Reset</source>
+          <target>Enviar solicitud a&amp;probación</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Jobs Card - Action Reset - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2260327238 - Action 858296388 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cancel Approval Re&amp;quest</source>
+          <target>&amp;Cancelar solicitud aprobación</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Jobs Card - Action CancelApprovalRequest - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1671507476 - Action 2364670106 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Request Approval</source>
+          <target>Aprobación solic.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Employee Requisition Card - Action Request Approval - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1802816631 - Action 2364670106 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Request Approval</source>
+          <target>Aprobación solic.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Employee Requisitions List - Action Request Approval - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1802816631 - Action 383335270 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send A&amp;pproval Request</source>
+          <target>Enviar solicitud a&amp;probación</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Employee Requisitions List - Action SendApprovalRequest - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1802816631 - Action 858296388 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cancel Approval Re&amp;quest</source>
+          <target>&amp;Cancelar solicitud aprobación</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page HR Employee Requisitions List - Action CancelApprovalRequest - Property Caption</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

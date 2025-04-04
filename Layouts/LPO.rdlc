@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Description>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
+</Description>
+  <Author>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
+</Author>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+      </Body>
+      <Width>6.5in</Width>
+      <Page></Page>
+    </ReportSection>
+  </ReportSections>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="ReportForNavId_4458">
+          <DataField>ReportForNavId_4458</DataField>
+        </Field>
+        <Field Name="Purchase_Header_Document_Type">
+          <DataField>Purchase_Header_Document_Type</DataField>
+        </Field>
+        <Field Name="Purchase_Header_No_">
+          <DataField>Purchase_Header_No_</DataField>
+        </Field>
+        <Field Name="BuyfromVendorNo_PurchaseHeader">
+          <DataField>BuyfromVendorNo_PurchaseHeader</DataField>
+        </Field>
+        <Field Name="OrderDate_PurchaseHeader">
+          <DataField>OrderDate_PurchaseHeader</DataField>
+        </Field>
+        <Field Name="ReportForNavId_6547">
+          <DataField>ReportForNavId_6547</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Picture">
+          <DataField>CompanyInfo_Picture</DataField>
+        </Field>
+        <Field Name="CompanyInfo__Country_Region_Code_">
+          <DataField>CompanyInfo__Country_Region_Code_</DataField>
+        </Field>
+        <Field Name="CompanyInfo_City">
+          <DataField>CompanyInfo_City</DataField>
+        </Field>
+        <Field Name="CompanyInfo__Address_2_">
+          <DataField>CompanyInfo__Address_2_</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Address">
+          <DataField>CompanyInfo_Address</DataField>
+        </Field>
+        <Field Name="CompanyInfo_Name">
+          <DataField>CompanyInfo_Name</DataField>
+        </Field>
+        <Field Name="CompanyInfo__Phone_No__">
+          <DataField>CompanyInfo__Phone_No__</DataField>
+        </Field>
+        <Field Name="CompanyInfo__Fax_No__">
+          <DataField>CompanyInfo__Fax_No__</DataField>
+        </Field>
+        <Field Name="CompanyInfo__E_Mail_">
+          <DataField>CompanyInfo__E_Mail_</DataField>
+        </Field>
+        <Field Name="CompanyInfo__Home_Page_">
+          <DataField>CompanyInfo__Home_Page_</DataField>
+        </Field>
+        <Field Name="Purchase_Header___No__">
+          <DataField>Purchase_Header___No__</DataField>
+        </Field>
+        <Field Name="FORMAT__Purchase_Line___Order_Date__0_4_">
+          <DataField>FORMAT__Purchase_Line___Order_Date__0_4_</DataField>
+        </Field>
+        <Field Name="Purchase_Header___Buy_from_Vendor_Name_">
+          <DataField>Purchase_Header___Buy_from_Vendor_Name_</DataField>
+        </Field>
+        <Field Name="VendorAddr">
+          <DataField>VendorAddr</DataField>
+        </Field>
+        <Field Name="VendorCity">
+          <DataField>VendorCity</DataField>
+        </Field>
+        <Field Name="VendorPostCod">
+          <DataField>VendorPostCod</DataField>
+        </Field>
+        <Field Name="VendorTel">
+          <DataField>VendorTel</DataField>
+        </Field>
+        <Field Name="Purchase_Line_Quantity">
+          <DataField>Purchase_Line_Quantity</DataField>
+        </Field>
+        <Field Name="Purchase_Line_QuantityFormat">
+          <DataField>Purchase_Line_QuantityFormat</DataField>
+        </Field>
+        <Field Name="Purchase_Line_Description">
+          <DataField>Purchase_Line_Description</DataField>
+        </Field>
+        <Field Name="Purchase_Line__Unit_Cost_">
+          <DataField>Purchase_Line__Unit_Cost_</DataField>
+        </Field>
+        <Field Name="Purchase_Line__Unit_Cost_Format">
+          <DataField>Purchase_Line__Unit_Cost_Format</DataField>
+        </Field>
+        <Field Name="Purchase_Line_Amount">
+          <DataField>Purchase_Line_Amount</DataField>
+        </Field>
+        <Field Name="Purchase_Line_AmountFormat">
+          <DataField>Purchase_Line_AmountFormat</DataField>
+        </Field>
+        <Field Name="Purchase_Line_Amount_Control1000000133">
+          <DataField>Purchase_Line_Amount_Control1000000133</DataField>
+        </Field>
+        <Field Name="Purchase_Line_Amount_Control1000000133Format">
+          <DataField>Purchase_Line_Amount_Control1000000133Format</DataField>
+        </Field>
+        <Field Name="Purchase_Header___Created_By_">
+          <DataField>Purchase_Header___Created_By_</DataField>
+        </Field>
+        <Field Name="Purchase_Header___Date_Created_">
+          <DataField>Purchase_Header___Date_Created_</DataField>
+        </Field>
+        <Field Name="Tel_Caption">
+          <DataField>Tel_Caption</DataField>
+        </Field>
+        <Field Name="Fax_Caption">
+          <DataField>Fax_Caption</DataField>
+        </Field>
+        <Field Name="Email_Caption">
+          <DataField>Email_Caption</DataField>
+        </Field>
+        <Field Name="Web_Caption">
+          <DataField>Web_Caption</DataField>
+        </Field>
+        <Field Name="PURCHASE_ORDERCaption">
+          <DataField>PURCHASE_ORDERCaption</DataField>
+        </Field>
+        <Field Name="Order_DateCaption">
+          <DataField>Order_DateCaption</DataField>
+        </Field>
+        <Field Name="Order_No_Caption">
+          <DataField>Order_No_Caption</DataField>
+        </Field>
+        <Field Name="SUPPLIER_Caption">
+          <DataField>SUPPLIER_Caption</DataField>
+        </Field>
+        <Field Name="QuantityCaption">
+          <DataField>QuantityCaption</DataField>
+        </Field>
+        <Field Name="Unit_CostCaption">
+          <DataField>Unit_CostCaption</DataField>
+        </Field>
+        <Field Name="Total_Unit_CostCaption">
+          <DataField>Total_Unit_CostCaption</DataField>
+        </Field>
+        <Field Name="DescriptionCaption">
+          <DataField>DescriptionCaption</DataField>
+        </Field>
+        <Field Name="TotalCaption">
+          <DataField>TotalCaption</DataField>
+        </Field>
+        <Field Name="CurrReport_PAGENOCaption">
+          <DataField>CurrReport_PAGENOCaption</DataField>
+        </Field>
+        <Field Name="TERMS_AND_CONDITIONSCaption">
+          <DataField>TERMS_AND_CONDITIONSCaption</DataField>
+        </Field>
+        <Field Name="V1__This_LPO_is_valid_for_30_daysCaption">
+          <DataField>V1__This_LPO_is_valid_for_30_daysCaption</DataField>
+        </Field>
+        <Field Name="V3__TI_Kenya_reserves_the_right_to_return_all_the_goods_which_may_be_found_defective_during_consumptionCaption">
+          <DataField>V3__TI_Kenya_reserves_the_right_to_return_all_the_goods_which_may_be_found_defective_during_consumptionCaption</DataField>
+        </Field>
+        <Field Name="V2__All_the_goods_services_supplied_MUST_be_as_per_order_and_MUST_meet_all_the_specified_conditionsCaption">
+          <DataField>V2__All_the_goods_services_supplied_MUST_be_as_per_order_and_MUST_meet_all_the_specified_conditionsCaption</DataField>
+        </Field>
+        <Field Name="V5__All_payment_will_be_by_crossed_cheques_issued_by_TI_Kenya_and_in_line_with_stated_terms_Caption">
+          <DataField>V5__All_payment_will_be_by_crossed_cheques_issued_by_TI_Kenya_and_in_line_with_stated_terms_Caption</DataField>
+        </Field>
+        <Field Name="V4__Goods_services_are_received_subject_to_verification_in_due_courseCaption">
+          <DataField>V4__Goods_services_are_received_subject_to_verification_in_due_courseCaption</DataField>
+        </Field>
+        <Field Name="where_such_conditions_could_not_be_verified_or_established_during_receipt_of_the_goods_Caption">
+          <DataField>where_such_conditions_could_not_be_verified_or_established_during_receipt_of_the_goods_Caption</DataField>
+        </Field>
+        <Field Name="V6__The_prices_on_the_LPO_include_delivery_costs_to_the_specified_delivery_receiving_pointCaption">
+          <DataField>V6__The_prices_on_the_LPO_include_delivery_costs_to_the_specified_delivery_receiving_pointCaption</DataField>
+        </Field>
+        <Field Name="Date_Caption">
+          <DataField>Date_Caption</DataField>
+        </Field>
+        <Field Name="Date_Caption_Control1000000025">
+          <DataField>Date_Caption_Control1000000025</DataField>
+        </Field>
+        <Field Name="Date_Caption_Control1000000027">
+          <DataField>Date_Caption_Control1000000027</DataField>
+        </Field>
+        <Field Name="Signature_Caption">
+          <DataField>Signature_Caption</DataField>
+        </Field>
+        <Field Name="Signature_Caption_Control1000000030">
+          <DataField>Signature_Caption_Control1000000030</DataField>
+        </Field>
+        <Field Name="Signature_Caption_Control1000000031">
+          <DataField>Signature_Caption_Control1000000031</DataField>
+        </Field>
+        <Field Name="EmptyStringCaption">
+          <DataField>EmptyStringCaption</DataField>
+        </Field>
+        <Field Name="EmptyStringCaption_Control1000000034">
+          <DataField>EmptyStringCaption_Control1000000034</DataField>
+        </Field>
+        <Field Name="EmptyStringCaption_Control1000000035">
+          <DataField>EmptyStringCaption_Control1000000035</DataField>
+        </Field>
+        <Field Name="EmptyStringCaption_Control1000000037">
+          <DataField>EmptyStringCaption_Control1000000037</DataField>
+        </Field>
+        <Field Name="EmptyStringCaption_Control1000000038">
+          <DataField>EmptyStringCaption_Control1000000038</DataField>
+        </Field>
+        <Field Name="EmptyStringCaption_Control1000000039">
+          <DataField>EmptyStringCaption_Control1000000039</DataField>
+        </Field>
+        <Field Name="EmptyStringCaption_Control1000000040">
+          <DataField>EmptyStringCaption_Control1000000040</DataField>
+        </Field>
+        <Field Name="V7__Payment_Terms__Payment_shall_be_made_30_days_after_the_invoice_dateCaption">
+          <DataField>V7__Payment_Terms__Payment_shall_be_made_30_days_after_the_invoice_dateCaption</DataField>
+        </Field>
+        <Field Name="Prepared_By_Finance_Officer__Caption">
+          <DataField>Prepared_By_Finance_Officer__Caption</DataField>
+        </Field>
+        <Field Name="Checked_By_Head_of_Finance__Caption">
+          <DataField>Checked_By_Head_of_Finance__Caption</DataField>
+        </Field>
+        <Field Name="Authorised_By_Executive_Director_Caption">
+          <DataField>Authorised_By_Executive_Director_Caption</DataField>
+        </Field>
+        <Field Name="Purchase_Line_Document_Type">
+          <DataField>Purchase_Line_Document_Type</DataField>
+        </Field>
+        <Field Name="Purchase_Line_Document_No_">
+          <DataField>Purchase_Line_Document_No_</DataField>
+        </Field>
+        <Field Name="Purchase_Line_Line_No_">
+          <DataField>Purchase_Line_Line_No_</DataField>
+        </Field>
+        <Field Name="FUND">
+          <DataField>FUND</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="STRSUBSTNO_Text000_PeriodText_">
+          <DataField>STRSUBSTNO_Text000_PeriodText_</DataField>
+        </Field>
+        <Field Name="COMPANYNAME">
+          <DataField>COMPANYNAME</DataField>
+        </Field>
+        <Field Name="PeriodText">
+          <DataField>PeriodText</DataField>
+        </Field>
+        <Field Name="G_L_Account_TABLECAPTION_____GLFilter">
+          <DataField>G_L_Account_TABLECAPTION_____GLFilter</DataField>
+        </Field>
+        <Field Name="GLFilter">
+          <DataField>GLFilter</DataField>
+        </Field>
+        <Field Name="G_L_Account_No_">
+          <DataField>G_L_Account_No_</DataField>
+        </Field>
+        <Field Name="Trial_BalanceCaption">
+          <DataField>Trial_BalanceCaption</DataField>
+        </Field>
+        <Field Name="CurrReport_PAGENOCaption">
+          <DataField>CurrReport_PAGENOCaption</DataField>
+        </Field>
+        <Field Name="Net_ChangeCaption">
+          <DataField>Net_ChangeCaption</DataField>
+        </Field>
+        <Field Name="BalanceCaption">
+          <DataField>BalanceCaption</DataField>
+        </Field>
+        <Field Name="G_L_Account__No_Caption">
+          <DataField>G_L_Account__No_Caption</DataField>
+        </Field>
+        <Field Name="PADSTR__G_L_AccountIndentation_2_G_L_Account_NameCaptionLbl">
+          <DataField>PADSTR__G_L_AccountIndentation_2_G_L_Account_NameCaptionLbl</DataField>
+        </Field>
+        <Field Name="G_L_Account___Net_Change_CaptionLbl">
+          <DataField>G_L_Account___Net_Change_CaptionLbl</DataField>
+        </Field>
+        <Field Name="G_L_Account__Net_Change_Control22CaptionLbl">
+          <DataField>G_L_Account__Net_Change_Control22CaptionLbl</DataField>
+        </Field>
+        <Field Name="G_L_Account__Balance_at_Date_Control24CaptionLbl">
+          <DataField>G_L_Account__Balance_at_Date_Control24CaptionLbl</DataField>
+        </Field>
+        <Field Name="G_L_Account___Balance_at_Date_CaptionLbl">
+          <DataField>G_L_Account___Balance_at_Date_CaptionLbl</DataField>
+        </Field>
+        <Field Name="PageGroupNo">
+          <DataField>PageGroupNo</DataField>
+        </Field>
+        <Field Name="G_L_Account__No_">
+          <DataField>G_L_Account__No_</DataField>
+        </Field>
+        <Field Name="PADSTR__G_L_AccountIndentation_2_G_L_Account_Name">
+          <DataField>PADSTR__G_L_AccountIndentation_2_G_L_Account_Name</DataField>
+        </Field>
+        <Field Name="G_L_Account__Net_Change">
+          <DataField>G_L_Account__Net_Change</DataField>
+        </Field>
+        <Field Name="G_L_Account__Net_ChangeFormat">
+          <DataField>G_L_Account__Net_ChangeFormat</DataField>
+        </Field>
+        <Field Name="G_L_Account__Net_Change_Control22">
+          <DataField>G_L_Account__Net_Change_Control22</DataField>
+        </Field>
+        <Field Name="G_L_Account__Net_Change_Control22Format">
+          <DataField>G_L_Account__Net_Change_Control22Format</DataField>
+        </Field>
+        <Field Name="G_L_Account__Balance_at_Date">
+          <DataField>G_L_Account__Balance_at_Date</DataField>
+        </Field>
+        <Field Name="G_L_Account__Balance_at_DateFormat">
+          <DataField>G_L_Account__Balance_at_DateFormat</DataField>
+        </Field>
+        <Field Name="G_L_Account__Balance_at_Date_Control24">
+          <DataField>G_L_Account__Balance_at_Date_Control24</DataField>
+        </Field>
+        <Field Name="G_L_Account__Balance_at_Date_Control24Format">
+          <DataField>G_L_Account__Balance_at_Date_Control24Format</DataField>
+        </Field>
+        <Field Name="G_L_Account__Account_Type">
+          <DataField>G_L_Account__Account_Type</DataField>
+        </Field>
+        <Field Name="No__of_Blank_Lines">
+          <DataField>No__of_Blank_Lines</DataField>
+        </Field>
+        <Field Name="BlankLineNo">
+          <DataField>BlankLineNo</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>
