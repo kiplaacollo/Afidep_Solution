@@ -10642,8 +10642,8 @@ End Function</Code>
         <Field Name="Global_Dimension_1_Code">
           <DataField>Global_Dimension_1_Code</DataField>
         </Field>
-        <Field Name="Project_Code">
-          <DataField>Project_Code</DataField>
+        <Field Name="Global_Dimension_2_Code">
+          <DataField>Global_Dimension_2_Code</DataField>
         </Field>
         <Field Name="Shortcut_Dimension_3_Code">
           <DataField>Shortcut_Dimension_3_Code</DataField>
