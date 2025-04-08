@@ -392,6 +392,7 @@ Page 17251 "HR Job Applications Card"
                     ApplicationArea = Basic;
                     //  Caption = 'Generate Offer Letter';
                     Promoted = true;
+                    PromotedCategory = Category6;
                     // Visible = false;
                     RunObject = Report "Job Summary";
                 }

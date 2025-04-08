@@ -33,7 +33,40 @@ report 50109 "Job Summary"
                 column(Institution_Type; "Institution Type") { }
                 column(Start_Date; "Start Date") { }
                 column(End_Date; "End Date") { }
+                column(Qualification_Code; "Qualification Code") { }
+                column(Qualification_Name; "Qualification Name") { }
+                column(Section_Level; "Section/Level") { }
 
+
+            }
+            dataitem("Applicant Job Experience"; "Applicant Job Experience")
+            {
+                DataItemLink = "Applicant No." = field("Application No");
+                column(Applicant_No_E; "Applicant No.") { }
+                column(Employer; Employer) { }
+                column(Start_Date_E; "Start Date") { }
+                column(End_Date_E; "End Date") { }
+                column(No__of_Years; "No. of Years") { }
+
+            }
+            dataitem("Applicant Prof Membership"; "Applicant Prof Membership")
+            {
+                DataItemLink = "Applicant No." = field("Application No");
+                column(Applicant_No_M; "Applicant No.") { }
+                column(Professional_Body; "Professional Body") { }
+                column(MembershipNo; MembershipNo) { }
+                column(Description; Description) { }
+            }
+            dataitem("HR Applicant Referees"; "HR Applicant Referees")
+            {
+                DataItemLink = "Job Application No" = field("Application No");
+                column(Job_Application_No; "Job Application No") { }
+                column(Names; Names) { }
+                column(Designation; Designation) { }
+                column(Institution_R; Institution) { }
+                column(Address; Address) { }
+                column(Telephone_No; "Telephone No") { }
+                column(E_Mail; "E-Mail") { }
 
             }
         }

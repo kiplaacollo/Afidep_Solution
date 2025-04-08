@@ -607,11 +607,11 @@ Page 80101 "Payment Voucher Card"
                 action(PostNew)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Post To Journals';
+                    Caption = 'Post With W/T';
                     //Ellipsis = true;
                     Image = Post;
-                    // Promoted = true;
-                    // PromotedCategory = Category4;
+                    Promoted = true;
+                    PromotedCategory = Category6;
 
                     trigger OnAction()
                     var
@@ -1042,12 +1042,12 @@ Page 80101 "Payment Voucher Card"
                                     GenJnlLine.MODIFY(TRUE);
                                 END;
                             END;
-                            Rec.Completed := true;
-                            Rec.Posted := true;
-                            Rec.Modify(true);
-                            CurrPage.Close();
-                            Message('Journals Inserted Successfully');
-                            exit;
+                            // Rec.Completed := true;
+                            // Rec.Posted := true;
+                            // Rec.Modify(true);
+                            // CurrPage.Close();
+                            // Message('Journals Inserted Successfully');
+                            // exit;
                             GenJnlLine.Reset;
                             GenJnlLine.SetRange(GenJnlLine."Journal Template Name", 'PAYMENTS');
                             GenJnlLine.SetRange(GenJnlLine."Journal Batch Name", 'PVS');
@@ -1101,11 +1101,11 @@ Page 80101 "Payment Voucher Card"
             group("Request Approval")
 
             {
-                Caption = 'Request Approval';
+                //  Caption = 'Request Approval';
                 action(Post)
                 {
                     ApplicationArea = Basic, Suite;
-                    Caption = 'Post';
+                    Caption = 'Post Without W/T';
                     //Ellipsis = true;
                     Image = Post;
                     Promoted = true;

@@ -7055,6 +7055,50 @@ Budget: Code[100]; Donor: Code[100]; Dept: Code[100]; Strategic: Code[100]; Case
             end;
         end;
     end;
+     procedure GenerateEmploreeReq(No: Code[40]; var Base64Txt: Text)
+    var
+        Filename: Text[100];
+        TempBlob: Codeunit "Temp Blob";
+        StatementOutstream: OutStream;
+        StatementInstream: InStream;
+        EmployeeReqReport: Report 80040;
+        Base64Convert: Codeunit "Base64 Convert";
+        HrEmployeeRequisition:Record "HR Employee Requisitions";
+    begin
+        Filename := FilePath.GetTempPath() + FilePath.GetRandomFileName();
+        HrEmployeeRequisition.Reset;
+        HrEmployeeRequisition.SetRange(HrEmployeeRequisition."Requisition No.", No);
+        if HrEmployeeRequisition.Find('-') then begin
+            EmployeeReqReport.SetTableView(HrEmployeeRequisition);
+            TempBlob.CreateOutStream(StatementOutstream);
+            if EmployeeReqReport.SaveAs('', ReportFormat::Pdf, StatementOutstream) then begin
+                TempBlob.CreateInStream(StatementInstream);
+                Base64Txt := Base64Convert.ToBase64(StatementInstream, true);
+            end;
+        end;
+    end;
+     procedure GenerateJobSummary(No: Code[40]; var Base64Txt: Text)
+    var
+        Filename: Text[100];
+        TempBlob: Codeunit "Temp Blob";
+        StatementOutstream: OutStream;
+        StatementInstream: InStream;
+        JobReport: Report 50108;
+        Base64Convert: Codeunit "Base64 Convert";
+        JobApplication:Record "HR Job Applications";
+    begin
+        Filename := FilePath.GetTempPath() + FilePath.GetRandomFileName();
+        JobApplication.Reset;
+        JobApplication.SetRange(JobApplication."Application No", No);
+        if JobApplication.Find('-') then begin
+            JobReport.SetTableView(JobApplication);
+            TempBlob.CreateOutStream(StatementOutstream);
+            if JobReport.SaveAs('', ReportFormat::Pdf, StatementOutstream) then begin
+                TempBlob.CreateInStream(StatementInstream);
+                Base64Txt := Base64Convert.ToBase64(StatementInstream, true);
+            end;
+        end;
+    end;
 
     procedure FnEditImprestSurRequisitionLines(No: Code[50]; AmountSpent: Decimal; LineNo: Integer) returnout: Text
     var

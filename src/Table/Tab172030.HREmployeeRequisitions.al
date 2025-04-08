@@ -183,7 +183,7 @@ Table 172030 "HR Employee Requisitions"
         }
         field(3966; Requestor; Code[50])
         {
-            
+
         }
         field(3967; "No. Series"; Code[100])
         {
@@ -245,13 +245,13 @@ Table 172030 "HR Employee Requisitions"
         field(3977; "Professional Course"; Code[50])
         {
             DataClassification = CustomerContent;
-            TableRelation = Qualifications.Code where("Qualification Type" = const(Academic), "Education Level" = const(Professional));
+            //  TableRelation = Qualifications.Code where("Qualification Type" = const(Academic), "Education Level" = const(Professional));
             Caption = 'Professional Course';
         }
         field(3978; "Professional Membership"; Code[50])
         {
             DataClassification = CustomerContent;
-            TableRelation = "Professional Memberships";
+            //  TableRelation = "Professional Memberships";
             Caption = 'Professional Membership';
         }
         field(3979; "Field of Study"; Code[50])
