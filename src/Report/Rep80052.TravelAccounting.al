@@ -34,7 +34,7 @@ Report 80052 "Travel Accounting"
             column(Paying_Account_Name; "Paying Account Name") { }
             column(Payee_Naration; "Payee Naration") { }
             column(Employee_Name; "Employee Name") { }
-            column(Total_Amount_Spent; "Total Amount Spent") { }
+            column(Total_Amount_Spent; "Total Amount Spent" * "Purchase Line"."Currency Factor") { }
             column(Travel_Total; "Travel Total" * "Currency Factor") { }
             column(Total_Cash_Refund; "Total Cash Refund") { }
             column(RequesterSignature_PurchaseHeader; "Requester Signature")
@@ -101,8 +101,8 @@ Report 80052 "Travel Accounting"
                 column(ShortcutDimCode_7_; "ShortcutDimCode[7]") { }
                 column(ShortcutDimCode_8_; "ShortcutDimCode[8]") { }
                 column(Budget_Line_description; "Budget Line description") { }
-                column(Direct_Unit_Cost; "Direct Unit Cost") { }
-                column(Amount_Spent; "Amount Spent") { }
+                column(Direct_Unit_Cost; "Direct Unit Cost" * Quantity) { }
+                column(Amount_Spent; "Amount Spent" * "Currency Factor") { }
                 column(Cash_Refund; "Cash Refund") { }
 
             }
@@ -129,19 +129,32 @@ Report 80052 "Travel Accounting"
             }
             trigger OnAfterGetRecord();
             begin
-                DimVal.Reset;
-                DimVal.SetRange(Code, "Shortcut Dimension 1 Code");
-                if DimVal.FindFirst then
-                    //Dim1Name := DimVal.Name;
-                DimVal.Reset;
-                DimVal.SetRange(Code, "Shortcut Dimension 4 Code");
-                if DimVal.FindFirst then
-                    //Dim2Name := DimVal.Name;
-                    "Purchase Line"."Budget Line description" := DimVal.Name;
-                if "Purchase Header"."Requester Signature".Hasvalue = false then begin
-                    //HREmployees.Get("Purchase Header"."Employee No");
-                    //HREmployees.CALCFIELDS("Employee Signature");
-                    //"Purchase Header"."Requester Signature":=HREmployees."Employee Signature";
+                // DimVal.Reset;
+                // DimVal.SetRange(Code, "Shortcut Dimension 1 Code");
+                // if DimVal.FindFirst then
+                //     //Dim1Name := DimVal.Name;
+                // DimVal.Reset;
+                // DimVal.SetRange(Code, "Shortcut Dimension 4 Code");
+                // if DimVal.FindFirst then
+                //     //Dim2Name := DimVal.Name;
+                //     "Purchase Line"."Budget Line description" := DimVal.Name;
+                // if "Purchase Header"."Requester Signature".Hasvalue = false then begin
+                //     //HREmployees.Get("Purchase Header"."Employee No");
+                //     //HREmployees.CALCFIELDS("Employee Signature");
+                //     //"Purchase Header"."Requester Signature":=HREmployees."Employee Signature";
+                //     ApprovalEntry.Reset;
+                //     ApprovalEntry.SetRange("Document No.", "Purchase Header"."No.");
+                //     ApprovalEntry.SetRange("Sequence No.", 1);
+                //     if ApprovalEntry.FindFirst then begin
+                //         "Purchase Header".RequesterDate := ApprovalEntry."Date-Time Sent for Approval";
+                //     end;
+                // end;
+
+                HREmployees.Reset;
+                HREmployees.SetRange(HREmployees."No.", "Purchase Header"."Employee No");
+                if HREmployees.FindFirst then begin
+                    HREmployees.CALCFIELDS(Signature);
+                    "Purchase Header"."Requester Signature" := HREmployees.Signature;
                     ApprovalEntry.Reset;
                     ApprovalEntry.SetRange("Document No.", "Purchase Header"."No.");
                     ApprovalEntry.SetRange("Sequence No.", 1);

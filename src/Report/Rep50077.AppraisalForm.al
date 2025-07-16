@@ -3,7 +3,7 @@ report 50077 "Appraisal Form"
     ApplicationArea = All;
     Caption = 'Appraisal Form';
     UsageCategory = ReportsAndAnalysis;
-    DefaultLayout = Word;
+    DefaultLayout = Word;//
     WordLayout = 'Layouts/Performance Appraisal.docx';
 
     // DefaultLayout = RDLC;

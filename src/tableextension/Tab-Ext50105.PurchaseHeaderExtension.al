@@ -696,6 +696,13 @@ tableextension 50105 "PurchaseHeaderExtension" extends "Purchase Header"
             Editable = false;
             FieldClass = FlowField;
         }
+        field(99000828; "Consultancy Tax Amount2"; Decimal)
+        {
+            CalcFormula = sum("Purchase Line"."Consultancy Fee 2" where("Document Type" = field("Document Type"),
+                                                                              "Document No." = field("No.")));
+            Editable = false;
+            FieldClass = FlowField;
+        }
         field(172000; "Payee Naration"; Text[100])
         {
             DataClassification = ToBeClassified;
@@ -883,7 +890,7 @@ tableextension 50105 "PurchaseHeaderExtension" extends "Purchase Header"
     begin
         if "Status" = "Status"::Released then
             NotifyFinancePerson();
-        NotifyProcurementOfficer();
+        //  NotifyProcurementOfficer();
     end;
 
 
@@ -1053,13 +1060,13 @@ tableextension 50105 "PurchaseHeaderExtension" extends "Purchase Header"
         Country: Code[30]; // Adjust size as per your setup
     begin
         // Check if AU Form Type is 'Purchase Requisition'
-        if "AU Form Type" <> "AU Form Type"::"Purchase Requisition" then
+        if ("AU Form Type" <> "AU Form Type"::"Purchase Requisition") then
             exit; // Exit if it's not a Purchase Requisition
 
         Country := "Shortcut Dimension 1 Code"; // Replace 'YourCountryField' with the actual field name, e.g., "Country/Region Code"
 
         // Determine the recipient based on the country
-        if Country = 'KENYA' then
+        if (Country = 'KENYA') and (Status = Status::Released) then
             Recipient := 'Doris.Sitienei@afidep.org'
         else
             // if Country = 'MALAWI' then

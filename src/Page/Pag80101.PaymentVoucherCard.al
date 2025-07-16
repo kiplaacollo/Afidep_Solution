@@ -525,6 +525,59 @@ Page 80101 "Payment Voucher Card"
 
                 end;
             }
+
+            action(UnpostRec)
+            {
+                ApplicationArea = Basic, Suite;
+
+                Caption = 'Unpost Record';
+                Image = UpdateDescription;
+                Promoted = true;
+                Visible = true;
+                PromotedCategory = Report;
+                PromotedIsBig = true;
+
+                ToolTip = 'Mark Record as not posted and Not completed.';
+
+                trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                    COA: Record "G/L Account";
+                begin
+                    if Rec.Posted = true then
+                        Rec.Posted := false;
+                    if Rec.Completed = true then
+                        Rec.Completed := false;
+                    Rec.Modify();
+
+                end;
+            }
+            action(MarkpostRec)
+            {
+                ApplicationArea = Basic, Suite;
+
+                Caption = 'Mark As Posted';
+                Image = UpdateDescription;
+                Promoted = true;
+                Visible = true;
+                PromotedCategory = Report;
+                PromotedIsBig = true;
+
+                ToolTip = 'Mark Record as posted and completed.';
+
+                trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                    COA: Record "G/L Account";
+                begin
+                    if Rec.Posted = false then
+                        Rec.Posted := true;
+                    if Rec.Completed = false then
+                        Rec.Completed := true;
+                    Rec.Modify();
+
+                end;
+            }
             action("Cancel A&pproval Request")
             {
                 ApplicationArea = Basic;
@@ -632,42 +685,9 @@ Page 80101 "Payment Voucher Card"
                             Rec.TestField(Rec.Completed, FALSE);
                             Rec.CalcFields("Amount Including VAT");
                             rec.CalcFields(Rec."Consultancy Tax Amount");
-
-                            //withholding tax
-                            WithholdingTax.Reset();
-                            WithholdingTax.SetRange(WithholdingTax.Code, PurchLine6."Withholding Tax Code");
-                            if WithholdingTax.Find('-') then begin
-                                WithholdingTaxAccount := WithholdingTax."Withholding Tax Account";
-
-                            end;
-
-                            //Consultancy Fee
-
-                            WithholdingTax.Reset();
-                            WithholdingTax.SetRange(WithholdingTax.Code, PurchLine6."Withholding Tax Code");
-                            if WithholdingTax.Find('-') then begin
-                                WithholdingTaxAccountConsultancy := WithholdingTax."Consultancy Fee AC";
+                            Rec.CalcFields(Rec."Consultancy Tax Amount2");
 
 
-                            end;
-
-                            //withholding tax
-                            WithholdingTax.Reset();
-                            WithholdingTax.SetRange(WithholdingTax.Code, PurchLine6."Withholding Tax Code 2");
-                            if WithholdingTax.Find('-') then begin
-                                WithholdingTaxAccount := WithholdingTax."Withholding Tax Account";
-
-                            end;
-
-                            //Consultancy Fee
-
-                            WithholdingTax.Reset();
-                            WithholdingTax.SetRange(WithholdingTax.Code, PurchLine6."Withholding Tax Code 2");
-                            if WithholdingTax.Find('-') then begin
-                                WithholdingTaxAccountConsultancy := WithholdingTax."Consultancy Fee AC";
-
-
-                            end;
 
                             GenJournalBatch.Reset;
                             GenJournalBatch.SetRange(GenJournalBatch."Journal Template Name", 'PAYMENTS');
@@ -716,8 +736,8 @@ Page 80101 "Payment Voucher Card"
                                 ;
                                 GenJnlLine.Payee := Rec."Payee Naration";
 
-                                GenJnlLine.Amount := -1 * Rec."Amount Including VAT" + Rec."Consultancy Tax Amount";//(Rec.Amount + PurchLine6."Consultancy Fee");
-                                                                                                                    // Message('Document total: %1', Rec.Amount);
+                                GenJnlLine.Amount := (-1 * Rec."Amount Including VAT") + (Rec."Consultancy Tax Amount" + Rec."Consultancy Tax Amount2");
+                                // Message('Document total: %1', Rec.Amount);
                                 GenJnlLine.Validate(GenJnlLine.Amount);
 
                                 GenJnlLine."Currency Code" := Rec."Currency Code";
@@ -772,7 +792,7 @@ Page 80101 "Payment Voucher Card"
                                     GenJnlLine.Description := PurchLine6."Description 2";
                                     GenJnlLine.Payee := Rec."Payee Naration";
 
-                                    GenJnlLine.Amount := PurchLine6."Direct Unit Cost" - PurchLine6."Consultancy Fee";
+                                    GenJnlLine.Amount := PurchLine6."Direct Unit Cost" - (PurchLine6."Consultancy Fee" + PurchLine6."Consultancy Fee 2");
 
                                     GenJnlLine.Validate(GenJnlLine.Amount);
 
@@ -806,7 +826,7 @@ Page 80101 "Payment Voucher Card"
                                     WithholdingTax.Reset();
                                     WithholdingTax.SetRange(WithholdingTax.Code, PurchLine6."Withholding Tax Code 2");
                                     if WithholdingTax.Find('-') then begin
-                                        WithholdingTaxAccount := WithholdingTax."Withholding Tax Account";
+                                        WithholdingTaxAccount2 := WithholdingTax."Withholding Tax Account";
 
                                     end;
 
@@ -864,7 +884,7 @@ Page 80101 "Payment Voucher Card"
                                     GenJnlLine."External Document No." := Rec."No.";
                                     IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::"G/L Account" THEN
                                         GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
-                                    GenJnlLine."Account No." := WithholdingTax."Withholding Tax Account";
+                                    // GenJnlLine."Account No." := WithholdingTax."Withholding Tax Account";
                                     GenJnlLine."Account No." := PurchLine6."Account No New";
                                     IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::Supplier THEN
                                         GenJnlLine."Account Type" := GenJnlLine."Account Type"::Vendor;
@@ -872,21 +892,6 @@ Page 80101 "Payment Voucher Card"
                                         GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
                                         //  GenJnlLine."Account No." := PurchLine6."Imprest Account No";
                                     END;
-
-                                    // GenJnlLine."Document No." := Rec."No.";
-                                    // GenJnlLine."External Document No." := Rec."No.";
-                                    // if PurchLine6.Type = PurchLine6.Type::"G/L Account" then
-                                    //     GenJnlLine."Account Type" := GenJnlLine."account type"::"G/L Account";
-
-                                    // if PurchLine6.Type = PurchLine6.Type::"Fixed Asset" then begin
-
-                                    //     GenJnlLine."Account Type" := GenJnlLine."account type"::"Fixed Asset";
-                                    //     GenJnlLine."FA Posting Type" := GenJnlLine."fa posting type"::"Acquisition Cost";
-                                    //     GenJnlLine."FA Posting Date" := Rec."Posting Date";
-                                    // GenJnlLine."Gen. Posting Type" := GenJnlLine."gen. posting type"::Purchase;
-
-                                    // end;
-                                    // GenJnlLine."Account No." := PurchLine6."No.";
 
                                     GenJnlLine.Validate(GenJnlLine."Account No.");
                                     GenJnlLine.Description := COPYSTR(Rec."Payment Naration", 1, 100);
@@ -928,14 +933,14 @@ Page 80101 "Payment Voucher Card"
 
                                     GenJnlLine."Account Type" := GenJnlLine."account type"::"G/L Account";
 
-                                    GenJnlLine."Account No." := WithholdingTaxAccountConsultancy;
+                                    GenJnlLine."Account No." := WithholdingTaxAccount2;
 
 
                                     GenJnlLine.Validate(GenJnlLine."Account No.");
                                     GenJnlLine.Description := COPYSTR(Rec."Payment Naration", 1, 100);
                                     GenJnlLine.Payee := Rec."Payee Naration";
 
-                                    GenJnlLine.Amount := PurchLine6."Withholding Tax Amount";
+                                    GenJnlLine.Amount := -1 * PurchLine6."Consultancy Fee 2";
                                     GenJnlLine.Validate(GenJnlLine.Amount);
                                     GenJnlLine."Currency Code" := Rec."Currency Code";
                                     GenJnlLine.Validate("Currency Code");
@@ -955,6 +960,8 @@ Page 80101 "Payment Voucher Card"
                                     if GenJnlLine.Amount <> 0 then
                                         GenJnlLine.Insert;
 
+
+
                                     LineNo2 := LineNo2 + 2000;
                                     GenJnlLine.Init;
                                     GenJnlLine."Journal Template Name" := 'PAYMENTS';
@@ -964,32 +971,31 @@ Page 80101 "Payment Voucher Card"
                                     GenJnlLine."Source Code" := 'PAYMENTJNL';
                                     GenJnlLine."Posting Date" := Rec."Posting Date";
 
+
                                     GenJnlLine."Document No." := Rec."No.";
                                     GenJnlLine."External Document No." := Rec."No.";
-                                    if PurchLine6.Type = PurchLine6.Type::"G/L Account" then
-                                        GenJnlLine."Account Type" := GenJnlLine."account type"::"G/L Account";
-
-                                    if PurchLine6.Type = PurchLine6.Type::"Fixed Asset" then begin
-
-                                        GenJnlLine."Account Type" := GenJnlLine."account type"::"Fixed Asset";
-                                        GenJnlLine."FA Posting Type" := GenJnlLine."fa posting type"::"Acquisition Cost";
-                                        GenJnlLine."FA Posting Date" := Rec."Posting Date";
-                                        GenJnlLine."Gen. Posting Type" := GenJnlLine."gen. posting type"::Purchase;
-
-                                    end;
-                                    //GenJnlLine."Account No." := PurchLine6."No.";
+                                    IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::"G/L Account" THEN
+                                        GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+                                    // GenJnlLine."Account No." := WithholdingTax."Withholding Tax Account";
+                                    GenJnlLine."Account No." := PurchLine6."Account No New";
+                                    IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::Supplier THEN
+                                        GenJnlLine."Account Type" := GenJnlLine."Account Type"::Vendor;
+                                    IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::Customer THEN BEGIN
+                                        GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
+                                        //  GenJnlLine."Account No." := PurchLine6."Imprest Account No";
+                                    END;
 
                                     GenJnlLine.Validate(GenJnlLine."Account No.");
                                     GenJnlLine.Description := COPYSTR(Rec."Payment Naration", 1, 100);
                                     GenJnlLine.Payee := Rec."Payee Naration";
 
-                                    GenJnlLine.Amount := -PurchLine6."Withholding Tax Amount";
-
+                                    GenJnlLine.Amount := PurchLine6."Consultancy Fee 2";
+                                    GenJnlLine.Validate(GenJnlLine.Amount);
 
                                     GenJnlLine."Currency Code" := Rec."Currency Code";
                                     GenJnlLine.Validate("Currency Code");
                                     GenJnlLine."Currency Factor" := Rec."Currency Factor";
-                                    // GenJnlLine.Validate("Currency Factor");
+                                    //GenJnlLine.Validate("Currency Factor");
                                     GenJnlLine."Shortcut Dimension 1 Code" := PurchLine6."Shortcut Dimension 1 Code";
                                     GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
                                     GenJnlLine."Shortcut Dimension 2 Code" := PurchLine6."Shortcut Dimension 2 Code";
@@ -1182,17 +1188,6 @@ Page 80101 "Payment Voucher Card"
                             GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
                             GenJnlLine."Shortcut Dimension 2 Code" := Rec."Shortcut Dimension 2 Code";
                             GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 2 Code");
-                            PurchLine6.Reset;
-                            PurchLine6.SetRange(PurchLine6."Document No.", Rec."No.");
-                            //PurchLine6.SETFILTER("Amount Spent",'<>%1',0);
-                            if PurchLine6.FindSet then begin
-                                GenJnlLine.ValidateShortcutDimCode(3, PurchLine6."ShortcutDimCode[3]");
-                                GenJnlLine.ValidateShortcutDimCode(4, PurchLine6."ShortcutDimCode[4]");
-                                GenJnlLine.ValidateShortcutDimCode(5, Rec."Shortcut Dimension 5 Code");
-                                GenJnlLine.ValidateShortcutDimCode(6, PurchLine6."ShortcutDimCode[6]");
-                                GenJnlLine.ValidateShortcutDimCode(7, PurchLine6."ShortcutDimCode[7]");
-                                GenJnlLine.ValidateShortcutDimCode(8, PurchLine6."ShortcutDimCode[8]");
-                            end;
 
                             if GenJnlLine.Amount <> 0 then
                                 GenJnlLine.Insert;
@@ -1248,224 +1243,20 @@ Page 80101 "Payment Voucher Card"
                                     GenJnlLine.ValidateShortcutDimCode(6, PurchLine6."ShortcutDimCode[6]");
                                     GenJnlLine.ValidateShortcutDimCode(7, PurchLine6."ShortcutDimCode[7]");
                                     GenJnlLine.ValidateShortcutDimCode(8, PurchLine6."ShortcutDimCode[8]");
-
                                     if GenJnlLine.Amount <> 0 then
                                         GenJnlLine.Insert;
-
-                                    //withholding tax
-                                    WithholdingTax.Reset();
-                                    WithholdingTax.SetRange(WithholdingTax.Code, PurchLine6."Withholding Tax Code");
-                                    if WithholdingTax.Find('-') then begin
-                                        WithholdingTaxAccount := WithholdingTax."Withholding Tax Account";
-
-                                    end;
-
-                                    LineNo2 := LineNo2 + 2000;
-                                    GenJnlLine.Init;
-                                    GenJnlLine."Journal Template Name" := 'PAYMENTS';
-                                    GenJnlLine."Journal Batch Name" := 'PVS';
-
-                                    GenJnlLine."Line No." := LineNo2;
-                                    GenJnlLine."Source Code" := 'PAYMENTJNL';
-                                    GenJnlLine."Posting Date" := Rec."Posting Date";
-
-                                    GenJnlLine."Document No." := Rec."No.";
-                                    GenJnlLine."External Document No." := Rec."No.";
-
-                                    GenJnlLine."Account Type" := GenJnlLine."account type"::"G/L Account";
-
-                                    GenJnlLine."Account No." := WithholdingTaxAccount;
-
-                                    GenJnlLine.Validate(GenJnlLine."Account No.");
-                                    GenJnlLine.Description := COPYSTR(Rec."Payment Naration", 1, 100);
-                                    GenJnlLine.Payee := Rec."Payee Naration";
-
-                                    GenJnlLine.Amount := -PurchLine6."Withholding Tax Amount";
-                                    GenJnlLine.Validate(GenJnlLine.Amount);
-                                    GenJnlLine."Currency Code" := Rec."Currency Code";
-                                    GenJnlLine.Validate("Currency Code");
-                                    GenJnlLine."Currency Factor" := Rec."Currency Factor";
-                                    //  GenJnlLine.Validate("Currency Factor");
-                                    GenJnlLine."Shortcut Dimension 1 Code" := PurchLine6."Shortcut Dimension 1 Code";
-                                    GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
-                                    GenJnlLine."Shortcut Dimension 2 Code" := PurchLine6."Shortcut Dimension 2 Code";
-                                    GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 2 Code");
-                                    GenJnlLine.ValidateShortcutDimCode(3, PurchLine6."ShortcutDimCode[3]");
-                                    GenJnlLine.ValidateShortcutDimCode(4, PurchLine6."ShortcutDimCode[4]");
-                                    GenJnlLine.ValidateShortcutDimCode(5, PurchLine6."ShortcutDimCode[5]");
-                                    GenJnlLine.ValidateShortcutDimCode(6, PurchLine6."ShortcutDimCode[6]");
-                                    GenJnlLine.ValidateShortcutDimCode(7, PurchLine6."ShortcutDimCode[7]");
-                                    GenJnlLine.ValidateShortcutDimCode(8, PurchLine6."ShortcutDimCode[8]");
-
-                                    if GenJnlLine.Amount <> 0 then
-                                        GenJnlLine.Insert;
-
-                                    LineNo2 := LineNo2 + 2000;
-                                    GenJnlLine.Init;
-                                    GenJnlLine."Journal Template Name" := 'PAYMENTS';
-                                    GenJnlLine."Journal Batch Name" := 'PVS';
-
-                                    GenJnlLine."Line No." := LineNo2;
-                                    GenJnlLine."Source Code" := 'PAYMENTJNL';
-                                    GenJnlLine."Posting Date" := Rec."Posting Date";
-
-
-                                    GenJnlLine."Document No." := Rec."No.";
-                                    GenJnlLine."External Document No." := Rec."No.";
-                                    IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::"G/L Account" THEN
-                                        GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
-                                    GenJnlLine."Account No." := PurchLine6."Account No New";
-                                    IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::Supplier THEN
-                                        GenJnlLine."Account Type" := GenJnlLine."Account Type"::Vendor;
-                                    IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::Customer THEN BEGIN
-                                        GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
-                                        //  GenJnlLine."Account No." := PurchLine6."Imprest Account No";
-                                    END;
-
-                                    // GenJnlLine."Document No." := Rec."No.";
-                                    // GenJnlLine."External Document No." := Rec."No.";
-                                    // if PurchLine6.Type = PurchLine6.Type::"G/L Account" then
-                                    //     GenJnlLine."Account Type" := GenJnlLine."account type"::"G/L Account";
-
-                                    // if PurchLine6.Type = PurchLine6.Type::"Fixed Asset" then begin
-
-                                    //     GenJnlLine."Account Type" := GenJnlLine."account type"::"Fixed Asset";
-                                    //     GenJnlLine."FA Posting Type" := GenJnlLine."fa posting type"::"Acquisition Cost";
-                                    //     GenJnlLine."FA Posting Date" := Rec."Posting Date";
-                                    GenJnlLine."Gen. Posting Type" := GenJnlLine."gen. posting type"::Purchase;
-
-                                    // end;
-                                    // GenJnlLine."Account No." := PurchLine6."No.";
-
-                                    GenJnlLine.Validate(GenJnlLine."Account No.");
-                                    GenJnlLine.Description := COPYSTR(Rec."Payment Naration", 1, 100);
-                                    GenJnlLine.Payee := Rec."Payee Naration";
-
-                                    GenJnlLine.Amount := PurchLine6."Withholding Tax Amount";
-                                    GenJnlLine.Validate(GenJnlLine.Amount);
-
-                                    GenJnlLine."Currency Code" := Rec."Currency Code";
-                                    //   GenJnlLine.Validate("Currency Code");
-                                    GenJnlLine."Currency Factor" := Rec."Currency Factor";
-                                    //  GenJnlLine.Validate("Currency Factor");
-                                    GenJnlLine."Shortcut Dimension 1 Code" := PurchLine6."Shortcut Dimension 1 Code";
-                                    GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
-                                    GenJnlLine."Shortcut Dimension 2 Code" := PurchLine6."Shortcut Dimension 2 Code";
-                                    GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 2 Code");
-                                    GenJnlLine.ValidateShortcutDimCode(3, PurchLine6."ShortcutDimCode[3]");
-                                    GenJnlLine.ValidateShortcutDimCode(4, PurchLine6."ShortcutDimCode[4]");
-                                    GenJnlLine.ValidateShortcutDimCode(5, PurchLine6."ShortcutDimCode[5]");
-                                    GenJnlLine.ValidateShortcutDimCode(6, PurchLine6."ShortcutDimCode[6]");
-                                    GenJnlLine.ValidateShortcutDimCode(7, PurchLine6."ShortcutDimCode[7]");
-                                    GenJnlLine.ValidateShortcutDimCode(8, PurchLine6."ShortcutDimCode[8]");
-
-                                    if GenJnlLine.Amount <> 0 then
-                                        GenJnlLine.Insert;
-
-                                    //Consultancy Fee
-
-                                    WithholdingTax.Reset();
-                                    WithholdingTax.SetRange(WithholdingTax.Code, PurchLine6."Withholding Tax Code");
-                                    if WithholdingTax.Find('-') then begin
-                                        WithholdingTaxAccountConsultancy := WithholdingTax."Consultancy Fee AC";
-
-
-                                    end;
-
-                                    LineNo2 := LineNo2 + 2000;
-                                    GenJnlLine.Init;
-                                    GenJnlLine."Journal Template Name" := 'PAYMENTS';
-                                    GenJnlLine."Journal Batch Name" := 'PVS';
-
-                                    GenJnlLine."Line No." := LineNo2;
-                                    GenJnlLine."Source Code" := 'PAYMENTJNL';
-                                    GenJnlLine."Posting Date" := Rec."Posting Date";
-
-                                    GenJnlLine."Document No." := Rec."No.";
-                                    GenJnlLine."External Document No." := Rec."No.";
-
-                                    GenJnlLine."Account Type" := GenJnlLine."account type"::"G/L Account";
-
-                                    //GenJnlLine."Account No." := WithholdingTaxAccountConsultancy;
-
-
-                                    GenJnlLine.Validate(GenJnlLine."Account No.");
-                                    GenJnlLine.Description := COPYSTR(Rec."Payment Naration", 1, 100);
-                                    GenJnlLine.Payee := Rec."Payee Naration";
-
-                                    GenJnlLine.Amount := -PurchLine6."Consultancy Fee";
-                                    GenJnlLine.Validate(GenJnlLine.Amount);
-                                    GenJnlLine."Currency Code" := Rec."Currency Code";
-                                    // GenJnlLine.Validate("Currency Code");
-                                    GenJnlLine."Currency Factor" := Rec."Currency Factor";
-                                    // GenJnlLine.Validate("Currency Factor");
-                                    GenJnlLine."Shortcut Dimension 1 Code" := PurchLine6."Shortcut Dimension 1 Code";
-                                    GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
-                                    GenJnlLine."Shortcut Dimension 2 Code" := PurchLine6."Shortcut Dimension 2 Code";
-                                    GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 2 Code");
-                                    GenJnlLine.ValidateShortcutDimCode(3, PurchLine6."ShortcutDimCode[3]");
-                                    GenJnlLine.ValidateShortcutDimCode(4, PurchLine6."ShortcutDimCode[4]");
-                                    GenJnlLine.ValidateShortcutDimCode(5, PurchLine6."ShortcutDimCode[5]");
-                                    GenJnlLine.ValidateShortcutDimCode(6, PurchLine6."ShortcutDimCode[6]");
-                                    GenJnlLine.ValidateShortcutDimCode(7, PurchLine6."ShortcutDimCode[7]");
-                                    GenJnlLine.ValidateShortcutDimCode(8, PurchLine6."ShortcutDimCode[8]");
-
-                                    if GenJnlLine.Amount <> 0 then
-                                        GenJnlLine.Insert;
-
-                                    LineNo2 := LineNo2 + 2000;
-                                    GenJnlLine.Init;
-                                    GenJnlLine."Journal Template Name" := 'PAYMENTS';
-                                    GenJnlLine."Journal Batch Name" := 'PVS';
-
-                                    GenJnlLine."Line No." := LineNo2;
-                                    GenJnlLine."Source Code" := 'PAYMENTJNL';
-                                    GenJnlLine."Posting Date" := Rec."Posting Date";
-
-                                    GenJnlLine."Document No." := Rec."No.";
-                                    GenJnlLine."External Document No." := Rec."No.";
-                                    if PurchLine6.Type = PurchLine6.Type::"G/L Account" then
-                                        GenJnlLine."Account Type" := GenJnlLine."account type"::"G/L Account";
-
-                                    if PurchLine6.Type = PurchLine6.Type::"Fixed Asset" then begin
-
-                                        GenJnlLine."Account Type" := GenJnlLine."account type"::"Fixed Asset";
-                                        GenJnlLine."FA Posting Type" := GenJnlLine."fa posting type"::"Acquisition Cost";
-                                        GenJnlLine."FA Posting Date" := Rec."Posting Date";
-                                        GenJnlLine."Gen. Posting Type" := GenJnlLine."gen. posting type"::Purchase;
-
-                                    end;
-                                    //GenJnlLine."Account No." := PurchLine6."No.";
-
-                                    GenJnlLine.Validate(GenJnlLine."Account No.");
-                                    GenJnlLine.Description := COPYSTR(Rec."Payment Naration", 1, 100);
-                                    GenJnlLine.Payee := Rec."Payee Naration";
-
-                                    GenJnlLine.Amount := PurchLine6."Consultancy Fee";
-
-
-                                    GenJnlLine."Currency Code" := Rec."Currency Code";
-                                    //  GenJnlLine.Validate("Currency Code");
-                                    GenJnlLine."Currency Factor" := Rec."Currency Factor";
-                                    //    GenJnlLine.Validate("Currency Factor");
-                                    GenJnlLine."Shortcut Dimension 1 Code" := PurchLine6."Shortcut Dimension 1 Code";
-                                    GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
-                                    GenJnlLine."Shortcut Dimension 2 Code" := PurchLine6."Shortcut Dimension 2 Code";
-                                    GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 2 Code");
-                                    GenJnlLine.ValidateShortcutDimCode(3, PurchLine6."ShortcutDimCode[3]");
-                                    GenJnlLine.ValidateShortcutDimCode(4, PurchLine6."ShortcutDimCode[4]");
-                                    GenJnlLine.ValidateShortcutDimCode(5, PurchLine6."ShortcutDimCode[5]");
-                                    GenJnlLine.ValidateShortcutDimCode(6, PurchLine6."ShortcutDimCode[6]");
-                                    GenJnlLine.ValidateShortcutDimCode(7, PurchLine6."ShortcutDimCode[7]");
-                                    GenJnlLine.ValidateShortcutDimCode(8, PurchLine6."ShortcutDimCode[8]");
-
-                                    if GenJnlLine.Amount <> 0 then
-                                        GenJnlLine.Insert;
-
-
-
 
                                 until PurchLine6.Next = 0;
+                                PurchLine6.Reset;
+                                PurchLine6.SetRange(PurchLine6."Document No.", Rec."No.");
+                                if PurchLine6.Find('-') then begin
+                                    GenJnlLine.ValidateShortcutDimCode(3, PurchLine6."ShortcutDimCode[3]");
+                                    GenJnlLine.ValidateShortcutDimCode(4, PurchLine6."ShortcutDimCode[4]");
+                                    GenJnlLine.ValidateShortcutDimCode(5, Rec."Shortcut Dimension 5 Code");
+                                    GenJnlLine.ValidateShortcutDimCode(6, PurchLine6."ShortcutDimCode[6]");
+                                    GenJnlLine.ValidateShortcutDimCode(7, PurchLine6."ShortcutDimCode[7]");
+                                    GenJnlLine.ValidateShortcutDimCode(8, PurchLine6."ShortcutDimCode[8]");
+                                end;
                             end;
                             BAL := 0;
                             GenJnlLine.RESET;
@@ -1713,6 +1504,7 @@ Page 80101 "Payment Voucher Card"
         LineNo: Integer;
         PurchLine6: Record "Purchase Line";
         WithholdingTaxAccount: Code[20];
+        WithholdingTaxAccount2: Code[20];
         LineNo2: Decimal;
         GenJournalBatch: Record "Gen. Journal Batch";
         BankAccount: Record "Bank Account";

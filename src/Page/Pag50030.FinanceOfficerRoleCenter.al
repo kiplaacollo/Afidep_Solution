@@ -499,6 +499,60 @@ Page 50030 "Finance Officer Role Center"
 
                     RunObject = report "Trial Balancever2";
                 }
+                group("Financial Reports")
+                {
+                    action("Financial reports1")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Financial Reports';
+
+                        Visible = true;
+
+                        RunObject = page 108;
+                    }
+                    group("Monthly Staff Cost Report")
+                    {
+                        action("Staff Cost Report")
+                        {
+                            ApplicationArea = Basic, Suite;
+                            Caption = 'Staff Cost Report Per Project';
+
+                            Visible = true;
+
+                            RunObject = report "Staff Cost Report";
+                        }
+                        action("Staff Cost Report1")
+                        {
+                            ApplicationArea = Basic, Suite;
+                            Caption = 'Staff Cost Report Per Employee';
+
+                            Visible = true;
+
+                            RunObject = report "Staff Cost Report Per employee";
+                        }
+                    }
+                    group("Selected Range Staff Cost")
+                    {
+                        action("Staff Cost Report2")
+                        {
+                            ApplicationArea = Basic, Suite;
+                            Caption = 'Staff Cost Range Per Employee';
+
+                            Visible = true;
+
+                            RunObject = report "Staff Cost Report Range";
+                        }
+                        action("Staff Cost Report3")
+                        {
+                            ApplicationArea = Basic, Suite;
+                            Caption = 'Staff Cost Range Per Project';
+
+                            Visible = true;
+
+                            RunObject = report "Staff Cost Report P Range";
+                        }
+                    }
+                }
                 action("General Ledger Report")
                 {
                     ApplicationArea = Basic, Suite;
@@ -929,18 +983,95 @@ Page 50030 "Finance Officer Role Center"
             }
             group("Purchase Invoices ")
             {
-                action("New Purchase Invoice")
+                group("New Invoices")
                 {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'New Purchase Invoice';
+                    action("New Purchase Invoice")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'New Purchase Invoice Malawi';
 
-                    RunObject = page "Purchase Invoice List";
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Open'), "Shortcut Dimension 1 Code" = const('MALAWI'));
 
+                    }
+                    action("New Purchase Invoice K")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'New Purchase Invoice Kenya';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Open'), "Shortcut Dimension 1 Code" = const('Kenya'));
+
+                    }
+                }
+                group("Pending Invoices")
+                {
+                    action("Pend Purchase Invoice")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Pending Purchase Invoice Malawi';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Pending Approval'), "Shortcut Dimension 1 Code" = const('MALAWI'));
+
+                    }
+                    action("Pend Purchase Invoice K")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Pending Purchase Invoice Kenya';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Pending Approval'), "Shortcut Dimension 1 Code" = const('Kenya'));
+
+                    }
+                }
+                group("Approved Invoices")
+                {
+                    action("Appr Purchase Invoice")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Approved Purchase Invoice Malawi';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Released'), Posted = const(false), "Shortcut Dimension 1 Code" = const('MALAWI'));
+
+                    }
+                    action("Appr Purchase Invoice K")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Approved Purchase Invoice Kenya';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Released'), Posted = const(false), "Shortcut Dimension 1 Code" = const('Kenya'));
+
+                    }
+                }
+                group("Posted Invoices")
+                {
+                    action("Posted Purchase Invoice")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Posted Purchase Invoice Malawi';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Released'), Posted = const(true), "Shortcut Dimension 1 Code" = const('MALAWI'));
+
+                    }
+                    action("Posted Purchase Invoice K")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Posted Purchase Invoice Kenya';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Released'), Posted = const(true), "Shortcut Dimension 1 Code" = const('Kenya'));
+
+                    }
                 }
                 action("Purchase Invoice Pending Approval")
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Purchase Invoice Pending Approval';
+                    Visible = false;
 
                     RunObject = page "Purchase Invoice List Pend";
 
@@ -949,6 +1080,7 @@ Page 50030 "Finance Officer Role Center"
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Purchase Invoice Approved List';
+                    Visible = false;
 
                     RunObject = page "Purchase Invoice List Appr";
 
@@ -1166,11 +1298,25 @@ Page 50030 "Finance Officer Role Center"
                     RunObject = Page "Proposal development tracker";
                     RunPageView = order(ascending) where(Status = filter(approved));
                 }
+                action("Converted Proposal development ")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Proposal Development (Converted)';
+
+
+                    RunObject = Page "Proposal development tracker";
+                    RunPageView = order(ascending) where(Status = filter(converted));
+                }
                 action("Resource mobilization setup")
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Resource Mobilization Setup';
                     RunObject = page "Resource mobilization setup";
+                }
+                action("Resource Mobilization Report")
+                {
+                    ApplicationArea = Basic, Suite;
+                    RunObject = report "Resource Mobilization Report";
                 }
             }
             group("Staff claims")
@@ -1687,12 +1833,19 @@ Page 50030 "Finance Officer Role Center"
                 }
                 group("Payroll Reports")
                 {
-                    action("Donor Claim Report")
+                    action("Daily Staff Cost")
                     {
                         ApplicationArea = Basic, Suite;
-                        Caption = 'Donor Claim Report';
+                        Caption = 'Daily Staff Cost Kenya';
 
-                        RunObject = report "Donor Claim";
+                        RunObject = report "Daily Actual Staff Cost";
+                    }
+                    action("Daily Staff Cost M")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Daily Staff Cost Malawi';
+
+                        RunObject = report "Daily Actual Staff Cost M";
                     }
                     action("Payroll NetPay Report")
                     {
@@ -2195,46 +2348,116 @@ Page 50030 "Finance Officer Role Center"
                 {
                     action("Appraisal List")
                     {
-                        Caption = 'Target Setting List(Appraisee)';
+                        Caption = 'New Appraisals';
                         ApplicationArea = basic, suite;
 
                         RunObject = page "Appraissal List";
-                        RunPageLink = "Appraisal Status" = filter(Appraisee);
+                        RunPageLink = "Supervisor Target Approved" = const(false), "Appraisal Stage" = filter("Target Setting");
                     }
                     action("Supervisor Appraisal List")
                     {
 
                         ApplicationArea = All;
                         RunObject = page "Appraissal List";
-                        RunPageLink = "Appraisal Stage" = filter("Target Approval");
-                        Caption = 'Target Setting Approval(Supervisor)';
+                        RunPageLink = "Appraisal Stage" = filter("Target Approval"), "Supervisor Target Approved" = const(false);
+                        Caption = 'Target Setting Pending Supervisor';
 
                     }
-                    action("Appraisee's Evaluation List")
+                    action("HR Target Setting")
                     {
-                        ApplicationArea = All;
-                        RunObject = page "Appraissal List";
-                        RunPageLink = "Appraisal Stage" = filter("End Year Evaluation");
-                        Caption = 'Appraisee Evaluation List';
+                        Caption = 'Target Settings Pending HR';
+                        ApplicationArea = basic, suite;
 
+                        RunObject = page "Appraissal List";
+                        RunPageLink = "Supervisor Target Approved" = const(true), "Appraisal Stage" = filter("Target Approval"), "HR Target Approved" = const(false);
                     }
-                    action("Supervisor Evaluation List")
+                    action("Mid Year Review")
                     {
-                        ApplicationArea = All;
+                        Caption = 'New Mid Year Review';
+                        ApplicationArea = basic, suite;
+
                         RunObject = page "Appraissal List";
-                        RunPageLink = "Appraisal Stage" = filter("Supervisor Evaluation");
-                        Caption = 'Supervisor Evaluation List';
-
+                        RunPageLink = "Supervisor Target Approved" = const(true), "Appraisal Stage" = filter("Target Approval"), "HR Target Approved" = const(true);
                     }
-
-                    action("HR Completed Appraisal List")
+                    action("Supervisor Mid Year Review")
                     {
-                        ApplicationArea = All;
+                        Caption = 'Mid Year Review Pending Supervisor';
+                        ApplicationArea = basic, suite;
+
                         RunObject = page "Appraissal List";
-                        RunPageLink = "Appraisal Stage" = filter("Appraisal Completed");
-                        Caption = 'HR Completed Appraisal List';
+                        RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Appraisal Stage" = filter("Mid Year Review"), "Supervisor MID Approved" = const(false);
+                    }
+                    action("HR Mid year Review")
+                    {
+                        Caption = 'Mid year Review Pending HR';
+                        ApplicationArea = basic, suite;
+
+                        RunObject = page "Appraissal List";
+                        RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Appraisal Stage" = filter("Mid Year Review"), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(false);
+                    }
+                    action("Annual Review")
+                    {
+                        Caption = 'New Annual Review';
+                        ApplicationArea = basic, suite;
+
+                        RunObject = page "Appraissal List";
+                        RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Appraisal Stage" = filter("Mid Year Review"), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(true);
 
                     }
+                    action("Supervisor Annual Review")
+                    {
+                        Caption = 'Annual Review Pending Supervisor';
+                        ApplicationArea = basic, suite;
+
+                        RunObject = page "Appraissal List";
+                        RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(true), "Supervisor Annual Approved" = const(false), "HR Annual Approved" = const(false);
+
+                    }
+                    action("HR Annual Review")
+                    {
+                        Caption = 'Annual Review Pending HR';
+                        ApplicationArea = basic, suite;
+
+                        RunObject = page "Appraissal List";
+                        RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(true), "Supervisor Annual Approved" = const(true), "HR Annual Approved" = const(false);
+                        // RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Appraisal Stage" = filter("Mid Year Review"), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(false);
+
+                    }
+                    action("Completed Appraisal")
+                    {
+                        Caption = 'Completed Appraisals';
+                        ApplicationArea = basic, suite;
+
+                        RunObject = page "Appraissal List";
+                        RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(true), "Supervisor Annual Approved" = const(true), "HR Annual Approved" = const(true);
+                        // RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Appraisal Stage" = filter("Mid Year Review"), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(false);
+
+                    }
+                    // action("Appraisee's Evaluation List")
+                    // {
+                    //     ApplicationArea = All;
+                    //     RunObject = page "Appraissal List";
+                    //     RunPageLink = "Appraisal Stage" = filter("End Year Evaluation");
+                    //     Caption = 'Appraisee Evaluation List';
+
+                    // }
+                    // action("Supervisor Evaluation List")
+                    // {
+                    //     ApplicationArea = All;
+                    //     RunObject = page "Appraissal List";
+                    //     RunPageLink = "Appraisal Stage" = filter("Supervisor Evaluation");
+                    //     Caption = 'Supervisor Evaluation List';
+
+                    // }
+
+                    // action("HR Completed Appraisal List")
+                    // {
+                    //     ApplicationArea = All;
+                    //     RunObject = page "Appraissal List";
+                    //     RunPageLink = "Appraisal Stage" = filter("Appraisal Completed");
+                    //     Caption = 'HR Completed Appraisal List';
+
+                    // }
 
 
 
@@ -2338,6 +2561,20 @@ Page 50030 "Finance Officer Role Center"
 
 
                 }
+                group("Notices")
+                {
+                    action("Notice Board")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        RunObject = page "Notice Board";
+                    }
+                    // action("Project Budget")
+                    // {
+                    //     ApplicationArea = Basic, Suite;
+                    //     RunObject = page "Project Budget Card";
+                    // }
+                }
+
                 group(MEL)
                 {
                     action("Project Evaluation")
@@ -2377,6 +2614,12 @@ Page 50030 "Finance Officer Role Center"
                 {
                     ApplicationArea = Basic, Suite;
                     RunObject = page "Workplan List";
+                }
+                action("Workflow User Group ")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Workflow Management';
+                    RunObject = page "Workflow User Group";
                 }
                 action("Workflow User Group")
                 {
@@ -2463,7 +2706,13 @@ Page 50030 "Finance Officer Role Center"
 
                     RunObject = report "Donor Claim";
                 }
+                action("Donor Claim Report R")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Donor Claim Report Rev';
 
+                    RunObject = report "Donor Claim Revised";
+                }
                 action("Active projects")
                 {
                     ApplicationArea = Basic, Suite;
@@ -2482,6 +2731,11 @@ Page 50030 "Finance Officer Role Center"
 
                     RunObject = Page "Award List";
                     RunPageLink = Blocked = filter(Closed);
+                }
+                action("Stay Datails")
+                {
+                    ApplicationArea = Basic, Suite;
+                    RunObject = page "Stay Details List";
                 }
 
             }
@@ -2586,6 +2840,12 @@ Page 50030 "Finance Officer Role Center"
                     Caption = 'Timesheet summary';
                     ApplicationArea = Basic, Suite;
                     RunObject = report "Timesheet Monthly Summary";
+                }
+                action("Timesheets Project")
+                {
+                    Caption = 'Timesheet Project summary';
+                    ApplicationArea = Basic, Suite;
+                    RunObject = report "Timesheet Project Summary";
                 }
                 action("Timesheets SMT")
                 {

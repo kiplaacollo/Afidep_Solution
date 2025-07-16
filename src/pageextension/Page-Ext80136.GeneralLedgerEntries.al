@@ -2,6 +2,10 @@ pageextension 80136 GeneralLedgerEntries extends "General Ledger Entries"
 {
     layout
     {
+        addafter("G/L Account No.")
+        {
+            field("G/L Account Name N"; Rec."G/L Account Name") { ApplicationArea = all; }
+        }
         // Add changes to page layout here
         addafter(Amount)
         {

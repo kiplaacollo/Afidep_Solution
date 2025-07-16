@@ -3,63 +3,64 @@ Table 170107 "HR Shortlisted Applicants"
 
     fields
     {
-        field(1;"Employee Requisition No";Code[20])
+        field(1; "Employee Requisition No"; Code[20])
         {
             Editable = false;
             NotBlank = true;
             //TableRelation = "Board Members".Field3968;
         }
-        field(2;"Stage Code";Code[20])
+        field(2; "Stage Code"; Code[20])
         {
             Editable = false;
             NotBlank = true;
         }
-        field(3;"Job Application No";Code[20])
+        field(3; "Job Application No"; Code[20])
         {
-            Editable = false;
+            Editable = true;
             NotBlank = true;
             TableRelation = "HR Job Applications"."Application No";
+            
         }
-        field(4;"Stage Score";Decimal)
+        field(4; "Stage Score"; Decimal)
         {
             Editable = false;
         }
-        field(5;Qualified;Boolean)
+        field(5; Qualified; Boolean)
         {
         }
-        field(6;"First Name";Text[100])
-        {
-            Editable = false;
-        }
-        field(7;"Middle Name";Text[100])
+        field(6; "First Name"; Text[100])
         {
             Editable = false;
         }
-        field(8;"Last Name";Text[100])
+        field(7; "Middle Name"; Text[100])
         {
             Editable = false;
         }
-        field(9;"ID No";Text[100])
+        field(8; "Last Name"; Text[100])
         {
             Editable = false;
         }
-        field(10;Gender;Option)
+        field(9; "ID No"; Text[100])
+        {
+            Editable = false;
+        }
+        field(10; Gender; Option)
         {
             Editable = false;
             OptionCaption = 'Male,Female';
             OptionMembers = Male,Female;
         }
-        field(11;"Marital Status";Option)
+        field(11; "Marital Status"; Option)
         {
             Editable = false;
             OptionCaption = ' ,Single,Married,Separated,Divorced,Widow(er),Other';
             OptionMembers = " ",Single,Married,Separated,Divorced,"Widow(er)",Other;
         }
-        field(12;"Manual Change";Boolean)
+        field(12; "Manual Change"; Boolean)
         {
             Editable = false;
         }
-        field(13;Employ;Boolean)
+        field(13; Employ; Boolean)
         {
 
             trigger OnValidate()
@@ -172,20 +173,20 @@ Table 170107 "HR Shortlisted Applicants"
 
             end;
         }
-        field(14;Date;Date)
+        field(14; Date; Date)
         {
         }
-        field(15;Position;Integer)
+        field(15; Position; Integer)
         {
         }
-        field(16;"Reporting Date";Date)
+        field(16; "Reporting Date"; Date)
         {
         }
     }
 
     keys
     {
-        key(Key1;"Employee Requisition No","Job Application No")
+        key(Key1; "Employee Requisition No", "Job Application No")
         {
             Clustered = true;
         }

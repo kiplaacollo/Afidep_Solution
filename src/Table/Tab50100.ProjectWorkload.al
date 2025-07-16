@@ -37,6 +37,10 @@ Table 50100 "Projects Work Load"
             Editable = false;
             AutoIncrement = true;
         }
+        field(6; Comments; Text[2048])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

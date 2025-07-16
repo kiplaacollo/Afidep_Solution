@@ -7,7 +7,7 @@ Page 17256 "HR Applicants UnQualified List"
     UsageCategory = Lists;
     ApplicationArea = All;
     SourceTable = "HR Job Applications";
-    SourceTableView = where("Qualification Status" = filter(UnQualified), Qualified = filter(false));
+    SourceTableView = where( Qualified = filter(false));
 
     layout
     {

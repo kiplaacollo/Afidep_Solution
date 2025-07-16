@@ -197,6 +197,13 @@ Page 80027 "HR Setup"
                     ApplicationArea = Basic;
                 }
             }
+            group(NoticeBoard)
+            {
+                field("Notice Board"; Rec."Notice Board")
+                {
+                    ApplicationArea = Basic;
+                }
+            }
         }
     }
 

@@ -5,7 +5,7 @@ Page 50101 ProjectWorkLoad
     UsageCategory = Tasks;
     ApplicationArea = ALL;
     Editable = true;
-    DeleteAllowed = false;
+    DeleteAllowed = true;
     layout
     {
         area(content)

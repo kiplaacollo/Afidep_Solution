@@ -7,7 +7,7 @@ Page 80120 "Purchase Invoice List"
     SourceTable = "Purchase Header";
     SourceTableView = sorting("Document Type", "No.")
                       order(descending)
-                      where(/*pv = const(true),*/ Status = filter(Open), "Document Type" = filter('Invoice'));// "Document Type" = filter('Payment Voucher'));
+                      where("Document Type" = filter('Invoice'));// "Document Type" = filter('Payment Voucher'));
 
     layout
     {

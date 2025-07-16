@@ -46,13 +46,13 @@ Table 170114 "HR Applicant Referees"
         }
         field(13; "Line No"; Integer)
         {
-
+            AutoIncrement = true;
         }
     }
 
     keys
     {
-        key(Key1; "Job Application No", Names)
+        key(Key1; "Line No")
         {
             Clustered = true;
         }

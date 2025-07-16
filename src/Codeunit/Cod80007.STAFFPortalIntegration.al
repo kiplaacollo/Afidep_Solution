@@ -1069,6 +1069,7 @@ Codeunit 80007 "STAFFPortalIntegration"
         objHRLeaveApplication.Reset();
         objHRLeaveApplication.SetRange("Application Code", DocumentNumber);
         if objHRLeaveApplication.Find('-') then begin
+
             objHRLeaveApplication."Approved days" := objHRLeaveApplication."Days Applied";
             objHRLeaveApplication.Modify();
         end;
@@ -1310,6 +1311,11 @@ Codeunit 80007 "STAFFPortalIntegration"
     var
         JsonOut: dotnet String;
         picture: BigText;
+
+        noticeobj: JsonObject;
+        noticearr: JsonArray;
+
+        detailjson: JsonObject;
     begin
         StringBuilder := StringBuilder.StringBuilder;
         StringWriter := StringWriter.StringWriter(StringBuilder);
@@ -1321,44 +1327,60 @@ Codeunit 80007 "STAFFPortalIntegration"
         if HREmployees.Find('-') then begin
             HREmployees.CalcFields("Total Leave Taken", "Reimbursed Leave Days", "Allocated Leave Days", "Annual Leave Account", "Compassionate Leave Acc.");
             HREmployees.CalcFields("Maternity Leave Acc.", "Paternity Leave Acc.", "Sick Leave Acc.", "Study Leave Acc", "CTO  Leave Acc.");
-            CreateJsonAttribute('No', HREmployees."No.");
-            CreateJsonAttribute('FirstName', HREmployees."First Name");
-            CreateJsonAttribute('LastName', HREmployees."Last Name");
-            CreateJsonAttribute('IdNumber', HREmployees."ID Number");
-            CreateJsonAttribute('Department', HREmployees."Department Name");
-            CreateJsonAttribute('JobId', HREmployees."Job Title");
-            CreateJsonAttribute('EmailAddress', HREmployees."E-Mail");
-            CreateJsonAttribute('officialAddress', HREmployees."E-Mail");
 
-            CreateJsonAttribute('MobilePhone', HREmployees."Cellular Phone Number");
-            CreateJsonAttribute('TotalLeavedays', HREmployees."Total (Leave Days)");
-            CreateJsonAttribute('LeavedaysAllocated', HREmployees."Allocated Leave Days");
-            CreateJsonAttribute('LeaveDaysreimbursed', HREmployees."Reimbursed Leave Days");
-            CreateJsonAttribute('LeavedaysTaken', HREmployees."Total Leave Taken");
-            CreateJsonAttribute('LeaveBalance', HREmployees."Annual Leave Account");
+            detailjson.add('No', HREmployees."No.");
+            detailjson.add('FirstName', HREmployees."First Name");
+            detailjson.add('LastName', HREmployees."Last Name");
+            detailjson.add('IdNumber', HREmployees."ID Number");
+            detailjson.add('Department', HREmployees."Department Name");
+            detailjson.add('JobId', HREmployees."Job Title");
+            detailjson.add('EmailAddress', HREmployees."E-Mail");
+            detailjson.add('officialAddress', HREmployees."E-Mail");
 
-            CreateJsonAttribute('annualLeaveAcc', HREmployees."Annual Leave Account");
-            CreateJsonAttribute('compasionateLeaveAcc', HREmployees."Compassionate Leave Acc.");
-            CreateJsonAttribute('sickLeaveAcc', HREmployees."Sick Leave Acc.");
-            CreateJsonAttribute('paternityLeaveAcc', HREmployees."Paternity Leave Acc.");
-            CreateJsonAttribute('studyLeaveAcc', HREmployees."Study Leave Acc");
-            CreateJsonAttribute('maternityLeaveAcc', HREmployees."Maternity Leave Acc.");
-            CreateJsonAttribute('Cto', HREmployees."CTO  Leave Acc.");
+            detailjson.add('MobilePhone', HREmployees."Cellular Phone Number");
+            detailjson.add('TotalLeavedays', HREmployees."Total (Leave Days)");
+            detailjson.add('LeavedaysAllocated', HREmployees."Allocated Leave Days");
+            detailjson.add('LeaveDaysreimbursed', HREmployees."Reimbursed Leave Days");
+            detailjson.add('LeavedaysTaken', HREmployees."Total Leave Taken");
+            detailjson.add('LeaveBalance', HREmployees."Annual Leave Account");
+
+            detailjson.add('annualLeaveAcc', HREmployees."Annual Leave Account");
+            detailjson.add('compasionateLeaveAcc', HREmployees."Compassionate Leave Acc.");
+            detailjson.add('sickLeaveAcc', HREmployees."Sick Leave Acc.");
+            detailjson.add('paternityLeaveAcc', HREmployees."Paternity Leave Acc.");
+            detailjson.add('studyLeaveAcc', HREmployees."Study Leave Acc");
+            detailjson.add('maternityLeaveAcc', HREmployees."Maternity Leave Acc.");
+            detailjson.add('Cto', HREmployees."CTO  Leave Acc.");
             if hrsetup.Get() then begin
                 fnAppreciation(picture);
-                CreateJsonAttribute('picture', picture);
-                CreateJsonAttribute('title', hrsetup."Appreciation Title");
-                CreateJsonAttribute('summary', hrsetup."Appreciation Narration");
-                CreateJsonAttribute('name', '');
+                //detailjson.add('picture', picture);
+                detailjson.add('title', hrsetup."Appreciation Title");
+                detailjson.add('summary', hrsetup."Appreciation Narration");
+                detailjson.add('name', '');
             end;
-            JSONTextWriter.WritePropertyName('Notice');
-            JSONTextWriter.WriteValue(Format(fnGetNoticeBoard()));
+            Clear(noticearr);
+            notice.reset();
+            if notice.findset() then begin
+                repeat
+                    Clear(noticeobj);
+                    noticeobj.add('text', notice.Announcement);
+                    noticeobj.add('department', notice."Department Announcing");
+                    noticeobj.add('date', notice."Date of Announcement");
+                    noticearr.add(noticeobj);
+                until notice.next() = 0;
+            end;
+
+            detailjson.add('notices1', format(noticearr));
+
+            // JSONTextWriter.WritePropertyName('notices1');
+            // JSONTextWriter.WriteValue(Format(fnGetNoticeBoard()));
 
             // MESSAGE(fnGetNoticeBoard());
+            CreateJsonAttribute('picture', picture);
         end;
         JSONTextWriter.WriteEndObject;
         JsonOut := StringBuilder.ToString;
-        returnout := Format(JsonOut);
+        returnout := Format(detailjson);
     end;
 
     procedure fnGetPaymentInformation(No: Code[50]) returnout: Text
@@ -7055,7 +7077,8 @@ Budget: Code[100]; Donor: Code[100]; Dept: Code[100]; Strategic: Code[100]; Case
             end;
         end;
     end;
-     procedure GenerateEmploreeReq(No: Code[40]; var Base64Txt: Text)
+
+    procedure GenerateEmploreeReq(No: Code[40]; var Base64Txt: Text)
     var
         Filename: Text[100];
         TempBlob: Codeunit "Temp Blob";
@@ -7063,7 +7086,7 @@ Budget: Code[100]; Donor: Code[100]; Dept: Code[100]; Strategic: Code[100]; Case
         StatementInstream: InStream;
         EmployeeReqReport: Report 80040;
         Base64Convert: Codeunit "Base64 Convert";
-        HrEmployeeRequisition:Record "HR Employee Requisitions";
+        HrEmployeeRequisition: Record "HR Employee Requisitions";
     begin
         Filename := FilePath.GetTempPath() + FilePath.GetRandomFileName();
         HrEmployeeRequisition.Reset;
@@ -7077,15 +7100,16 @@ Budget: Code[100]; Donor: Code[100]; Dept: Code[100]; Strategic: Code[100]; Case
             end;
         end;
     end;
-     procedure GenerateJobSummary(No: Code[40]; var Base64Txt: Text)
+
+    procedure GenerateJobSummary(No: Code[40]; var Base64Txt: Text)
     var
         Filename: Text[100];
         TempBlob: Codeunit "Temp Blob";
         StatementOutstream: OutStream;
         StatementInstream: InStream;
-        JobReport: Report 50108;
+        JobReport: Report 50109;
         Base64Convert: Codeunit "Base64 Convert";
-        JobApplication:Record "HR Job Applications";
+        JobApplication: Record "HR Job Applications";
     begin
         Filename := FilePath.GetTempPath() + FilePath.GetRandomFileName();
         JobApplication.Reset;
@@ -8943,7 +8967,7 @@ Budget: Code[100]; Donor: Code[100]; Dept: Code[100]; Strategic: Code[100]; Case
         ExpenseReport: Report 80056;
         TimesheetReport: Report 50060;
         GoNoGoReport: Report 50043;
-        ProposalReport: Report 50044;
+        ProposalReport: Report 50048;
         ClaimsVoucher: Report 50089;
         LeaveReport: Report 80075;
         RFQReport: Report 17366;
@@ -9000,19 +9024,17 @@ Budget: Code[100]; Donor: Code[100]; Dept: Code[100]; Strategic: Code[100]; Case
                 end;
             end;
 
-        end;
-        PurchaseOrder.reset;
-        PurchaseOrder.setrange("no.", documentNo);
-        if PurchaseOrder.find('-') then begin
             if purchaseheader."Document Type" = purchaseheader."Document Type"::Order then begin
-                LPOReport.SetTableView(PurchaseOrder);
+                LPOReport.SetTableView(purchaseheader);
                 TempBlob.CreateOutStream(StatementOutstream);
                 if LPOReport.SaveAs('', ReportFormat::Pdf, StatementOutstream) then begin
                     TempBlob.CreateInStream(StatementInstream);
                     Base64Txt := Base64Convert.ToBase64(StatementInstream, true);
                 end;
             end;
+
         end;
+
         RFQHeader.reset;
         RFQHeader.setrange("no.", documentNo);
         if RFQHeader.find('-') then begin

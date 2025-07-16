@@ -3,6 +3,7 @@ Table 170161 "Purchase Quote Line"
     Caption = 'Purchase Quote Line';
     // LookupPageID = UnknownPage54371;
     PasteIsValid = false;
+    
 
     fields
     {

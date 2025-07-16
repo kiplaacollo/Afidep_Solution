@@ -104,7 +104,7 @@ Table 172029 "HR Leave Application" //172029
                 if BaseCalendar.Find('-') then begin
                     repeat
                         if BaseCalendar.Nonworking = true then begin
-                            if BaseCalendar.Description <> '' then
+                            if (BaseCalendar.Description <> '') and ("Leave Type" <> 'CTO') then
                                 Error('You can not start your Leave on a Holiday - ''' + BaseCalendar.Description + '''')
                             else
                                 Error('You can not start your Leave on a Holiday');
@@ -122,7 +122,7 @@ Table 172029 "HR Leave Application" //172029
                         if "Start Date" = BaseCalendar.Date then begin
 
                             if BaseCalendar.Nonworking = true then begin
-                                if BaseCalendar.Description <> '' then
+                                if (BaseCalendar.Description <> '') and ("Leave Type" <> 'CTO') then
                                     Error('You can not start your Leave on a Holiday - ''' + BaseCalendar.Description + '''')
                                 else
                                     Error('You can not start your Leave on a Holiday');
@@ -785,7 +785,7 @@ Table 172029 "HR Leave Application" //172029
         GeneralOptions.Find('-');
         //One off Hollidays like Good Friday
         BaseCalendar.Reset;
-        BaseCalendar.SetFilter(BaseCalendar."Base Calendar Code", GeneralOptions."Base Calendar");
+        // BaseCalendar.SetFilter(BaseCalendar."Base Calendar Code", GeneralOptions."Base Calendar");
         BaseCalendar.SetRange(BaseCalendar.Date, bcDate);
         if BaseCalendar.Find('-') then begin
             if BaseCalendar.Nonworking = true then
@@ -794,7 +794,7 @@ Table 172029 "HR Leave Application" //172029
 
         // For Annual Holidays
         BaseCalendar.Reset;
-        BaseCalendar.SetFilter(BaseCalendar."Base Calendar Code", GeneralOptions."Base Calendar");
+        //  BaseCalendar.SetFilter(BaseCalendar."Base Calendar Code", GeneralOptions."Base Calendar");
         BaseCalendar.SetRange(BaseCalendar."Recurring System", BaseCalendar."recurring system"::"Annual Recurring");
         if BaseCalendar.Find('-') then begin
             repeat

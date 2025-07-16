@@ -1530,7 +1530,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Cash_Refund.Value</Value>
+                                  <Value>=Fields!Direct_Unit_Cost.Value-Fields!Amount_Spent.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Format>n2</Format>
@@ -3089,8 +3089,9 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!Total_Amount_Spent.Value</Value>
+                    <Value>=Sum(Fields!Amount_Spent.Value)</Value>
                     <Style>
+                      <FontSize>9pt</FontSize>
                       <Format>n2</Format>
                     </Style>
                   </TextRun>
@@ -3245,8 +3246,9 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Fields!Total_Cash_Refund.Value</Value>
+                    <Value>=Sum(Fields!Direct_Unit_Cost.Value)-Sum(Fields!Amount_Spent.Value)</Value>
                     <Style>
+                      <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Format>n2</Format>
                     </Style>

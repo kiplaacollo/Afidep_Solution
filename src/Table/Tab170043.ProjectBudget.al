@@ -8,18 +8,19 @@ table 170043 "Project Budget"
         field(1; No; Code[50])
         {
             Caption = 'No';
-            TableRelation = "Dimension Value".Code where("Dimension Code" = const('PROJECTS'));
+            TableRelation = Projects;
+            // TableRelation = "Dimension Value".Code where("Dimension Code" = const('PROJECTS'));
             trigger
             OnValidate()
             var
                 Dimension: Record "Dimension Value";
             begin
-                Dimension.Reset();
-                Dimension.SetRange(Code, No);
-                if Dimension.FindFirst() then begin
+                // Dimension.Reset();
+                // Dimension.SetRange(Code, No);
+                // if Dimension.FindFirst() then begin
 
-                    Title := Dimension.Name;
-                end;
+                //     Title := Dimension.Name;
+                // end;
             end;
         }
         field(2; Title; Text[2048])

@@ -396,6 +396,97 @@ codeunit 172998 PortalEntryPoint
 
         exit(Format(JA));
     end;
+
+    //ProjectEval Code
+
+    procedure ProjectEvalCodes(): Text
+    VAR
+        // ref: Variant
+        ProjectTable: Record "Award";
+        JA: JsonArray;
+        JO: JsonObject;
+
+    begin
+        ProjectTable.Reset();
+        ProjectTable.SetRange(Blocked, ProjectTable.Blocked::" ");
+        if ProjectTable.Find('-') then begin
+            JO.Add('code', '');
+            JO.Add('title', '');
+            JO.Add('shorttitle', '');
+            JO.Add('projectStartDate', '');
+            JO.Add('projectEndDate', '');
+            JO.Add('funder', '');
+            repeat
+                JO.Replace('code', ProjectTable."No.");
+                JO.Replace('title', ProjectTable.Description);
+                JO.Replace('shorttitle', ProjectTable.Name);
+                JO.Replace('projectStartDate', ProjectTable."Start Date");
+                JO.Replace('projectEndDate', ProjectTable."End Date");
+                JO.Replace('funder', ProjectTable."Sponsoring Funder No.");
+
+                JA.Add(JO);
+            until ProjectTable.Next = 0;
+        end;
+
+        exit(Format(JA));
+    end;
+
+    //Project Evaluation Users
+    procedure ProjectEvalUsers(): Text
+    VAR
+        // ref: Variant
+        UsersTable: Record "User Setup";
+        JA: JsonArray;
+        JO: JsonObject;
+
+    begin
+        UsersTable.Reset();
+        if UsersTable.Find('-') then begin
+            JO.Add('userid', '');
+            repeat
+                JO.Replace('userid', UsersTable."User ID");
+
+                JA.Add(JO);
+            until UsersTable.Next = 0;
+        end;
+
+        exit(Format(JA));
+    end;
+
+    //Project Eval Indicators
+    // procedure ProjectEvalCodes(): Text
+    // VAR
+    //     // ref: Variant
+    //     ProjectTable: Record "Award";
+    //     JA: JsonArray;
+    //     JO: JsonObject;
+
+    // begin
+    //     ProjectTable.Reset();
+    //     ProjectTable.SetRange(Blocked, ProjectTable.Blocked::" ");
+    //     if ProjectTable.Find('-') then begin
+    //         JO.Add('code', '');
+    //         JO.Add('title', '');
+    //         JO.Add('shorttitle', '');
+    //         JO.Add('projectStartDate', '');
+    //         JO.Add('projectEndDate', '');
+    //         JO.Add('funder', '');
+    //         repeat
+    //             JO.Replace('code', ProjectTable."No.");
+    //             JO.Replace('title', ProjectTable.Description);
+    //             JO.Replace('shorttitle', ProjectTable.Name);
+    //             JO.Replace('projectStartDate', ProjectTable."Start Date");
+    //             JO.Replace('projectEndDate', ProjectTable."End Date");
+    //             JO.Replace('funder', ProjectTable."Sponsoring Funder No.");
+
+    //             JA.Add(JO);
+    //         until ProjectTable.Next = 0;
+    //     end;
+
+    //     exit(Format(JA));
+    // end;
+
+
     // Supervisor objectives
 
 
@@ -1209,50 +1300,47 @@ codeunit 172998 PortalEntryPoint
                         SENDEMAILApproval(HREmp."Company E-Mail", MessageFormatterd)
                     end;
 
-
-
-
                 end;
 
             end;
 
-            if format(lJObject.GetValue('appraisalStatus')) <> '' then begin
-                if format(lJObject.GetValue('appraisalStatus')) = '1' then
-                    // Evaluate(appraisalheader."Appraisal Status", Format(lJObject.GetValue('appraisalStatus')));
-                    appraisalheader."Appraisal Status" := appraisalheader."Appraisal Status"::Appraisee;
-                appraisalheader."Appraisal Stage" := appraisalheader."Appraisal Stage"::"Target Setting";
-                appraisalheader.Modify(true);
-                //  Message := 'Approval for Target Setting Appraisal of %1 (No. %2) has been rejected. Kindly ' +
-                //                                        '<a href="https://bc.afidep.org:8090/">click here</a> to view.';
-                //     MessageFormatterd := StrSubstNo(Message, appraisalheader."Employee Name", appraisalheader."No.");
-                //        HREmp.Reset();
-                //     HREmp.SetRange("No.", appraisalheader."Employee No.");
-                //     if HREmp.FindFirst() then begin
-                //        SENDEMAILApproval(HREmp."Company E-Mail", MessageFormatterd)
-                //     end;  
+            // if format(lJObject.GetValue('appraisalStatus')) <> '' then begin
+            //     // if format(lJObject.GetValue('appraisalStatus')) = '1' then 
+            //     //     // Evaluate(appraisalheader."Appraisal Status", Format(lJObject.GetValue('appraisalStatus')));
+            //     //     appraisalheader."Appraisal Status" := appraisalheader."Appraisal Status"::Appraisee;
+            //     // appraisalheader."Appraisal Stage" := appraisalheader."Appraisal Stage"::"Target Setting";
+            //     // appraisalheader.Modify(true);
+            //     //  Message := 'Approval for Target Setting Appraisal of %1 (No. %2) has been rejected. Kindly ' +
+            //     //                                        '<a href="https://bc.afidep.org:8090/">click here</a> to view.';
+            //     //     MessageFormatterd := StrSubstNo(Message, appraisalheader."Employee Name", appraisalheader."No.");
+            //     //        HREmp.Reset();
+            //     //     HREmp.SetRange("No.", appraisalheader."Employee No.");
+            //     //     if HREmp.FindFirst() then begin
+            //     //        SENDEMAILApproval(HREmp."Company E-Mail", MessageFormatterd)
+            //     //     end;  
 
-            end;
+            // end;
             if format(lJObject.GetValue('appraisalStatus')) <> '' then begin
-                if format(lJObject.GetValue('appraisalStatus')) = '8' then
+                if format(lJObject.GetValue('appraisalStatus')) = '8' then begin
                     // Evaluate(appraisalheader."Appraisal Status", Format(lJObject.GetValue('appraisalStatus')));
-                appraisalheader."Appraisal Status" := appraisalheader."Appraisal Status"::Supervisor;
-                appraisalheader."Appraisal Stage" := appraisalheader."Appraisal Stage"::"Mid Year Review";
-                appraisalheader.Modify(true);
-                Message := 'Approval for Mid Year Appraisal of %1 (No. %2) requires your attention. Kindly ' +
-                                                      '<a href="https://bc.afidep.org:8090/">click here</a> to approve.';
-                MessageFormatterd := StrSubstNo(Message, appraisalheader."Employee Name", appraisalheader."No.");
-                HREmp.Reset();
-                HREmp.SetRange("No.", appraisalheader."Supervisor No.");
-                if HREmp.FindFirst() then begin
-                    SENDEMAILApproval(HREmp."Company E-Mail", MessageFormatterd)
+                    appraisalheader."Appraisal Status" := appraisalheader."Appraisal Status"::Supervisor;
+                    appraisalheader."Appraisal Stage" := appraisalheader."Appraisal Stage"::"Mid Year Review";
+                    appraisalheader.Modify(true);
+                    Message := 'Approval for Mid Year Appraisal of %1 (No. %2) requires your attention. Kindly ' +
+                                                          '<a href="https://bc.afidep.org:8090/">click here</a> to approve.';
+                    MessageFormatterd := StrSubstNo(Message, appraisalheader."Employee Name", appraisalheader."No.");
+                    HREmp.Reset();
+                    HREmp.SetRange("No.", appraisalheader."Supervisor No.");
+                    if HREmp.FindFirst() then begin
+                        SENDEMAILApproval(HREmp."Company E-Mail", MessageFormatterd)
+                    end;
                 end;
-
             end;
 
             if format(lJObject.GetValue('status')) <> '' then begin
                 if format(lJObject.GetValue('status')) = '3' then begin
                     appraisalheader."Appraisal Status" := appraisalheader."Appraisal Status"::Supervisor;
-                    appraisalheader."Appraisal Stage" := appraisalheader."Appraisal Stage"::"Target Setting";
+                    appraisalheader."Appraisal Stage" := appraisalheader."Appraisal Stage"::"Target Approval";
                     appraisalheader."Supervisor Target Approved" := true;
                     appraisalheader.Modify(true);
                     Message := 'Approval for Target Setting  Appraisal of %1 (No. %2) has been approved  by supervisor. Kindly ' +
@@ -1543,6 +1631,14 @@ codeunit 172998 PortalEntryPoint
                     end;
                 end;
             end;
+            if format(lJObject.GetValue('status')) <> '' then begin
+                if format(lJObject.GetValue('status')) = '33' then begin
+                    appraisalheader."Appraisal Status" := appraisalheader."Appraisal Status"::Supervisor;
+                    appraisalheader."Appraisal Stage" := appraisalheader."Appraisal Stage"::"Target Approval";
+                    appraisalheader.Modify(true);
+                    Commit();
+                end;
+            end;
             if format(lJObject.GetValue('remarks')) <> '' then begin
                 appraisalheader."Comments Appraisee" := Format(lJObject.GetValue('remarks'));
                 appraisalheader.Modify(true);
@@ -1627,7 +1723,7 @@ codeunit 172998 PortalEntryPoint
                         ProjectWorkload."Project Code" := Format(ljobject2.GetValue('projectcode'));
                         ProjectWorkload.Validate("Project Code");
                         Evaluate(ProjectWorkload.Weight, Format(ljobject2.GetValue('weight')));
-
+                        ProjectWorkload.Modify(true);
                         Commit();
 
                     end
@@ -1862,7 +1958,625 @@ codeunit 172998 PortalEntryPoint
         end;
 
     end;
-    //Evaluations
+
+    procedure GetProjectEvaluation(projectcode: code[50]): Text
+    var
+        projecttable: Record Projects;
+        projectfunding: Record "Project Budget";
+        projectoutcomes: Record "Project Outcomes";
+
+        objective1table: Record "Objective 1";
+        objective2table: Record "Objective 2";
+        objective3table: Record "Objective 3";
+        objective4table: Record "Objective 4";
+
+        report1table: Record "Report Q1";
+        report2table: Record "Report Q2";
+        report3table: Record "Report Q3";
+        report4table: Record "Report Q4";
+
+        quantitativetable: Record "Quantitative Indicators";
+        qualitativetable: Record "Qualitative Indicators";
+
+        impacttable: Record "Project Impact";
+        previewtable: Record "Project Peer Review";
+
+        jsonresult: JsonObject;
+        jsonprojectDetails: JsonObject;
+        jsonprojectfundings: JsonObject;
+        jsonprojectfundingsarr: JsonArray;
+
+        jsonoutcomesarr: JsonArray;
+        jsonoutcomesobj: JsonObject;
+
+        jsonobj1arr: JsonArray;
+        jsonobj1obj: JsonObject;
+        jsonobj2arr: JsonArray;
+        jsonobj2obj: JsonObject;
+        jsonobj3arr: JsonArray;
+        jsonobj3obj: JsonObject;
+        jsonobj4arr: JsonArray;
+        jsonobj4obj: JsonObject;
+
+        jsonrep1arr: JsonArray;
+        jsonrep1obj: JsonObject;
+        jsonrep2arr: JsonArray;
+        jsonrep2obj: JsonObject;
+        jsonrep3arr: JsonArray;
+        jsonrep3obj: JsonObject;
+        jsonrep4arr: JsonArray;
+        jsonrep4obj: JsonObject;
+
+        jsonquanarr: JsonArray;
+        jsonquanobj: JsonObject;
+        jsonqualarr: JsonArray;
+        jsonqualobj: JsonObject;
+
+        jsonimpactarr: JsonArray;
+        jsonimpactobj: JsonObject;
+
+        jsonpeerarr: JsonArray;
+        jsonpeerobj: JsonObject;
+    begin
+        projecttable.Reset();
+        if projecttable.get(projectcode) then begin
+            Clear(jsonresult);
+            Clear(jsonprojectDetails);
+            jsonprojectDetails.add('code', projecttable."Project Code");
+            jsonprojectDetails.add('title', projecttable."Project Name");
+            jsonprojectDetails.add('shorttitle', projecttable."Project Short Name");
+            jsonprojectDetails.add('projectStartDate', projecttable."Start Date");
+            jsonprojectDetails.add('projectEndDate', projecttable."End Date");
+            jsonprojectDetails.add('funder', projecttable.Partner);
+            jsonresult.add('projectDetails', jsonprojectDetails);
+            jsonresult.add('projectManager', projecttable."Project Manager & SMT Lead ");
+
+            projectfunding.Reset();
+            projectfunding.SetRange(No, projecttable."Project Code");
+            if projectfunding.FindSet() then begin
+                Clear(jsonprojectfundingsarr);
+                repeat
+                    Clear(jsonprojectfundings);
+                    jsonprojectfundings.add('funding', Format(projectfunding.Funding));
+                    jsonprojectfundings.add('totalprojectamount', projectfunding."Budgeted Amount");
+                    jsonprojectfundings.add('totalspenttodate', projectfunding."Amount Awarded");
+                    jsonprojectfundings.add('variance', projectfunding."Remaining Balance");
+                    jsonprojectfundings.add('burnrate', projectfunding."Burn rate %");
+                    jsonprojectfundings.add('commentary', projectfunding.Commentary);
+                    jsonprojectfundingsarr.add(jsonprojectfundings);
+                until projectfunding.Next() = 0;
+            end;
+            jsonresult.add('projectfunding', jsonprojectfundingsarr);
+            jsonresult.add('themmaticprogramme', projecttable."Thematic Programme");
+            jsonresult.add('projectrationale', projecttable."Project rationale");
+            jsonresult.add('goalsummary', projecttable."Goal Summary");
+            jsonresult.add('kpi', projecttable.Indicator);
+
+            projectoutcomes.Reset();
+            projectoutcomes.SetRange("Project Code", projecttable."Project Code");
+            if projectoutcomes.FindSet() then begin
+                Clear(jsonoutcomesarr);
+                repeat
+                    Clear(jsonoutcomesobj);
+                    jsonoutcomesobj.add('lineno', projectoutcomes."Key");
+                    jsonoutcomesobj.add('activities', Format(projectoutcomes."Activities by Objective"));
+                    jsonoutcomesobj.add('responsible', projectoutcomes.Responsible);
+                    jsonoutcomesobj.add('anticipated', projectoutcomes."Outcomes Summary");
+                    jsonoutcomesobj.add('keydeliverables', projectoutcomes.Indicator);
+                    jsonoutcomesobj.add('quarter1', projectoutcomes.Q1);
+                    jsonoutcomesobj.add('quarter2', projectoutcomes.Q2);
+                    jsonoutcomesobj.add('quarter3', projectoutcomes.Q3);
+                    jsonoutcomesobj.add('quarter4', projectoutcomes.Q4);
+                    jsonoutcomesobj.add('year', projectoutcomes.Year);
+                    jsonoutcomesarr.add(jsonoutcomesobj);
+                until projectoutcomes.Next() = 0;
+            end;
+            jsonresult.add('OutcomeEntries', jsonoutcomesarr);
+
+            objective1table.Reset();
+            objective1table.SetRange("Project Code", projecttable."Project Code");
+            if objective1table.FindSet() then begin
+                Clear(jsonobj1arr);
+                repeat
+                    Clear(jsonobj1obj);
+                    jsonobj1obj.add('objectivenumber', objective1table."No.");
+                    jsonobj1obj.add('projectobjective', objective1table."Project Objecive / Outcome");
+                    jsonobj1arr.add(jsonobj1obj);
+                until objective1table.Next() = 0;
+            end;
+            jsonresult.add('Objective1', jsonobj1arr);
+
+            objective2table.Reset();
+            objective2table.SetRange("Project Code", projecttable."Project Code");
+            if objective2table.FindSet() then begin
+                Clear(jsonobj2arr);
+                repeat
+                    Clear(jsonobj2obj);
+                    jsonobj2obj.add('objectivenumber', objective2table."No.");
+                    jsonobj2obj.add('projectobjective', objective2table."Project Objecive / Outcome");
+                    jsonobj2arr.add(jsonobj2obj);
+                until objective1table.Next() = 0;
+            end;
+            jsonresult.add('Objective2', jsonobj2arr);
+
+            objective3table.Reset();
+            objective3table.SetRange("Project Code", projecttable."Project Code");
+            if objective3table.FindSet() then begin
+                Clear(jsonobj3arr);
+                repeat
+                    Clear(jsonobj3obj);
+                    jsonobj3obj.add('objectivenumber', objective3table."No.");
+                    jsonobj3obj.add('projectobjective', objective3table."Project Objecive / Outcome");
+                    jsonobj3arr.add(jsonobj3obj);
+                until objective1table.Next() = 0;
+            end;
+            jsonresult.add('Objective3', jsonobj3arr);
+
+            objective4table.Reset();
+            objective4table.SetRange("Project Code", projecttable."Project Code");
+            if objective4table.FindSet() then begin
+                Clear(jsonobj4arr);
+                repeat
+                    Clear(jsonobj4obj);
+                    jsonobj4obj.add('objectivenumber', objective4table."No.");
+                    jsonobj4obj.add('projectobjective', objective4table."Project Objecive / Outcome");
+                    jsonobj4arr.add(jsonobj1obj);
+                until objective4table.Next() = 0;
+            end;
+            jsonresult.add('Objective4', jsonobj4arr);
+
+            jsonresult.add('anticipatedrisks', projecttable."Anticipated Risks ");
+            jsonresult.add('riskmitigation', projecttable."Risk Mitigation ");
+            jsonresult.add('opportunities', projecttable."Opportunities ");
+
+            report1table.Reset();
+            report1table.SetRange("Project Code", projecttable."Project Code");
+            if report1table.FindSet() then begin
+                Clear(jsonrep1arr);
+                repeat
+                    Clear(jsonrep1obj);
+                    jsonrep1obj.add('keyactivities', report1table."Key Activities");
+                    jsonrep1obj.add('status', report1table."Activity status");
+                    jsonrep1obj.add('variation', report1table."Any Variation");
+                    jsonrep1obj.add('deliverables', report1table."Key Deliverables");
+                    jsonrep1obj.add('outcomes', report1table."Key Outcomes");
+                    jsonrep1obj.add('planned', report1table."Planned Activities");
+                    jsonrep1obj.add('challenges', report1table."Key Challenges Faced");
+                    jsonrep1obj.add('opportunities', report1table."Opportunities Identified");
+                    jsonrep1obj.add('lessons', report1table."Lessons Learnt");
+                    jsonrep1obj.add('communication', report1table."Commmunications Outputs");
+                    jsonrep1arr.add(jsonobj1obj);
+                until report1table.Next() = 0;
+            end;
+            jsonresult.add('ReportQ1', jsonrep1arr);
+
+            report2table.Reset();
+            report2table.SetRange("Project Code", projecttable."Project Code");
+            if report2table.FindSet() then begin
+                Clear(jsonrep2arr);
+                repeat
+                    Clear(jsonrep2obj);
+                    jsonrep2obj.add('keyactivities', report2table."Key Activities");
+                    jsonrep2obj.add('status', report2table."Activity status");
+                    jsonrep2obj.add('variation', report2table."Any Variation");
+                    jsonrep2obj.add('deliverables', report2table."Key Deliverables");
+                    jsonrep2obj.add('outcomes', report2table."Key Outcomes");
+                    jsonrep2obj.add('planned', report2table."Planned Activities");
+                    jsonrep2obj.add('challenges', report2table."Key Challenges Faced");
+                    jsonrep2obj.add('opportunities', report2table."Opportunities Identified");
+                    jsonrep2obj.add('lessons', report2table."Lessons Learnt");
+                    jsonrep2obj.add('communication', report2table."Commmunications Outputs");
+                    jsonrep2arr.add(jsonobj2obj);
+                until report2table.Next() = 0;
+            end;
+            jsonresult.add('ReportQ2', jsonrep2arr);
+
+            report3table.Reset();
+            report3table.SetRange("Project Code", projecttable."Project Code");
+            if report3table.FindSet() then begin
+                Clear(jsonrep3arr);
+                repeat
+                    Clear(jsonrep3obj);
+                    jsonrep3obj.add('keyactivities', report3table."Key Activities");
+                    jsonrep3obj.add('status', report3table."Activity status");
+                    jsonrep3obj.add('variation', report3table."Any Variation");
+                    jsonrep3obj.add('deliverables', report3table."Key Deliverables");
+                    jsonrep3obj.add('outcomes', report3table."Key Outcomes");
+                    jsonrep3obj.add('planned', report3table."Planned Activities");
+                    jsonrep3obj.add('challenges', report3table."Key Challenges Faced");
+                    jsonrep3obj.add('opportunities', report3table."Opportunities Identified");
+                    jsonrep3obj.add('lessons', report3table."Lessons Learnt");
+                    jsonrep3obj.add('communication', report3table."Commmunications Outputs");
+                    jsonrep3arr.add(jsonobj3obj);
+                until report3table.Next() = 0;
+            end;
+            jsonresult.add('ReportQ3', jsonrep3arr);
+
+            report4table.Reset();
+            report4table.SetRange("Project Code", projecttable."Project Code");
+            if report4table.FindSet() then begin
+                Clear(jsonrep4arr);
+                repeat
+                    Clear(jsonrep4obj);
+                    jsonrep4obj.add('keyactivities', report4table."Key Activities");
+                    jsonrep4obj.add('status', report4table."Activity status");
+                    jsonrep4obj.add('variation', report4table."Any Variation");
+                    jsonrep4obj.add('deliverables', report4table."Key Deliverables");
+                    jsonrep4obj.add('outcomes', report4table."Key Outcomes");
+                    jsonrep4obj.add('planned', report4table."Planned Activities");
+                    jsonrep4obj.add('challenges', report4table."Key Challenges Faced");
+                    jsonrep4obj.add('opportunities', report4table."Opportunities Identified");
+                    jsonrep4obj.add('lessons', report4table."Lessons Learnt");
+                    jsonrep4obj.add('communication', report4table."Commmunications Outputs");
+                    jsonrep4arr.add(jsonobj4obj);
+                until report4table.Next() = 0;
+            end;
+            jsonresult.add('ReportQ4', jsonrep4arr);
+
+            quantitativetable.Reset();
+            quantitativetable.SetRange("Project Code", projecttable."Project Code");
+            if quantitativetable.FindSet() then begin
+                Clear(jsonquanarr);
+                repeat
+                    Clear(jsonquanobj);
+                    jsonquanobj.add('indicator', quantitativetable.Indicator);
+                    jsonquanobj.add('indicatorlevel', quantitativetable."Indicator Level");
+                    jsonquanobj.add('unitmeasure', quantitativetable."Unit of Measure");
+                    jsonquanobj.add('baseline', quantitativetable.Baseline);
+                    jsonquanobj.add('q1', quantitativetable.Q1);
+                    jsonquanobj.add('q2', quantitativetable.Q2);
+                    jsonquanobj.add('q3', quantitativetable.Q3);
+                    jsonquanobj.add('q4', quantitativetable.Q4);
+                    jsonquanobj.add('actual', quantitativetable."Actual Cummulative");
+                    jsonquanobj.add('annual', quantitativetable."Annual Target");
+                    jsonquanobj.add('source', quantitativetable."Data Source");
+                    jsonquanobj.add('comment', quantitativetable.Comments);
+                    jsonquanarr.add(jsonquanobj);
+                until quantitativetable.Next() = 0;
+            end;
+            jsonresult.add('Quantitavive', jsonquanarr);
+
+            qualitativetable.Reset();
+            qualitativetable.SetRange("Project Code", projecttable."Project Code");
+            if qualitativetable.FindSet() then begin
+                Clear(jsonqualarr);
+                repeat
+                    Clear(jsonqualobj);
+                    jsonqualobj.add('indicator', qualitativetable.Indicator);
+                    jsonqualobj.add('indicatorlevel', qualitativetable."Indicator Level");
+                    jsonqualobj.add('baseline', qualitativetable.Baseline);
+                    jsonqualobj.add('q1', qualitativetable.Q1);
+                    jsonqualobj.add('q2', qualitativetable.Q2);
+                    jsonqualobj.add('q3', qualitativetable.Q3);
+                    jsonqualobj.add('q4', qualitativetable.Q4);
+                    jsonqualobj.add('source', qualitativetable."Data Source/Reporting projects");
+                    jsonqualobj.add('comment', qualitativetable.Comments);
+                    jsonqualarr.add(jsonqualobj);
+                until qualitativetable.Next() = 0;
+            end;
+            jsonresult.add('Qualitative', jsonqualarr);
+
+            impacttable.Reset();
+            impacttable.SetRange("Project Code", projecttable."Project Code");
+            if impacttable.FindSet() then begin
+                Clear(jsonimpactarr);
+                repeat
+                    Clear(jsonimpactobj);
+                    jsonimpactobj.add('impact', impacttable."Project Goal/Impact");
+                    jsonimpactobj.add('outcomes', impacttable."Project Objectives/ Outcomes");
+                    jsonimpactobj.add('questions', impacttable."Project Learning Questions");
+                    jsonimpactarr.add(jsonimpactobj);
+                until impacttable.Next() = 0;
+            end;
+            jsonresult.add('Impacts', jsonimpactarr);
+
+            previewtable.Reset();
+            previewtable.SetRange("Project Code", projecttable."Project Code");
+            if previewtable.FindSet() then begin
+                Clear(jsonpeerarr);
+                repeat
+                    Clear(jsonpeerobj);
+                    jsonpeerobj.add('review', previewtable."Peer Review");
+                    jsonpeerobj.add('q1', previewtable.Q1);
+                    jsonpeerobj.add('q2', previewtable.Q2);
+                    jsonpeerobj.add('q3', previewtable.Q3);
+                    jsonpeerobj.add('q4', previewtable.Q4);
+                    jsonpeerarr.add(jsonpeerobj);
+                until previewtable.Next() = 0;
+            end;
+            jsonresult.add('PeerReviews', jsonpeerarr);
+
+        end;
+        exit(Format(jsonresult));
+    end;
+
+    procedure InsertProjectEvaluation(args: Text): Text
+    var
+        hremployees: Record "HR Employees";
+        projectstable: Record Projects;
+        awardtable: Record Award;
+        pdetails: JsonObject;
+    begin
+        if args <> '' then begin
+            lJObject := lJObject.Parse(args);
+            if Format(lJObject.SelectToken('projectDetails')) <> '' then begin
+                lJObject2 := lJObject2.Parse(Format(lJObject.SelectToken('projectDetails')));
+                projectstable.Reset();
+                projectstable.SetRange("Project Code", (Format(lJObject2.GetValue('code'))));
+                if projectstable.Find('-') then begin
+                    projectstable."Project Manager & SMT Lead " := Format(lJObject.GetValue('projectManager'));
+                    projectstable.Modify();
+                end else begin
+                    projectstable.Init();
+                    projectstable."Project Code" := Format(lJObject2.GetValue('code'));
+                    projectstable."Project Manager & SMT Lead " := Format(lJObject.GetValue('projectManager'));
+                    projectstable.Validate("Project Code");
+                    projectstable.Insert(true);
+                end;
+            end;
+        end;
+
+        exit(GetProjectEvaluation(projectstable."Project Code"));
+    end;
+
+    procedure GetProjectEvaluations(args: Text): Text
+    var
+        projecttable: Record Projects;
+        jsonresult: JsonObject;
+        jsonresultarr: JsonArray;
+        jsonprojectDetails: JsonObject;
+    begin
+        projecttable.Reset();
+        if projecttable.Find() then begin
+            repeat
+                Clear(jsonresult);
+                Clear(jsonprojectDetails);
+                jsonprojectDetails.add('code', projecttable."Project Code");
+                jsonprojectDetails.add('title', projecttable."Project Name");
+                jsonprojectDetails.add('shorttitle', projecttable."Project Short Name");
+                jsonprojectDetails.add('projectStartDate', projecttable."Start Date");
+                jsonprojectDetails.add('projectEndDate', projecttable."End Date");
+                jsonprojectDetails.add('funder', projecttable.Partner);
+                jsonresult.add('projectDetails', jsonprojectDetails);
+                jsonresult.add('projectManager', projecttable."Project Manager & SMT Lead ");
+                jsonresult.add('themmaticprogramme', projecttable."Thematic Programme");
+                jsonresult.add('projectrationale', projecttable."Project rationale");
+                jsonresult.add('goalsummary', projecttable."Goal Summary");
+                jsonresult.add('kpi', projecttable.Indicator);
+                jsonresult.add('anticipatedrisks', projecttable."Anticipated Risks ");
+                jsonresult.add('riskmitigation', projecttable."Risk Mitigation ");
+                jsonresult.add('opportunities', projecttable."Opportunities ");
+                jsonresultarr.Add(jsonresult);
+            until projecttable.Next() = 0;
+        end;
+        exit(Format(jsonresultarr));
+    end;
+
+    procedure ModifyProjectEvaluation(args: Text): Text
+    var
+        projectstable: Record Projects;
+        awardtable: Record Award;
+        projectoutcomes: Record "Project Outcomes";
+
+        objective1table: Record "Objective 1";
+        objective2table: Record "Objective 2";
+        objective3table: Record "Objective 3";
+        objective4table: Record "Objective 4";
+
+        report1table: Record "Report Q1";
+        report2table: Record "Report Q2";
+        report3table: Record "Report Q3";
+        report4table: Record "Report Q4";
+
+        quantitativetable: Record "Quantitative Indicators";
+        qualitativetable: Record "Qualitative Indicators";
+
+        impacttable: Record "Project Impact";
+        previewtable: Record "Project Peer Review";
+        pdetails: JsonObject;
+    begin
+        if args <> '' then begin
+            lJObject := lJObject.Parse(args);
+            if Format(lJObject.SelectToken('projectDetails')) <> '' then begin
+                lJObject2 := lJObject2.Parse(Format(lJObject.SelectToken('projectDetails')));
+                projectstable.Reset();
+                projectstable.SetRange("Project Code", (Format(lJObject2.GetValue('code'))));
+                if projectstable.Find('-') then begin
+                    if Format(lJObject.GetValue('projectManager')) <> '' then
+                        projectstable."Project Manager & SMT Lead " := Format(lJObject.GetValue('projectManager'));
+                    if Format(lJObject.GetValue('projectrationale')) <> '' then
+                        projectstable."Project rationale" := Format(lJObject.GetValue('projectrationale'));
+                    if Format(lJObject.GetValue('goalsummary')) <> '' then
+                        projectstable."Goal Summary" := Format(lJObject.GetValue('goalsummary'));
+                    if Format(lJObject.GetValue('kpi')) <> '' then
+                        projectstable.Indicator := Format(lJObject.GetValue('kpi'));
+                    if Format(lJObject.GetValue('anticipatedrisks')) <> '' then
+                        projectstable."Anticipated Risks " := Format(lJObject.GetValue('anticipatedrisks'));
+                    if Format(lJObject.GetValue('riskmitigation')) <> '' then
+                        projectstable."Risk Mitigation " := Format(lJObject.GetValue('riskmitigation'));
+                    if Format(lJObject.GetValue('opportunities')) <> '' then
+                        projectstable."Opportunities " := Format(lJObject.GetValue('opportunities'));
+                    projectstable.Modify(true);
+                    Commit();
+
+                    //Project Outcomes
+                    if Format(lJObject.SelectToken('OutcomeEntries')) <> '' then begin
+                        lJsonArray := lJsonArray.Parse(Format(lJObject.SelectToken('OutcomeEntries')));
+                        Clear(lJObject2);
+
+                        foreach ljobject2 in lJsonArray do begin
+                            Evaluate(projectoutcomes."Key", Format(lJObject2.GetValue('lineno')));
+                            if projectoutcomes.get(projectoutcomes."Key", Format(lJObject2.GetValue('lineno')), projectstable."Project Code") then begin
+
+                                if (Format(lJObject2.GetValue('activities')) <> '') then begin
+                                    if (Format(lJObject2.GetValue('activities')) = '1') then
+                                        projectoutcomes."Activities by Objective" := projectoutcomes."Activities by Objective"::"Funder's Report:";
+                                    // if (Format(lJObject2.GetValue('activities')) = '2') then
+                                    //     projectoutcomes."Activities by Objective" := projectoutcomes."Activities by Objective"::"Monthly Reports:";
+                                    // if (Format(lJObject2.GetValue('activities')) = '3') then
+                                    //     projectoutcomes."Activities by Objective" := projectoutcomes."Activities by Objective"::"Quarterly Report:";
+                                end;
+
+                                if (Format(lJObject2.GetValue('responsible')) <> '') then begin
+                                    projectoutcomes.Responsible := Format((lJObject2.GetValue('responsible')));
+                                end;
+
+                                if (Format(lJObject2.GetValue('anticipated')) <> '') then begin
+                                    projectoutcomes."Outcomes Summary" := Format(lJObject2.GetValue('anticipated'));
+                                end;
+
+                                if (Format(lJObject2.GetValue('keydeliverables')) <> '') then begin
+                                    projectoutcomes.Indicator := Format(lJObject2.GetValue('keydeliverables'));
+                                end;
+
+                                if (Format(lJObject2.GetValue('quarter1')) <> '') then begin
+                                    projectoutcomes.Q1 := Format(lJObject2.GetValue('quarter1'));
+                                end;
+
+                                if (Format(lJObject2.GetValue('quarter2')) <> '') then begin
+                                    projectoutcomes.Q2 := Format(lJObject2.GetValue('quarter2'));
+                                end;
+
+                                if (Format(lJObject2.GetValue('quarter3')) <> '') then begin
+                                    projectoutcomes.Q3 := Format(lJObject2.GetValue('quarter3'));
+                                end;
+
+                                if (Format(lJObject2.GetValue('quarter4')) <> '') then begin
+                                    projectoutcomes.Q4 := Format(lJObject2.GetValue('quarter4'));
+                                end;
+
+                                projectoutcomes.Modify(true);
+                                Commit();
+                            end else begin
+                                projectoutcomes.Init();
+                                if (Format(lJObject2.GetValue('activities')) <> '') then begin
+                                    if (Format(lJObject2.GetValue('activities')) = '1') then
+                                        projectoutcomes."Activities by Objective" := projectoutcomes."Activities by Objective"::"Funder's Report:";
+                                    // if (Format(lJObject2.GetValue('activities')) = '2') then
+                                    //     projectoutcomes."Activities by Objective" := projectoutcomes."Activities by Objective"::"Monthly Reports:";
+                                    // if (Format(lJObject2.GetValue('activities')) = '3') then
+                                    //     projectoutcomes."Activities by Objective" := projectoutcomes."Activities by Objective"::"Quarterly Report:";
+                                end;
+
+                                if (Format(lJObject2.GetValue('responsible')) <> '') then begin
+                                    projectoutcomes.Responsible := Format((lJObject2.GetValue('responsible')));
+                                end;
+
+                                if (Format(lJObject2.GetValue('anticipated')) <> '') then begin
+                                    projectoutcomes."Outcomes Summary" := Format(lJObject2.GetValue('anticipated'));
+                                end;
+
+                                if (Format(lJObject2.GetValue('keydeliverables')) <> '') then begin
+                                    projectoutcomes.Indicator := Format(lJObject2.GetValue('keydeliverables'));
+                                end;
+
+                                if (Format(lJObject2.GetValue('quarter1')) <> '') then begin
+                                    projectoutcomes.Q1 := Format(lJObject2.GetValue('quarter1'));
+                                end;
+
+                                if (Format(lJObject2.GetValue('quarter2')) <> '') then begin
+                                    projectoutcomes.Q2 := Format(lJObject2.GetValue('quarter2'));
+                                end;
+
+                                if (Format(lJObject2.GetValue('quarter3')) <> '') then begin
+                                    projectoutcomes.Q3 := Format(lJObject2.GetValue('quarter3'));
+                                end;
+
+                                if (Format(lJObject2.GetValue('quarter4')) <> '') then begin
+                                    projectoutcomes.Q4 := Format(lJObject2.GetValue('quarter4'));
+                                end;
+
+                                projectoutcomes.Insert(true);
+                                Commit();
+                            end;
+                        end;
+                    end;
+
+                    //Objective 1 Updating
+                    if Format(lJObject.SelectToken('Objective1')) <> '' then begin
+                        lJsonArray := lJsonArray.Parse(Format(lJObject.SelectToken('Objective1')));
+                        Clear(lJObject2);
+                        foreach ljobject2 in lJsonArray do begin
+                            Evaluate(objective1table."No.", Format(lJObject2.GetValue('objectivenumber')));
+                            if objective1table.get(objective1table."No.", Format(lJObject2.GetValue('objectivenumber'))) then begin
+                                objective1table."Project Objecive / Outcome" := Format(lJObject2.GetValue('projectobjective'));
+                                objective1table.Modify(true);
+                                Commit();
+                            end else begin
+                                objective1table."Project Code" := projectstable."Project Code";
+                                objective1table."Project Objecive / Outcome" := Format(lJObject2.GetValue('projectobjective'));
+                                objective1table.Insert(true);
+                                Commit();
+                            end;
+                        end;
+                    end;
+
+                    //Ovjective 2 Updating
+                    if Format(lJObject.SelectToken('Objective2')) <> '' then begin
+                        lJsonArray := lJsonArray.Parse(Format(lJObject.SelectToken('Objective2')));
+                        Clear(lJObject2);
+                        foreach ljobject2 in lJsonArray do begin
+                            Evaluate(objective2table."No.", Format(lJObject2.GetValue('objectivenumber')));
+                            if objective2table.get(objective2table."No.", Format(lJObject2.GetValue('objectivenumber'))) then begin
+                                objective2table."Project Objecive / Outcome" := Format(lJObject2.GetValue('projectobjective'));
+                                objective2table.Modify(true);
+                                Commit();
+                            end else begin
+                                objective2table."Project Code" := projectstable."Project Code";
+                                objective2table."Project Objecive / Outcome" := Format(lJObject2.GetValue('projectobjective'));
+                                objective2table.Insert(true);
+                                Commit();
+                            end;
+                        end;
+                    end;
+
+                    //Ovjective 3 Updating
+                    if Format(lJObject.SelectToken('Objective3')) <> '' then begin
+                        lJsonArray := lJsonArray.Parse(Format(lJObject.SelectToken('Objective3')));
+                        Clear(lJObject2);
+                        foreach ljobject2 in lJsonArray do begin
+                            Evaluate(objective3table."No.", Format(lJObject2.GetValue('objectivenumber')));
+                            if objective3table.get(objective3table."No.", Format(lJObject2.GetValue('objectivenumber'))) then begin
+                                objective3table."Project Objecive / Outcome" := Format(lJObject2.GetValue('projectobjective'));
+                                objective3table.Modify(true);
+                                Commit();
+                            end else begin
+                                objective3table."Project Code" := projectstable."Project Code";
+                                objective3table."Project Objecive / Outcome" := Format(lJObject2.GetValue('projectobjective'));
+                                objective3table.Insert(true);
+                                Commit();
+                            end;
+                        end;
+                    end;
+
+                    //Ovjective 4 Updating
+                    if Format(lJObject.SelectToken('Objective4')) <> '' then begin
+                        lJsonArray := lJsonArray.Parse(Format(lJObject.SelectToken('Objective4')));
+                        Clear(lJObject2);
+                        foreach ljobject2 in lJsonArray do begin
+                            Evaluate(objective2table."No.", Format(lJObject2.GetValue('objectivenumber')));
+                            if objective4table.get(objective4table."No.", Format(lJObject2.GetValue('objectivenumber'))) then begin
+                                objective4table."Project Objecive / Outcome" := Format(lJObject2.GetValue('projectobjective'));
+                                objective4table.Modify(true);
+                                Commit();
+                            end else begin
+                                objective4table."Project Code" := projectstable."Project Code";
+                                objective4table."Project Objecive / Outcome" := Format(lJObject2.GetValue('projectobjective'));
+                                objective4table.Insert(true);
+                                Commit();
+                            end;
+                        end;
+                    end;
+
+                    //
+                end;
+            end;
+        end;
+
+        exit(projectstable."Project Code");
+    end;
+
+
     var
         lJsonArray: DotNet JArray;
         lJObject: dotnet JObject;

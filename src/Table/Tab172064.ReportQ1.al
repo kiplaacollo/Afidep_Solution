@@ -13,9 +13,10 @@ Table 172064 "Report Q1"
             DataClassification = ToBeClassified;
             //TableRelation = Locations;
         }
-        field(3; "Activity status"; Text[1000])
+        field(3; "Activity status"; Option)
         {
             DataClassification = ToBeClassified;
+            OptionMembers = ,"Done in time","Done late","In progress","Not done";
         }
         field(4; "Any Variation"; Text[1000])
         {
@@ -71,5 +72,8 @@ Table 172064 "Report Q1"
 
     var
         Locations: Record Locations;
+
+   
+
 }
 

@@ -86,6 +86,8 @@ Page 50121 "Payroll Employee Malawi"
                     if "Payroll Period" = 0D then
                         Error('No Open Payroll Period');
 
+                    RemoveTrans(PayrollEmp."No.", "Payroll Period");
+
                     PayrollEmp.Reset;
                     PayrollEmp.SetRange(PayrollEmp.Status, PayrollEmp.Status::Active);
                     PayrollEmp.SetRange(PayrollEmp."Suspend Pay", false);
@@ -100,7 +102,7 @@ Page 50121 "Payroll Employee Malawi"
                             PayrollEmp.TESTFIELD(PayrollEmp."NSSF No");*/
 
                             //First Remove Any transactions for this Month
-                            RemoveTrans(PayrollEmp."No.", "Payroll Period");
+                          //  RemoveTrans(PayrollEmp."No.", "Payroll Period");
                             //End Remove Transactions
                             if PayrollEmp."Joining Date" <> 0D then begin
                                 PayrollManager.ProcessPayroll(PayrollEmp."No.", "Payroll Period", PayrollEmp."Posting Group", PayrollEmp."Basic Pay", PayrollEmp."Basic Pay(LCY)",
@@ -510,8 +512,8 @@ Page 50121 "Payroll Employee Malawi"
         ProgressWindow: Dialog;
         PayrollManager: Codeunit "Payroll Management_AU";
         "Payroll Period": Date;
-        PayrollCalender: Record "Payroll Calender_AU";
-        PayrollMonthlyTrans: Record "Payroll Monthly Trans_AU";
+        PayrollCalender: Record "Payroll CalenderMalawi";
+        PayrollMonthlyTrans: Record "Payroll Monthly Trans_Malawi";
         PayrollEmployeeDed: Record "Payroll Employee Deductions_AU";
         PayrollEmployerDed: Record "Payroll Employer Deductions_AU";
         HrEmployees: Record "HR Employees";

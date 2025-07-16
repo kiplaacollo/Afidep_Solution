@@ -31,7 +31,7 @@ Page 50038 "Project Card"
                 field("Thematic Programme"; Rec."Thematic Programme")
                 {
                     ApplicationArea = Basic;
-                    Editable = false;
+                    // Editable = false;
                 }
                 field("Project Manager & SMT Lead "; Rec."Project Manager & SMT Lead ")
                 {
@@ -101,34 +101,27 @@ Page 50038 "Project Card"
             {
                 SubPageLink = "Project Code" = field("Project Code");
             }
-            group("INSTITUTIONAL STRATEGIC OBJECTIVE 1: Strengthen capacity in  evidence use in decision making ")
+            part("Objective 1"; "Objective 1")
             {
-                field("Project Objective 1: "; Rec."Project Objective 1: ")
-                {
-                    ApplicationArea = Basic;
-                    Caption = 'Project Objecive 1: CAPACITY STRENGTHENING';
-                }
-                field("Project Objective 2: "; Rec."Project Objective 2: ")
-                {
-                    ApplicationArea = Basic;
-                }
+                Caption = 'INSTITUTIONAL STRATEGIC OBJECTIVE 1: Generate policy-relevant research and other types of evidence, and support African governments and other development actors to apply evidence in decision-making';
+                SubPageLink = "Project Code" = field("Project Code");
             }
-            group("INSTITUTIONAL STRATEGIC OBJECTIVE 2: Deepen evidence use to accelerate the achievement of SDGs")
+            part("Objective 2"; "Objective 2")
             {
-                field("Project Objective 3: "; Rec."Project Objective 3: ")
-                {
-                    ApplicationArea = Basic;
-                    Caption = 'Project Objecive 1: ;';
-                }
+                Caption = 'INSTITUTIONAL STRATEGIC OBJECTIVE 2: Strengthen technical and institutional capacities needed to enable sustained use of evidence in decision-making';
+                SubPageLink = "Project Code" = field("Project Code");
             }
-            group("INSTITUTIONAL STRATEGIC OBJECTIVE 3: Internal systems and structures strengthened")
+            part("Objective 3"; "Objective 3")
             {
-                field("Project Objective 5: "; Rec."Project Objective 5: ")
-                {
-                    ApplicationArea = Basic;
-                    Caption = 'Project Objecive 1: ;';
-                }
+                Caption = 'INSTITUTIONAL STRATEGIC OBJECTIVE 3: Deepen engagement with African governments, and expand strategic partnerships and networks to enhance evidence use and impact.';
+                SubPageLink = "Project Code" = field("Project Code");
             }
+            part("Objective 4"; "Objective 4")
+            {
+                Caption = 'INSTITUTIONAL STRATEGIC OBJECTIVE 4: Optimise our internal capacity by establishing robust financial and operations management systems, strengthening talent management, strengthening project management and delivery, deepening policy engagement and communications capabilities, and harnessing technology to optimise internal processes and decision-making';
+                SubPageLink = "Project Code" = field("Project Code");
+            }
+
             group("")
             {
                 field("Anticipated Risks "; Rec."Anticipated Risks ")
@@ -172,6 +165,27 @@ Page 50038 "Project Card"
             {
                 SubPageLink = "Project Code" = field("Project Code");
                 Caption = 'Report_Q4';
+            }
+            part(Control21; "Quantitative Indicators")
+            {
+                SubPageLink = "Project Code" = field("Project Code");
+                Caption = 'Quantitative Indicators';
+            }
+            part(Control22; "Qualitative Indicators")
+            {
+                SubPageLink = "Project Code" = field("Project Code");
+                Caption = 'Qualitative Indicators';
+            }
+            part(Control23; "Project Impact")
+            {
+                SubPageLink = "Project Code" = field("Project Code");
+                Caption = 'Project Impact';
+            }
+            part(Control24; "Peer Review")
+            {
+                SubPageLink = "Project Code" = field("Project Code");
+                Caption = 'Project Peer Review';
+                
             }
         }
     }

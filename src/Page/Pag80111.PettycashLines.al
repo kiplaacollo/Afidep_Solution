@@ -123,7 +123,7 @@ Page 80111 "Petty Cash Lines"
                 {
                     ApplicationArea = Dimensions;
                     ToolTip = 'Specifies the code for Shortcut Dimension 2, which is one of two global dimension codes that you set up in the General Ledger Setup window.';
-                    Editable = false;
+                    // Editable = false;
                     trigger OnValidate()
                     var
                         budgetmatrix: Record "Donors Budget Matrix line";

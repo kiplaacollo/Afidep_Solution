@@ -1,7 +1,11 @@
 report 80040 "Employee Requisition"
 {
-    RDLCLayout = './Layouts/EmployeeRequisition.rdlc';
-    DefaultLayout = RDLC;
+    // RDLCLayout = './Layouts/EmployeeRequisition.rdlc';
+    // DefaultLayout = RDLC;
+
+
+    DefaultLayout = Word;//
+    WordLayout = 'Layouts/HR Recruitment Request Form.docx';
 
     dataset
     {
@@ -17,21 +21,15 @@ report 80040 "Employee Requisition"
             column(Requestor; Requestor)
             {
             }
-            column(CompanyINfoName; CompanyINfo.Name)
-            {
-            }
-            column(CompanyINfoAdd; CompanyINfo.Address)
-            {
-            }
+
             column(Job_ID; "Job ID")
             {
             }
+            column(Job_Description; "Job Description") { }
             column(Reason_For_Request; "Reason For Request")
             {
             }
-            column(CompanyINfoPicture; CompanyINfo.Picture)
-            {
-            }
+
             column(Type_of_Contract_Required; "Type of Contract Required")
             {
             }
@@ -51,6 +49,17 @@ report 80040 "Employee Requisition"
             {
             }
             column(Global_Dimension_2_Code; "Global Dimension 2 Code") { }
+            column(Global_Dimension_1_Code; "Global Dimension 1 Code") { }
+            column(Reporting_Date; "Reporting Date") { }
+            column(Line_Manager; "Line Manager") { }
+            column(JD_Attached; "JD Attached") { }
+            column(Budgeted_Amount; "Budgeted Amount") { }
+            column(Monthly_Salary; "Monthly Salary") { }
+            column(Jobtitle; Jobtitle) { }
+            column(Phone; Phone) { }
+            column(Email; Email) { }
+            column(Program; Program) { }
+            column(RequestorName; RequestorName) { }
             column(Requisition_Type; "Requisition Type") { }
             column(Field_of_Study; "Field of Study") { }
             column(Education_Level; "Education Level") { }
@@ -59,6 +68,16 @@ report 80040 "Employee Requisition"
             column(Professional_Course; "Professional Course") { }
             column(Minimum_years_of_experience; "Minimum years of experience") { }
             column(Maximum_years_of_experience; "Maximum years of experience") { }
+            column(Approver1Date; Approver1Date) { }
+            column(Approver1Name; Approver1Name) { }
+            column(Approver1Signature; Approver1Signature) { }
+            column(Approver2Date; Approver2Date) { }
+            column(Approver2Name; Approver2Name) { }
+            column(Approver2Signature; Approver2Signature) { }
+            column(Approver3Date; Approver3Date) { }
+            column(Approver3Name; Approver3Name) { }
+            column(Approver3Signature; Approver3Signature) { }
+
             column(Closing_Date; "Closing Date") { }
 
             dataitem("Approval Entry"; "Approval Entry")
@@ -88,18 +107,76 @@ report 80040 "Employee Requisition"
                 // DimVal.SetRange(Code, "Shortcut Dimension 1 Code");
                 // if DimVal.FindFirst then
                 //     Dim1Name := DimVal.Name;
-                // DimVal.Reset;
-                // DimVal.SetRange(Code, "Shortcut Dimension 2 Code");
-                // if DimVal.FindFirst then
-                //     Dim2Name := DimVal.Name;
+                DimVal.Reset;
+                DimVal.SetRange(Code, "Global Dimension 2 Code");
+                if DimVal.FindFirst then
+                    Dim2Name := DimVal.Name;
                 // DimVal.SetRange(Code, "Shortcut Dimension 4 Code");
                 // if DimVal.FindFirst then
                 //     Dim4Name := DimVal.Name;
                 // DimVal.SetRange(Code, "Shortcut Dimension 3 Code");
                 // if DimVal.FindFirst then
                 //     Dim3Name := DimVal.Name;
-            end;
 
+                HREmp.Reset;
+                HREmp.SetRange(HREmp."Employee UserID", Requestor);
+                if HREmp.FindFirst then begin
+                    Jobtitle := HREmp."Job Title";
+                    Phone := HREmp."Cell Phone Number";
+                    Email := HREmp."E-Mail";
+                    Program := HREmp."Programme or Department";
+                    RequestorName := HREmp."First Name" + ' ' + HREmp."Middle Name" + ' ' + HREmp."Last Name";
+                end;
+
+                ApprovalEntry.Reset;
+                ApprovalEntry.SetRange("Document No.", "HR Employee Requisitions"."Requisition No.");
+                ApprovalEntry.SetRange("Sequence No.", 1);
+                ApprovalEntry.SetRange(Status, ApprovalEntry.Status::Approved);
+                if ApprovalEntry.FindFirst then begin
+                    HREmployees.Reset;
+                    HREmployees.SetRange(HREmployees."Employee UserID", ApprovalEntry."Approver ID");
+                    if HREmployees.FindFirst then begin
+                        HREmployees.CALCFIELDS(Signature);
+                        "HR Employee Requisitions".Approver1Signature := HREmployees.Signature;
+                        "HR Employee Requisitions".Approver1Name := HREmployees."First Name" + ' ' + HREmployees."Middle Name" + ' ' + HREmployees."Last Name";
+                        "HR Employee Requisitions".Approver1Date := ApprovalEntry."Last Date-Time Modified";
+                    end;
+                end;
+                //end;
+                //if "Purchase Header".Approver3Name = '' then begin
+                ApprovalEntry.Reset;
+                ApprovalEntry.SetRange("Document No.", "HR Employee Requisitions"."Requisition No.");
+                ApprovalEntry.SetRange("Sequence No.", 2);
+                ApprovalEntry.SetRange(Status, ApprovalEntry.Status::Approved);
+                if ApprovalEntry.FindFirst then begin
+                    HREmployees.Reset;
+                    HREmployees.SetRange(HREmployees."Employee UserID", ApprovalEntry."Approver ID");
+                    if HREmployees.FindFirst then begin
+                        HREmployees.CALCFIELDS(Signature);
+                        "HR Employee Requisitions".Approver2Signature := HREmployees.Signature;
+                        "HR Employee Requisitions".Approver2Name := HREmployees."First Name" + ' ' + HREmployees."Middle Name" + ' ' + HREmployees."Last Name";
+                        "HR Employee Requisitions".Approver2Date := ApprovalEntry."Last Date-Time Modified";
+                    end;
+                end;
+                //end;
+                //if "Purchase Header".Approver4Name = '' then begin
+                ApprovalEntry.Reset;
+                ApprovalEntry.SetRange("Document No.", "HR Employee Requisitions"."Requisition No.");
+                ApprovalEntry.SetRange("Sequence No.", 3);
+                ApprovalEntry.SetRange(Status, ApprovalEntry.Status::Approved);
+                if ApprovalEntry.FindFirst then begin
+                    HREmployees.Reset;
+                    HREmployees.SetRange(HREmployees."Employee UserID", ApprovalEntry."Approver ID");
+                    if HREmployees.FindFirst then begin
+                        HREmployees.CALCFIELDS(Signature);
+                        "HR Employee Requisitions".Approver3Signature := HREmployees.Signature;
+                        "HR Employee Requisitions".Approver3Name := HREmployees."First Name" + ' ' + HREmployees."Middle Name" + ' ' + HREmployees."Last Name";
+                        "HR Employee Requisitions".Approver3Date := ApprovalEntry."Last Date-Time Modified";
+                    end;
+                end;
+                //end;
+                "HR Employee Requisitions".Modify;
+            end;
         }
     }
 
@@ -173,5 +250,13 @@ report 80040 "Employee Requisition"
         Dim2Name: Text;
         Dim4Name: Text;
         Dim3Name: Text;
+        HREmp: Record "HR Employees";
+        Jobtitle: Text[100];
+        Phone: Code[50];
+        Email: code[50];
+        Program: Text[200];
+        RequestorName: Text[200];
+        HREmployees: Record "HR Employees";
+        ApprovalEntry: Record "Approval Entry";
 
 }

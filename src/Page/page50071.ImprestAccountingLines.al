@@ -134,7 +134,7 @@ Page 50071 "Imprest Accounting Lines"
                 field("Direct Unit Cost"; Rec."Direct Unit Cost")
                 {
                     ApplicationArea = Basic;
-                    Caption = 'Amount';
+
                     trigger OnValidate()
                     begin
                         Rec."Net Amount" := Rec.Amount;
@@ -144,6 +144,7 @@ Page 50071 "Imprest Accounting Lines"
                 field(Amount; Rec.Amount)
                 {
                     ApplicationArea = Basic;
+                    Caption = 'Amount(USD)';
 
                     trigger OnValidate()
                     begin
@@ -177,11 +178,12 @@ Page 50071 "Imprest Accounting Lines"
                 {
                     ApplicationArea = Basic;
                     Visible = true;
+                    Caption = 'Amount Spent(USD)';
                     ShowMandatory = true;
                     Editable = true;
                     trigger OnValidate()
                     begin
-                        Rec."Cash Refund" := Rec."Direct Unit Cost" - Rec."Amount Spent";
+                        Rec."Cash Refund" := (Rec.Amount) - Rec."Amount Spent";
                     end;
                 }
                 field("Cash Refund"; Rec."Cash Refund") { ApplicationArea = basic; }

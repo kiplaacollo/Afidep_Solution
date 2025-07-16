@@ -63,7 +63,7 @@ report 50062 "TimesheetReport Detail"
                 column(Timesheet_No; "Timesheet No") { }
                 column(Project; Project) { }
                 column(Project_decription; "Project decription") { }
-                column(Workplan;"Workplan ") { }
+                column(Workplan; "Workplan ") { }
                 column(Workplan_Description; "Workplan Description") { }
                 column(Activity; Activity) { }
                 column(Activity_Discription; "Activity Discription") { }

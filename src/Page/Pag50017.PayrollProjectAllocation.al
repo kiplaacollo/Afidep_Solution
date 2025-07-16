@@ -4,8 +4,8 @@ Page 50017 "Payroll Project Allocation"
     SourceTable = "Payroll Project Allocation";
     UsageCategory = Lists;
     ApplicationArea = ALL;
-    DeleteAllowed = false;
-    Editable = false;
+    DeleteAllowed = true;
+    Editable = true;
     layout
     {
         area(content)
@@ -99,7 +99,7 @@ Page 50017 "Payroll Project Allocation"
                             // Calculate total hours for the current timesheet (per employee)
                             TimesheetLns.Reset();
                             TimesheetLns.SetRange("Timesheet No", TimesheetHdr."Timesheet Header No");
-
+                            TimesheetLns.SetFilter(TimesheetLns.Project, '<>%1', '');
                             TotalHoursPerTimesheet := 0;
                             if TimesheetLns.FindSet() then begin
                                 // Sum total hours across all projects for the current timesheet
@@ -111,6 +111,7 @@ Page 50017 "Payroll Project Allocation"
                             // Process each unique project for the employee and calculate hours and allocation
                             TimesheetLns.Reset();
                             TimesheetLns.SetRange("Timesheet No", TimesheetHdr."Timesheet Header No");
+                            // TimesheetLns.SetFilter(TimesheetLns.Project, '<>%1', '');
 
                             // Loop through each unique project within the timesheet
                             if TimesheetLns.FindSet() then begin

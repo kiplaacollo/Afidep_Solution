@@ -16,8 +16,12 @@ Page 50123 "Report Q1"
                 }
                 field("Activity status"; Rec."Activity status")
                 {
-                    ApplicationArea = Basic;
-                    Caption = 'Activity status';
+                    ApplicationArea = All;
+                    StyleExpr = ActivityStyle;
+                    trigger OnValidate()
+                    begin
+                        UpdateStyle();
+                    end;
                 }
                 field("Any Variation"; Rec."Any Variation")
                 {
@@ -67,5 +71,40 @@ Page 50123 "Report Q1"
     actions
     {
     }
+    var
+        ActivityStyle: Text;
+
+    trigger OnAfterGetRecord()
+    begin
+        // case Rec."Activity status" of
+        //     Rec."Activity status"::"Done in time":
+        //         ActivityStyle := 'Favorable';
+        //     Rec."Activity status"::"Done late":
+        //         ActivityStyle := 'Unfavorable';
+        //     Rec."Activity status"::"In progress":
+        //         ActivityStyle := 'Ambiguous';
+        //     Rec."Activity status"::"Not done":
+        //         ActivityStyle := 'Strong';
+        //     else
+        //         ActivityStyle := '';
+        // end;
+    end;
+
+    local procedure UpdateStyle()
+    begin
+        case Rec."Activity status" of
+            Rec."Activity status"::"Done in time":
+                ActivityStyle := 'Favorable';
+            Rec."Activity status"::"Done late":
+                ActivityStyle := 'Unfavorable';
+            Rec."Activity status"::"In progress":
+                ActivityStyle := 'Ambiguous';
+            Rec."Activity status"::"Not done":
+                ActivityStyle := 'Strong';
+            else
+                ActivityStyle := '';
+        end;
+    end;
+
 }
 

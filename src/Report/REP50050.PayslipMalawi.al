@@ -135,6 +135,8 @@ Report 50050 "Payroll Payslip2"
                         CurrencyFactor := PayrollCalender."Malawi Currency Code";
                     end;
                 END;
+                if "prPeriod Transactions."."Transaction Code" = 'E012' then
+                    CurrReport.Skip;
             end;
         }
     }

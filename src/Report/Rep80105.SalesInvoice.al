@@ -5,6 +5,9 @@ Report 80105 "Sales Inv. Rep"
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/NewSalesInvoice.rdl';
 
+    // DefaultLayout = Word;//
+    // WordLayout = 'Layouts/HR Form 2 - Recruitment Request Form.docx';
+
     dataset
     {
         dataitem("Sales Header"; "Sales Header")
@@ -219,6 +222,9 @@ Report 80105 "Sales Inv. Rep"
             column(ShowWorkDescription; ShowWorkDescription) { }
             column(Bill_to_Customer_No_; "Bill-to Customer No.") { }
             column(Bill_to_Name; "Bill-to Name") { }
+            column(dim2name; Dim2Name)
+            {
+            }
             column(Bill_to_Address; "Bill-to Address") { }
 
             dataitem(Line; "Sales Line")
@@ -259,6 +265,7 @@ Report 80105 "Sales Inv. Rep"
                 }
                 column(Amount; Line.Amount) { }
                 column(Project_Code; Line."Shortcut Dimension 2 Code") { }
+                column(Currency_Code; "Currency Code") { }
 
             }
             dataitem(Totals; "Integer")
@@ -289,15 +296,38 @@ Report 80105 "Sales Inv. Rep"
                 //LastFieldNo := FIELDNO("Period Year");
                 //  "Payroll Monthly Trans_AU".SetFilter("Payroll Monthly Trans_AU"."Payroll Period", '=%1', SelectedPeriod);
             end;
+
+            trigger OnAfterGetRecord();
+            begin
+                DimVal.Reset;
+                DimVal.SetRange(Code, "Shortcut Dimension 2 Code");
+                if DimVal.FindFirst then
+                    Dim2Name := DimVal.Name;
+
+
+                if Line."Currency Code" = ''
+            then
+                    Line."Currency Code" := 'USD';
+
+
+                HREmp.Reset;
+                HREmp.SetRange(HREmp."User ID", UserId);
+                //  if HREmp.FindFirst then
+                //   Jobtitle := HREmp."Job Title";
+            end;
         }
     }
     var
         CompanyInfo: Record "Company Information";
         UserSetup: Record "User Setup";
+        DimVal: Record "Dimension Value";
+        Dim1Name: Text;
+        Dim2Name: Text;
         CompName: Text[50];
         Addr1: Text[50];
         Addr2: Text[50];
         Email: Text[50];
+        HREmp: Record "HR Employees";
         DummyVATAmountLine: Record "VAT Amount Line";
         DummyShipmentMethod: Record "Shipment Method";
         DummyCurrency: Record Currency;

@@ -4,7 +4,7 @@ page 17446 "Timesheet Lines"
     Caption = 'Timesheet Lines';
     PageType = ListPart;
     SourceTable = "Timesheet Lines";
-    // Editable = true;
+    Editable = true;
     DeleteAllowed = true;
     InsertAllowed = true;
     ModifyAllowed = true;
@@ -88,7 +88,7 @@ page 17446 "Timesheet Lines"
     }
     trigger OnAfterGetRecord()
     begin
-        CurrPageUpdate;
+         CurrPageUpdate;
     end;
 
 
@@ -103,7 +103,7 @@ page 17446 "Timesheet Lines"
         if Rec."Timesheet Status" = Rec."Timesheet Status"::Open then
             StatusEditable := true
         else
-            StatusEditable := false;
+            StatusEditable := true;
     end;
 
 

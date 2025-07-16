@@ -640,8 +640,19 @@ Page 50049 "Imprest Requisition"
                 trigger OnAction()
                 var
                     ReleasePurchDoc: Codeunit "Release Purchase Document";
+                    apprEnt: Record "Approval Entry";
                 begin
-                    ReleasePurchDoc.PerformManualReopen(Rec);
+                    //ReleasePurchDoc.PerformManualReopen(Rec);
+                    if Rec.Status = Rec.Status::"Pending Approval" then begin
+                        Rec.Status := Rec.Status::Open;
+                        Rec.Modify();
+
+                        apprEnt.Reset;
+                        apprEnt.SetRange(apprEnt."Document No.", Rec."No.");
+                        if apprEnt.Find('-') then
+                            apprEnt.Status := apprEnt.Status::Canceled;
+                        //apprEnt.Modify();
+                    end;
                 end;
 
             }

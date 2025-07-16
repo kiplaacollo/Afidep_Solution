@@ -74,6 +74,10 @@ Page 17248 "HR Employee Requisition Card"
                     // Editable = "Required PositionsEditable";
                     Importance = Promoted;
                 }
+                field(Advertise; Rec.Advertise)
+                {
+                    ApplicationArea = Basic;
+                }
                 field("Date Advertised"; Rec."Date Advertised")
                 {
                     ApplicationArea = Basic;
@@ -87,7 +91,17 @@ Page 17248 "HR Employee Requisition Card"
                     //Editable = "Closing DateEditable";
                     Importance = Promoted;
                 }
+                field("Reporting Date"; Rec."Reporting Date")
+                {
+                    ApplicationArea = Basic;
+                    Caption = 'Proposed Date of candidate reporting';
+                }
 
+                field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
+                {
+                    ApplicationArea = Basic;
+                    Caption = 'Duty Station';
+                }
                 field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
                 {
                     ApplicationArea = Basic;
@@ -116,6 +130,14 @@ Page 17248 "HR Employee Requisition Card"
                     Style = StrongAccent;
                     StyleExpr = true;
                 }
+                field("Budgeted Amount"; Rec."Budgeted Amount")
+                {
+                }
+                field("Monthly Salary"; Rec."Monthly Salary")
+                {
+
+                }
+
             }
             group("Profession")
             {
@@ -160,12 +182,12 @@ Page 17248 "HR Employee Requisition Card"
 
     actions
     {
-        area(navigation)
+        area(Processing)
         {
-            group("Fu&nctions")
+            group("General")
             {
-                Caption = 'Fu&nctions';
-                action(Advertise)
+                Caption = 'General';
+                action(Advertised)
                 {
                     ApplicationArea = Basic;
                     Caption = 'Advertise';
@@ -194,7 +216,7 @@ Page 17248 "HR Employee Requisition Card"
 
                         end;
 
-                        if Rec."Requisition Type" = Rec."Requisition Type"::External then begin
+                        if (Rec."Requisition Type" = Rec."Requisition Type"::External) OR (Rec."Requisition Type" = Rec."Requisition Type"::Both) then begin
                             Rec.Advertise := true;
                         end;
 
@@ -217,6 +239,9 @@ Page 17248 "HR Employee Requisition Card"
 
                         //     Message('All Employees have been notified about this vacancy');
                         // end;
+                        Rec.Advertise := true;
+                        rec.Status := rec.Status::Advertised;
+                        Rec.Modify();
                     end;
                 }
                 action("Mark as Closed/Open")

@@ -79,7 +79,7 @@ table 172716 "Employee Qualifications"
         field(3; "Qualification Code"; Code[10])
         {
             Caption = 'Qualification Code';
-            TableRelation = Qualification;
+            TableRelation = Qualifications;
 
             trigger OnValidate()
             begin
@@ -166,7 +166,7 @@ table 172716 "Employee Qualifications"
     end;
 
     var
-        Qualification: Record Qualification;
+        Qualification: Record Qualifications;
         Employee: Record "HR Employees";
 
         Text000: Label 'You cannot delete employee qualification information if there are comments associated with it.';
@@ -275,7 +275,7 @@ table 172718 "Company Job Education"
         field(12; "Qualification Code Prof"; Code[50])
         {
             DataClassification = CustomerContent;
-           // TableRelation = Qualification.Code;
+            // TableRelation = Qualification.Code;
             Caption = 'Qualification Code Prof';
 
             trigger OnValidate()
@@ -485,7 +485,7 @@ table 172723 "Key Job responsibilities"
             DataClassification = CustomerContent;
             Caption = 'Code';
         }
-        field(3; Description; Text[100])
+        field(3; Description; Text[2048])
         {
             DataClassification = CustomerContent;
             Caption = 'Description';
@@ -668,6 +668,7 @@ table 172724 "Applicant Job Education"
         {
             DataClassification = CustomerContent;
             Caption = 'Line No.';
+            AutoIncrement = true;
         }
         field(19; "Need Code"; Code[50])
         {
@@ -700,7 +701,7 @@ table 172724 "Applicant Job Education"
 
     keys
     {
-        key(PK; "Applicant No.", "Line No.")
+        key(PK; "Line No.")
         {
             Clustered = true;
         }
@@ -970,6 +971,7 @@ table 172727 "Applicant Prof Membership"
         {
             DataClassification = CustomerContent;
             Caption = 'Line No.';
+            AutoIncrement = true;
         }
         field(5; "Need Code"; Code[50])
         {
@@ -985,7 +987,7 @@ table 172727 "Applicant Prof Membership"
 
     keys
     {
-        key(Key1; "Applicant No.", "Line No.")
+        key(Key1; "Line No.")
         {
             Clustered = true;
         }

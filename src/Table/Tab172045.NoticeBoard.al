@@ -3,15 +3,15 @@ Table 172045 "Notice Board"
 
     fields
     {
-        field(1;"Date of Announcement";Date)
+        field(1; "Date of Announcement"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(2;"Department Announcing";Code[10])
+        field(2; "Department Announcing"; Code[50])
         {
             DataClassification = ToBeClassified;
         }
-        field(3;Announcement;Text[200])
+        field(3; Announcement; Text[2048])
         {
             DataClassification = ToBeClassified;
         }
@@ -19,7 +19,7 @@ Table 172045 "Notice Board"
 
     keys
     {
-        key(Key1;"Date of Announcement",Announcement)
+        key(Key1; "Date of Announcement", Announcement)
         {
             Clustered = true;
         }

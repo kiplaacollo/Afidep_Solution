@@ -14,10 +14,12 @@ Page 50011 "Appraissal List"
                 field("No."; Rec."No.")
                 {
                     ApplicationArea = Basic;
+                    Caption = 'Appraisal No.';
                 }
                 field("Appraisal Period"; Rec."Appraisal Period")
                 {
                     ApplicationArea = Basic;
+                    Visible = false;
                 }
                 field("Employee No."; Rec."Employee No.")
                 {
@@ -26,6 +28,15 @@ Page 50011 "Appraissal List"
                 field("Employee Name"; Rec."Employee Name")
                 {
                     ApplicationArea = Basic;
+                }
+                field("Job Title"; Rec."Job Title")
+                {
+                    ApplicationArea = Basic;
+                }
+                field("Supervisor User ID"; Rec."Supervisor User ID")
+                {
+                    ApplicationArea = Basic;
+                    Caption = 'Supervisor';
                 }
             }
         }

@@ -19,7 +19,7 @@ codeunit 50083 "Human resouce mgt"
 
         JobsApplied.Reset();
         JobsApplied.SetRange("Employee Requisition No", RecNeeds."Requisition No.");
-        JobsApplied.SetRange("Applicant Type", JobsApplied."Applicant Type"::External);
+        // JobsApplied.SetRange("Applicant Type", JobsApplied."Applicant Type"::External);
         if JobsApplied.FindSet() then
             repeat
                 Applicants.Get(JobsApplied."Application No");
@@ -60,7 +60,7 @@ codeunit 50083 "Human resouce mgt"
         ApplicantsShortlist.SetRange(ApplicantsShortlist."Employee Requisition No", RecruitmentNeeds."Requisition No.");
         if ApplicantsShortlist.FindSet() then
             repeat
-                Qualified := false;
+                //  Qualified := false;
                 //Message('home %1', ApplicantsShortlist."Employee Requisition No");
                 ApplicantEdLevelIndex := 0;
                 ShortlistEdLevelIndex := 0;
@@ -69,29 +69,29 @@ codeunit 50083 "Human resouce mgt"
                 ApplicantProfLevelIndex := 0;
                 ShortlistProfLevelIndex := 0;
 
-                //Shortlist By Field of Study
-                if RecruitmentNeeds."Field of Study" <> '' then begin
-                    Academics.Reset();
-                    Academics.SetRange("Applicant No.", ApplicantsShortlist."Application No");
-                    Academics.SetFilter("Field of Study", '=%1', RecruitmentNeeds."Field of Study");
-                    if Academics.FindFirst() then
-                        Qualified := true
-                    else
-                        Qualified := false;
-                end;
+                // //Shortlist By Field of Study
+                // if RecruitmentNeeds."Field of Study" <> '' then begin
+                //     Academics.Reset();
+                //     Academics.SetRange("Applicant No.", ApplicantsShortlist."Application No");
+                //     Academics.SetFilter("Field of Study", '=%1', RecruitmentNeeds."Field of Study");
+                //     if Academics.Find('-') then
+                //         Qualified := true
+                //     else
+                //         Qualified := false;
+                // end;
 
                 //Shortlist By Education Level
                 //if Qualified then begin
                 if RecruitmentNeeds."Education Level" <> RecruitmentNeeds."Education Level"::" " then begin
-                    //Get Shortlist Index
-                    ShortlistEdLevelIndex := RecruitmentNeeds."Education Level".Ordinals.IndexOf(RecruitmentNeeds."Education Level".AsInteger());
+                    //     //Get Shortlist Index
+                    //     ShortlistEdLevelIndex := RecruitmentNeeds."Education Level".Ordinals.IndexOf(RecruitmentNeeds."Education Level".AsInteger());
 
                     Academics.Reset();
                     Academics.SetRange("Applicant No.", ApplicantsShortlist."Application No");
-                    if RecruitmentNeeds."Field of Study" <> '' then
-                        Academics.SetRange("Field of Study", RecruitmentNeeds."Field of Study");
-                    //Academics.SetRange("Education Level", RecruitmentNeeds."Education Level");
-                    if Academics.FindFirst() then begin
+                    // if RecruitmentNeeds."Field of Study" <> '' then
+                    //     Academics.SetRange("Field of Study", RecruitmentNeeds."Field of Study");
+                    Academics.SetRange("Education Level", RecruitmentNeeds."Education Level");
+                    if Academics.Find('-') then begin
                         //Get Applicant Index
                         ApplicantEdLevelIndex := Academics."Education Level".Ordinals.IndexOf(Academics."Education Level".AsInteger());
 
@@ -99,51 +99,48 @@ codeunit 50083 "Human resouce mgt"
                             Qualified := true
                         else
                             Qualified := false;
-                    end else
-                        Qualified := false;
+                    end;
                 end;
-                //end;
+                //  end;
 
                 //Shortlist By Education Type
                 //if Qualified then begin
-                if RecruitmentNeeds."Education Type" <> RecruitmentNeeds."Education Type"::" " then begin
-                    //Get Shortlist Index
-                    ShortlistEdTypeIndex := RecruitmentNeeds."Education Type".Ordinals.IndexOf(RecruitmentNeeds."Education Type".AsInteger());
+                // if RecruitmentNeeds."Education Type" <> RecruitmentNeeds."Education Type"::" " then begin
+                //     //Get Shortlist Index
+                //     ShortlistEdTypeIndex := RecruitmentNeeds."Education Type".Ordinals.IndexOf(RecruitmentNeeds."Education Type".AsInteger());
 
-                    Academics.Reset();
-                    Academics.SetRange("Applicant No.", ApplicantsShortlist."Application No");
-                    if RecruitmentNeeds."Field of Study" <> '' then
-                        Academics.SetRange("Field of Study", RecruitmentNeeds."Field of Study");
-                    if Academics.FindFirst() then begin
-                        //Get Applicant Index
-                        ApplicantEdTypeIndex := Academics."Education Type".Ordinals.IndexOf(Academics."Education Type".AsInteger());
+                //     Academics.Reset();
+                //     Academics.SetRange("Applicant No.", ApplicantsShortlist."Application No");
+                //     if RecruitmentNeeds."Field of Study" <> '' then
+                //         Academics.SetRange("Field of Study", RecruitmentNeeds."Field of Study");
+                //     if Academics.Find('-') then begin
+                //         //Get Applicant Index
+                //         ApplicantEdTypeIndex := Academics."Education Type".Ordinals.IndexOf(Academics."Education Type".AsInteger());
 
-                        if ApplicantEdTypeIndex >= ShortlistEdTypeIndex then
-                            Qualified := true
-                        else
-                            Qualified := false;
-                    end else
-                        Qualified := false;
-                end;
+                //         if ApplicantEdTypeIndex >= ShortlistEdTypeIndex then
+                //             Qualified := true
+                //         else
+                //             Qualified := false;
+                //     end;
+                // end;
                 //end;
 
                 //Shortlist By Proficiency Level
                 //if Qualified then begin
-                if RecruitmentNeeds."Proficiency Level" <> RecruitmentNeeds."Proficiency Level"::" " then begin
-                    //Get Shortlist Index
-                    ShortlistProfLevelIndex := RecruitmentNeeds."Education Type".Ordinals.IndexOf(RecruitmentNeeds."Proficiency Level".AsInteger());
+                // if RecruitmentNeeds."Proficiency Level" <> RecruitmentNeeds."Proficiency Level"::" " then begin
+                //     //Get Shortlist Index
+                //     ShortlistProfLevelIndex := RecruitmentNeeds."Education Type".Ordinals.IndexOf(RecruitmentNeeds."Proficiency Level".AsInteger());
 
-                    Academics.Reset();
-                    Academics.SetRange("Applicant No.", ApplicantsShortlist."Application No");
-                    if Academics.FindFirst() then begin
-                        ApplicantProfLevelIndex := Academics."Proficiency Level".Ordinals.IndexOf(Academics."Proficiency Level".AsInteger());
-                        if ApplicantProfLevelIndex >= ShortlistProfLevelIndex then
-                            Qualified := true
-                        else
-                            Qualified := false;
-                    end else
-                        Qualified := false;
-                end;
+                //     Academics.Reset();
+                //     Academics.SetRange("Applicant No.", ApplicantsShortlist."Application No");
+                //     if Academics.Find('-') then begin
+                //         ApplicantProfLevelIndex := Academics."Proficiency Level".Ordinals.IndexOf(Academics."Proficiency Level".AsInteger());
+                //         if ApplicantProfLevelIndex >= ShortlistProfLevelIndex then
+                //             Qualified := true
+                //         else
+                //             Qualified := false;
+                //     end;
+                // end;
                 //end;
 
                 //Shortlist by Professional Course
@@ -152,7 +149,7 @@ codeunit 50083 "Human resouce mgt"
                     Academics.Reset();
                     Academics.SetRange("Applicant No.", ApplicantsShortlist."Application No");
                     Academics.SetRange("Qualification Code", RecruitmentNeeds."Professional Course");
-                    if Academics.FindFirst() then
+                    if Academics.Find('-') then
                         Qualified := true
                     else
                         Qualified := false;
@@ -165,24 +162,24 @@ codeunit 50083 "Human resouce mgt"
                     Prof.Reset();
                     Prof.SetRange("Applicant No.", ApplicantsShortlist."Application No");
                     Prof.SetRange("Professional Body", RecruitmentNeeds."Professional Membership");
-                    if Prof.FindFirst() then
+                    if Prof.Find('-') then
                         Qualified := true
                     else
                         Qualified := false;
                 end;
                 //end;
 
-                //Shortlist by Experience Industry
-                //if Qualified then begin
-                if RecruitmentNeeds."Experience industry" <> '' then begin
-                    Experience.Reset();
-                    Experience.SetRange("Applicant No.", ApplicantsShortlist."Application No");
-                    Experience.SetRange(Industry, RecruitmentNeeds."Experience industry");
-                    if Experience.FindFirst() then
-                        Qualified := true
-                    else
-                        Qualified := false;
-                end;
+                // //Shortlist by Experience Industry
+                // //if Qualified then begin
+                // if RecruitmentNeeds."Experience industry" <> '' then begin
+                //     Experience.Reset();
+                //     Experience.SetRange("Applicant No.", ApplicantsShortlist."Application No");
+                //     Experience.SetRange(Industry, RecruitmentNeeds."Experience industry");
+                //     if Experience.Find('-') then
+                //         Qualified := true
+                //     else
+                //         Qualified := false;
+                // end;
                 //end;
 
                 //Shortlist by years of experience
@@ -190,37 +187,20 @@ codeunit 50083 "Human resouce mgt"
                 if (RecruitmentNeeds."Minimum years of experience" <> 0) and (RecruitmentNeeds."Maximum years of experience" <> 0) then begin
                     Experience.Reset();
                     Experience.SetRange("Applicant No.", ApplicantsShortlist."Application No");
-                    if RecruitmentNeeds."Experience industry" <> '' then
-                        Experience.SetRange(Industry, RecruitmentNeeds."Experience industry");
+                    // if RecruitmentNeeds."Experience industry" <> '' then
+                    //     Experience.SetRange(Industry, RecruitmentNeeds."Experience industry");
                     if Experience.Find('-') then begin
                         Experience.CalcSums("No. of Years");
                         NoYears := Round(Experience."No. of Years", 1, '=');
 
-                        if (NoYears >= RecruitmentNeeds."Minimum years of experience") and (NoYears <= RecruitmentNeeds."Maximum years of experience") then
+                        if (NoYears >= RecruitmentNeeds."Minimum years of experience")/* and (NoYears <= RecruitmentNeeds."Maximum years of experience")*/ then
                             Qualified := true
                         else
                             Qualified := false;
 
-                    end else
-                        Qualified := false;
-                end else
-                    if (RecruitmentNeeds."Minimum years of experience" <> 0) and (RecruitmentNeeds."Maximum years of experience" = 0) then begin
-                        Experience.Reset();
-                        Experience.SetRange("Applicant No.", ApplicantsShortlist."Application No");
-                        if RecruitmentNeeds."Experience industry" <> '' then
-                            Experience.SetRange(Industry, RecruitmentNeeds."Experience industry");
-
-                        if Experience.Find('-') then begin
-                            Experience.CalcSums("No. of Years");
-                            NoYears := Round(Experience."No. of Years", 1, '=');
-                            if NoYears >= RecruitmentNeeds."Minimum years of experience" then
-                                Qualified := true
-                            else
-                                Qualified := false;
-                        end else
-                            Qualified := false;
-                    end else
-                        if (RecruitmentNeeds."Maximum years of experience" <> 0) and (RecruitmentNeeds."Minimum years of experience" = 0) then begin
+                    end;
+                    /*end else
+                        if (RecruitmentNeeds."Minimum years of experience" <> 0) and (RecruitmentNeeds."Maximum years of experience" = 0) then begin
                             Experience.Reset();
                             Experience.SetRange("Applicant No.", ApplicantsShortlist."Application No");
                             if RecruitmentNeeds."Experience industry" <> '' then
@@ -229,13 +209,27 @@ codeunit 50083 "Human resouce mgt"
                             if Experience.Find('-') then begin
                                 Experience.CalcSums("No. of Years");
                                 NoYears := Round(Experience."No. of Years", 1, '=');
-                                if NoYears <= RecruitmentNeeds."Maximum years of experience" then
+                                if NoYears >= RecruitmentNeeds."Minimum years of experience" then
                                     Qualified := true
                                 else
                                     Qualified := false;
-                            end else
-                                Qualified := false;
-                        end;
+                            end;
+                        end else
+                            if (RecruitmentNeeds."Maximum years of experience" <> 0) and (RecruitmentNeeds."Minimum years of experience" = 0) then begin
+                                Experience.Reset();
+                                Experience.SetRange("Applicant No.", ApplicantsShortlist."Application No");
+                                if RecruitmentNeeds."Experience industry" <> '' then
+                                    Experience.SetRange(Industry, RecruitmentNeeds."Experience industry");
+
+                                if Experience.Find('-') then begin
+                                    Experience.CalcSums("No. of Years");
+                                    NoYears := Round(Experience."No. of Years", 1, '=');
+                                    if NoYears <= RecruitmentNeeds."Maximum years of experience" then
+                                        Qualified := true
+                                    else
+                                        Qualified := false;
+                                end;*/
+                end;
                 //end;
 
                 JobApplications.Get(ApplicantsShortlist."Application No");

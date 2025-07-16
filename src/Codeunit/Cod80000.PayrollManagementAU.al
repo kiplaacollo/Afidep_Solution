@@ -837,7 +837,7 @@ Codeunit 80000 "Payroll Management_AU"
         EmployeeTransactions.SetRange(EmployeeTransactions."Period Month", CurMonth);
         EmployeeTransactions.SetRange(EmployeeTransactions."Period Year", CurYear);
         EmployeeTransactions.SetRange(EmployeeTransactions."Transaction Type", EmployeeTransactions."transaction type"::Deduction);
-        if EmployeeTransactions.FindSet then begin
+        if EmployeeTransactions.Find('-') then begin
             curTotalDeductions := 0;
             repeat
 

@@ -1194,10 +1194,21 @@ page 172265 "Procurement"
                 }
                 action("Donor Claim Report G")
                 {
+                    Visible = false;
                     ApplicationArea = Basic, Suite;
                     Caption = 'Donor Claim Report';
 
                     RunObject = report "Donor Claim";
+                }
+
+
+                action("Donor Claim Report R")
+                {
+                    Visible = false;
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Donor Claim Report Rev';
+
+                    RunObject = report "Donor Claim Revised";
                 }
 
                 action("Active Projects")

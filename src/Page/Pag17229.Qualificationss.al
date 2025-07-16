@@ -29,8 +29,8 @@ page 17229 Qualificationss
                     ToolTip = 'Specifies if the company has employees with this qualification.';
                 }
                 field("Qualification Type"; Rec."Qualification Type") { }
-                field("Field of Study"; Rec."Field of Study") { Visible = false; }
-                field("Education Level"; Rec."Education Level") { Visible = false; }
+                field("Field of Study"; Rec."Field of Study") { }
+                field("Education Level"; Rec."Education Level") { }
             }
         }
         area(factboxes)

@@ -95,32 +95,90 @@ page 80144 "Imp. Acc Dashboard Cue"
                 }
 
 
+                field("Travel Requsition Form Approved - All"; Rec."Imprest Request Approved K")
+                {
+                    ApplicationArea = Manufacturing;
+                    Caption = 'Approved Imprest Request Kenya';
+                    DrillDownPageID = "Approved Travel Authorization";
+                    trigger OnDrillDown()
+                    var
+                        ImprestRec: Record "Purchase Header";
+                    begin
+                        ImprestRec.Reset();
+                        ImprestRec.SetRange(ImprestRec."Shortcut Dimension 1 Code", 'KENYA');
+                        Page.Run(Page::"Approved Travel Authorization", ImprestRec);
+                    end;
+                    //ToolTip = 'Specifies the number of simulated production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
+                }
+                field("Travel Requsition Form Approved - M"; Rec."Imprest Request Approved M")
+                {
+                    ApplicationArea = Manufacturing;
+                    Caption = 'Approved Imprest Request Malawi';
+                    DrillDownPageID = "Approved Travel Authorization";
+                    trigger OnDrillDown()
+                    var
+                        ImprestRec: Record "Purchase Header";
+                    begin
+                        ImprestRec.Reset();
+                        ImprestRec.SetRange(ImprestRec."Shortcut Dimension 1 Code", 'MALAWI');
+                        Page.Run(Page::"Approved Travel Authorization", ImprestRec);
+                    end;
+                    //ToolTip = 'Specifies the number of simulated production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
+                }
+
+
+
             }
-            // cuegroup(ImprestRequisition)
-            // {
-            //     Caption = 'Imprest Requisition Form';
-            //     field("Travel Requsition Form New - All"; Rec."Imprest Requisition New")
-            //     {
-            //         ApplicationArea = Manufacturing;
-            //         DrillDownPageID = "New Travel Authorization";
-            //         //ToolTip = 'Specifies the number of simulated production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
-            //     }
-            //     field("Travel Requsition Form Pending Approval - All"; Rec."Imprest Requisition Pending Approval")
-            //     {
+            cuegroup(ImprestRequisition)
+            {
+                Caption = 'Imprest Requisition Form';
+                Visible = false;
+                field("Travel Requsition Form New - All"; Rec."Imprest Requisition New")
+                {
+                    ApplicationArea = Manufacturing;
+                    DrillDownPageID = "New Travel Authorization";
+                    //ToolTip = 'Specifies the number of simulated production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
+                }
+                field("Travel Requsition Form Pending Approval - All"; Rec."Imprest Requisition Pending Approval")
+                {
 
-            //         ApplicationArea = Manufacturing;
-            //         DrillDownPageID = "Pending Travel Authorization";
-            //         //ToolTip = 'Specifies the number of simulated production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
-            //     }
-            //     field("Travel Requsition Form Approved - All"; Rec."Imprest Requisition Approved")
-            //     {
-            //         ApplicationArea = Manufacturing;
-            //         DrillDownPageID = "Approved Travel Authorization";
-            //         //ToolTip = 'Specifies the number of simulated production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
-            //     }
+                    ApplicationArea = Manufacturing;
+                    DrillDownPageID = "Pending Travel Authorization";
+                    //ToolTip = 'Specifies the number of simulated production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
+                }
+                // field("Travel Requsition Form Approved - All"; Rec."Imprest Request Approved K")
+                // {
+                //     ApplicationArea = Manufacturing;
+                //     Caption = 'Imprest Request Kenya';
+                //     DrillDownPageID = "Approved Travel Authorization";
+                //     trigger OnDrillDown()
+                //     var
+                //         ImprestRec: Record "Purchase Header";
+                //     begin
+                //         ImprestRec.Reset();
+                //         ImprestRec.SetRange(ImprestRec."Shortcut Dimension 1 Code", 'KENYA');
+                //         Page.Run(Page::"Approved Travel Authorization", ImprestRec);
+                //     end;
+                //     //ToolTip = 'Specifies the number of simulated production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
+                // }
+                // field("Travel Requsition Form Approved - M"; Rec."Imprest Request Approved M")
+                // {
+                //     ApplicationArea = Manufacturing;
+                //     Caption = 'Imprest Request Malawi';
+                //     DrillDownPageID = "Approved Travel Authorization";
+                //     trigger OnDrillDown()
+                //     var
+                //         ImprestRec: Record "Purchase Header";
+                //     begin
+                //         ImprestRec.Reset();
+                //         ImprestRec.SetRange(ImprestRec."Shortcut Dimension 1 Code", 'MALAWI');
+                //         Page.Run(Page::"Approved Travel Authorization", ImprestRec);
+                //     end;
+                //     //ToolTip = 'Specifies the number of simulated production orders that are displayed in the Manufacturing Cue on the Role Center. The documents are filtered by today''s date.';
+                // }
 
 
-            // }
+            }
 
 #endif
 

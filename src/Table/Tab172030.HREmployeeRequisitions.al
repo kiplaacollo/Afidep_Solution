@@ -162,6 +162,31 @@ Table 172030 "HR Employee Requisitions"
         {
             Editable = false;
         }
+        field(40; "Global Dimension 1 Code"; Code[20])
+        {
+            CaptionClass = '1,1,2';
+            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
+        }
+        field(41; "Budgeted Amount"; Decimal)
+        {
+
+        }
+        field(42; "Monthly Salary"; Decimal)
+        {
+
+        }
+        field(43; "Reporting Date"; date)
+        {
+
+        }
+        field(44; "JD Attached"; Boolean)
+        {
+
+        }
+        field(45; "Line Manager"; Code[50])
+        {
+            TableRelation = "User Setup"."User ID";
+        }
         field(3949; "Reason for Request(Other)"; Text[100])
         {
         }
@@ -268,6 +293,46 @@ Table 172030 "HR Employee Requisitions"
         {
             //Editable = false;
         }
+        field(99000801; Approver1Signature; Blob)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(99000802; Approver2Name; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(99000803; Approver2Signature; Blob)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(99000804; Approver3Name; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(99000805; Approver3Signature; Blob)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(99000806; Approver1Date; DateTime)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(99000807; Approver2Date; DateTime)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(99000808; Approver3Date; DateTime)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(99000809; RequesterDate; DateTime)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(99000810; Approver1Name; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
@@ -325,5 +390,37 @@ Table 172030 "HR Employee Requisitions"
         userSetup: Record "User Setup";
         mDivision: Code[50];
         mResponsibility: Code[50];
+
+
+    local procedure NotifyHROfficers()
+    var
+        EmailMessage: Codeunit "Email Message";
+        Email: Codeunit Email;
+        EmailBody: Text;
+        EmailSubject: Text;
+        Recipient: Text;
+        Country: Code[30]; // Adjust size as per your setup
+    begin
+        // Check if AU Form Type is 'Purchase Requisition'
+        if Status <> status::Approved then
+            exit; // Exit if it's not a Purchase Requisition
+
+        // Country := "Shortcut Dimension 1 Code"; // Replace 'YourCountryField' with the actual field name, e.g., "Country/Region Code"
+
+        // Determine the recipient based on the country
+
+
+        // Prepare email details
+        EmailSubject := 'Emp Requisition Approved';
+        EmailBody := StrSubstNo(
+            'Employee requisition No. (%1) has been Approved and requires your attention.',
+            "Requisition No."
+        );
+
+        // Send the email
+        EmailMessage.Create(Recipient, EmailSubject, EmailBody, true);
+        Email.Send(EmailMessage);
+    end;
+
 }
 

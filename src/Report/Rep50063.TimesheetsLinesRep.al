@@ -6,9 +6,10 @@ report 50063 "Timesheet Monthly Summary"
     {
         dataitem(TimesheetLines; "Timesheet Lines")
         {
-            DataItemTableView = sorting("Staff No", Date) where("Timesheet Status" = filter('Approved'), Date = filter('<>0D'));
-            RequestFilterFields = "Staff No", Date, Project;
-
+            // DataItemTableView = sorting("Staff No", Date) where("Timesheet Status" = filter('Approved'), Date = filter('<>0D'));
+            // RequestFilterFields = "Staff No", Date, Project;
+            DataItemTableView = sorting("Staff No", Date) where(Date = filter('<>0D'), Project = filter('<>RM001&<>AD03&<>CD05&<>RP01&<>RM2025&<>ID0002&<>PD04'));
+            RequestFilterFields = "Staff No", Date, Project, "Timesheet Status";
             column(Date; Date) { }
             column(CompanyInformation_Pic; CompanyInfo.Picture) { }
             column(CompanyInformation_address; CompanyInfo.Address) { }
@@ -31,6 +32,12 @@ report 50063 "Timesheet Monthly Summary"
             column(Workplan; "Workplan ") { }
             column(Workplan_Description; "Workplan Description") { }
             column(Hours; Hours) { }
+            dataitem("Proposal Team"; "Proposal Team")
+            {
+                DataItemLink = "Proposal No." = field(Project), "Employee No." = field("Staff No");
+                column(Proposal_No_; "Proposal No.") { }
+                column(Allocation__; "Allocation %") { }
+            }
 
 
             trigger OnPreDataItem()

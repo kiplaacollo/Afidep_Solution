@@ -266,6 +266,20 @@ page 172255 "Resource mobilization RC"
                     RunObject = Page "Proposal development tracker";
                     RunPageView = order(ascending) where(Status = filter(approved));
                 }
+                action("Converted Proposal development ")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Proposal Development (Converted)';
+
+
+                    RunObject = Page "Proposal development tracker";
+                    RunPageView = order(ascending) where(Status = filter(converted));
+                }
+                action("Resource Mobilization Report")
+                {
+                    ApplicationArea = Basic, Suite;
+                    RunObject = report "Resource Mobilization Report";
+                }
 
             }
             group("Resource Mobilization Setup")

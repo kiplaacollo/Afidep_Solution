@@ -9,7 +9,7 @@ Page 17250 "HR Job Applications List"
     ApplicationArea = All;
     PromotedActionCategories = 'New,Process,Report,Applicant,Functions,Print';
     SourceTable = "HR Job Applications";
-    SourceTableView = where("Qualification Status" = filter(" "));
+    // SourceTableView = where("Qualification Status" = filter(" "));
 
     layout
     {

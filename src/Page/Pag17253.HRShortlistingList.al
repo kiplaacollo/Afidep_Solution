@@ -10,7 +10,7 @@ Page 17253 "HR Shortlisting List"
     UsageCategory = Lists;
     ApplicationArea = All;
     SourceTable = "HR Employee Requisitions";
-    SourceTableView = where(Status = const(Approved),
+    SourceTableView = where(Status = const(Advertised),
                             Closed = const(false));
 
     layout
@@ -19,15 +19,15 @@ Page 17253 "HR Shortlisting List"
         {
             repeater(Group)
             {
-                field("Requisition No.";Rec."Requisition No.")
+                field("Requisition No."; Rec."Requisition No.")
                 {
                     ApplicationArea = Basic;
                 }
-                field("Job Description";Rec."Job Description")
+                field("Job Description"; Rec."Job Description")
                 {
                     ApplicationArea = Basic;
                 }
-                field("Requisition Date";Rec."Requisition Date")
+                field("Requisition Date"; Rec."Requisition Date")
                 {
                     ApplicationArea = Basic;
                 }
@@ -35,7 +35,7 @@ Page 17253 "HR Shortlisting List"
                 {
                     ApplicationArea = Basic;
                 }
-                field("Reason For Request";Rec."Reason For Request")
+                field("Reason For Request"; Rec."Reason For Request")
                 {
                     ApplicationArea = Basic;
                 }
@@ -43,7 +43,7 @@ Page 17253 "HR Shortlisting List"
                 {
                     ApplicationArea = Basic;
                 }
-                field("Closing Date";Rec."Closing Date")
+                field("Closing Date"; Rec."Closing Date")
                 {
                     ApplicationArea = Basic;
                 }

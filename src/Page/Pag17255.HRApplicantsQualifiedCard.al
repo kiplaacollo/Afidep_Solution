@@ -4,7 +4,7 @@ Page 17255 "HR Applicants Qualified Card"
 {
     PageType = Card;
     SourceTable = "HR Job Applications";
-    //SourceTableView = where("Qualification Status" = const(Qualified));
+    SourceTableView = where(Qualified = const(true));
 
     layout
     {
@@ -43,8 +43,8 @@ Page 17255 "HR Applicants Qualified Card"
                 field(Qualified; Rec.Qualified)
                 {
                     ApplicationArea = Basic;
-                    Editable = false;
-                    Enabled = false;
+                    Editable = true;
+                    Enabled = true;
                 }
                 field("Date of Interview"; Rec."Date of Interview")
                 {

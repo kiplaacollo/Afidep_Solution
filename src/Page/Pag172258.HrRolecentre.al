@@ -192,47 +192,91 @@ page 172258 "HR role RC"
             {
                 action("Appraisal List")
                 {
-                    Caption = 'Target Setting List(Appraisee)';
+                    Caption = 'New Appraisals';
                     ApplicationArea = basic, suite;
 
                     RunObject = page "Appraissal List";
-                    RunPageLink = "Appraisal Status" = filter(Appraisee);
+                    RunPageLink = "Supervisor Target Approved" = const(false), "Appraisal Stage" = filter("Target Setting");
                 }
                 action("Supervisor Appraisal List")
                 {
 
                     ApplicationArea = All;
                     RunObject = page "Appraissal List";
-                    RunPageLink = "Appraisal Stage" = filter("Target Approval");
-                    Caption = 'Target Setting Approval(Supervisor)';
+                    RunPageLink = "Appraisal Stage" = filter("Target Approval"), "Supervisor Target Approved" = const(false);
+                    Caption = 'Target Setting Pending Supervisor';
 
                 }
-                action("Appraisee's Evaluation List")
+                action("HR Target Setting")
                 {
-                    ApplicationArea = All;
-                    RunObject = page "Appraissal List";
-                    RunPageLink = "Appraisal Stage" = filter("End Year Evaluation");
-                    Caption = 'Appraisee Evaluation List';
+                    Caption = 'Target Settings Pending HR';
+                    ApplicationArea = basic, suite;
 
+                    RunObject = page "Appraissal List";
+                    RunPageLink = "Supervisor Target Approved" = const(true), "Appraisal Stage" = filter("Target Approval"), "HR Target Approved" = const(false);
                 }
-                action("Supervisor Evaluation List")
+                action("Mid Year Review")
                 {
-                    ApplicationArea = All;
+                    Caption = 'New Mid Year Review';
+                    ApplicationArea = basic, suite;
+
                     RunObject = page "Appraissal List";
-                    RunPageLink = "Appraisal Stage" = filter("Supervisor Evaluation");
-                    Caption = 'Supervisor Evaluation List';
-
+                    RunPageLink = "Supervisor Target Approved" = const(true), "Appraisal Stage" = filter("Target Approval"), "HR Target Approved" = const(true);
                 }
-
-                action("HR Completed Appraisal List")
+                action("Supervisor Mid Year Review")
                 {
-                    ApplicationArea = All;
+                    Caption = 'Mid Year Review Pending Supervisor';
+                    ApplicationArea = basic, suite;
+
                     RunObject = page "Appraissal List";
-                    RunPageLink = "Appraisal Stage" = filter("Appraisal Completed");
-                    Caption = 'HR Completed Appraisal List';
+                    RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Appraisal Stage" = filter("Mid Year Review"), "Supervisor MID Approved" = const(false);
+                }
+                action("HR Mid year Review")
+                {
+                    Caption = 'Mid year Review Pending HR';
+                    ApplicationArea = basic, suite;
+
+                    RunObject = page "Appraissal List";
+                    RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Appraisal Stage" = filter("Mid Year Review"), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(false);
+                }
+                action("Annual Review")
+                {
+                    Caption = 'New Annual Review';
+                    ApplicationArea = basic, suite;
+
+                    RunObject = page "Appraissal List";
+                    RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Appraisal Stage" = filter("Mid Year Review"), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(true);
 
                 }
+                action("Supervisor Annual Review")
+                {
+                    Caption = 'Annual Review Pending Supervisor';
+                    ApplicationArea = basic, suite;
 
+                    RunObject = page "Appraissal List";
+                    RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(true), "Supervisor Annual Approved" = const(false), "HR Annual Approved" = const(false);
+
+                }
+                action("HR Annual Review")
+                {
+                    Caption = 'Annual Review Pending HR';
+                    ApplicationArea = basic, suite;
+
+                    RunObject = page "Appraissal List";
+                    RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(true), "Supervisor Annual Approved" = const(true), "HR Annual Approved" = const(false);
+                    // RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Appraisal Stage" = filter("Mid Year Review"), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(false);
+
+                }
+                action("Completed Appraisal")
+                {
+                    Caption = 'Completed Appraisals';
+                    ApplicationArea = basic, suite;
+
+                    RunObject = page "Appraissal List";
+                    RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(true), "Supervisor Annual Approved" = const(true), "HR Annual Approved" = const(true);
+                    // RunPageLink = "Supervisor Target Approved" = const(true), "HR Target Approved" = const(true), "Appraisal Stage" = filter("Mid Year Review"), "Supervisor MID Approved" = const(true), "HR Mid Approved" = const(false);
+
+                }
 
 
             }
@@ -446,6 +490,13 @@ page 172258 "HR role RC"
                     Caption = 'Timesheet summary';
                     ApplicationArea = Basic, Suite;
                     RunObject = report "Timesheet Monthly Summary";
+                }
+
+                action("Timesheets Project")
+                {
+                    Caption = 'Timesheet Project summary';
+                    ApplicationArea = Basic, Suite;
+                    RunObject = report "Timesheet Project Summary";
                 }
                 action("Timesheets SMT")
                 {

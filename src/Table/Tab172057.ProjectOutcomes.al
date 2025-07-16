@@ -32,7 +32,7 @@ Table 172057 "Project Outcomes"
         }
         field(7; "Activities by Objective"; Option)
         {
-            OptionMembers = "","Monthly Reports:","Quarterly Report:","Funder's Report:";
+            OptionMembers = "","Funder's Report:";
         }
         field(8; Responsible; Code[50])
         {
@@ -55,6 +55,10 @@ Table 172057 "Project Outcomes"
             DataClassification = ToBeClassified;
         }
         field(13; Year; Code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(14; "Reports Deadline"; Date)
         {
             DataClassification = ToBeClassified;
         }

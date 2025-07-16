@@ -68,6 +68,8 @@ pageextension 50014 "Approval lines" extends "Requests to Approve"
                     ApprovalEntry: Record "Approval Entry";
                     ApprovalsMgmt: Codeunit "Approvals Mgmt.";
                 begin
+                    if Rec."Sender ID" = Rec."Approver ID" then
+                        Error('You are trying to approve your own record. Kindly ask System Administrator to Delegate.');
                     if Confirm('Are you sure you want to Approve this Document?') = false then exit;
                     CurrPage.SetSelectionFilter(ApprovalEntry);
                     ApprovalsMgmt.ApproveApprovalRequests(ApprovalEntry);
@@ -75,7 +77,7 @@ pageextension 50014 "Approval lines" extends "Requests to Approve"
             }
             action(OpenRelatedDocument)
             {
-                Caption = 'Open Purchase Inv.';
+                Caption = 'Open Imprest Accounting';
                 ToolTip = 'Open the related document based on the document type and document number.';
                 ApplicationArea = Suite;
                 Promoted = true;
@@ -135,10 +137,10 @@ pageextension 50014 "Approval lines" extends "Requests to Approve"
         // Check if there is any record that matches the filter
         if PurchaseHeader.FindFirst() then begin
             // If found, open the Purchase Invoice page
-            PAGE.Run(PAGE::"Purchase Invoice", PurchaseHeader);
+            PAGE.Run(PAGE::"Travel Accounting", PurchaseHeader);
         end else begin
             // If not found, show an error message
-            Error('Purchase Invoice with Document No. %1 not found.', Rec."Document No.");
+            Error('Imprest Accounting with Document No. %1 not found.', Rec."Document No.");
         end;
     end;
 }

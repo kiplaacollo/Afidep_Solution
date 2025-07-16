@@ -311,7 +311,7 @@ Table 170113 "HR Job Applications"
             begin
 
                 HREmpReq.Reset;
-                //HREmpReq.SETRANGE(HREmpReq."Requisition No.","Employee Requisition No");
+                HREmpReq.SETRANGE(HREmpReq."Requisition No.", "Employee Requisition No");
                 if HREmpReq.Find('-') then
                     "Job Applied For" := HREmpReq."Job ID";
             end;

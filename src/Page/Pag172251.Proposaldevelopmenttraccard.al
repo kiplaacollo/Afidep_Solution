@@ -95,6 +95,10 @@ page 172251 "Proposal development trac card"
                 {
                     Editable = true;
                 }
+                field(Status; Rec.Status)
+                {
+                    Editable = false;
+                }
 
                 field("Year of decision"; Rec."Year of decision")
                 {

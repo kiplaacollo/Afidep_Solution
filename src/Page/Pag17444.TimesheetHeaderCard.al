@@ -194,7 +194,7 @@ page 17444 "Timesheet Header Card"
         if Rec."Timesheet Status" = Rec."Timesheet Status"::Open then
             StatusEditable := true
         else
-            StatusEditable := false;
+            StatusEditable := true;
     end;
 
 

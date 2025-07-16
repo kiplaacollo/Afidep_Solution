@@ -2,7 +2,7 @@ page 17392 "RFQ Subform"
 {
     PageType = ListPart;
     SourceTable = "Purchase Quote Line";
-    DeleteAllowed = false;
+    DeleteAllowed = true;
 
     layout
     {

@@ -353,6 +353,56 @@ Page 50063 "Travel Accounting"
                     DocumentAttachmentDetails.RunModal();
                 end;
             }
+            action("Cancel A&pproval Request")
+            {
+                ApplicationArea = Basic;
+                Caption = 'Reopen A&pproval Request';
+                Image = CancelApprovalRequest;
+                Promoted = true;
+                PromotedCategory = Category4;
+                PromotedIsBig = true;
+                // Visible = false;
+
+                trigger OnAction()
+                var
+                    Text001: label 'This Batch is already pending approval';
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                begin
+                    // Rec.TestField("Approval Status", Rec."Approval Status"::New);
+                    // Rec.TestField(Amount);
+
+                    if Rec.Status = Rec.Status::Released then
+                        Rec.Status := Rec.Status::Open;
+                    Rec.Modify;
+
+                end;
+            }
+
+            action("Update A&pproval Request")
+            {
+                ApplicationArea = Basic;
+                Caption = 'Update A&pproval Request';
+                Image = SendApprovalRequest;
+                Promoted = true;
+                PromotedCategory = Category4;
+                PromotedIsBig = true;
+                // Visible = false;
+
+                trigger OnAction()
+                var
+                    Text001: label 'This Batch is already pending approval';
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                begin
+                    // Rec.TestField("Approval Status", Rec."Approval Status"::New);
+                    // Rec.TestField(Amount);
+
+                    if Rec.Status = Rec.Status::Open then
+                        Rec.Status := Rec.Status::Released;
+                    Rec.Modify;
+
+                end;
+            }
+
             action(Post)
             {
                 ApplicationArea = Basic;

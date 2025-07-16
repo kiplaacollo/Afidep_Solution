@@ -32,7 +32,7 @@ Report 80038 "Payroll Journal Transfer M"
                 PeriodTrans.Reset();
                 PeriodTrans.SetRange(PeriodTrans."No.", "Payroll Employee_AU"."No.");
                 PeriodTrans.SetRange(PeriodTrans."Payroll Period", SelectedPeriod);
-                PeriodTrans.SetFilter(PeriodTrans."Transaction Name", '<>%1&<>%2&<>%3&<>%4', 'Education Allowance', 'Education Allowance deduction', 'Excess Pension', 'Salary Arrears Excess Pension'); // Corrected syntax
+                PeriodTrans.SetFilter(PeriodTrans."Transaction Name", '<>%1&<>%2&<>%3&<>%4&<>%5&<>%6&<>%7', 'Education Allowance', 'Administrative Pension fee', 'Group Life', 'Employers Pension', 'Medical Insurance', 'Vat Administrative Pension fee', 'Medical Insurance'); // Corrected syntax
                 if PeriodTrans.Find('-') then begin
                     repeat
 
@@ -49,6 +49,8 @@ Report 80038 "Payroll Journal Transfer M"
                                 IntegerPostAs := 0;
                             if PeriodTrans."Account Type" = 2 then
                                 IntegerPostAs := 1;
+
+
                             //Negative NPay
                             if (PeriodTrans."Posting Type" = PeriodTrans."posting type"::Credit) and (PeriodTrans.Amount < 0) then begin
 
@@ -87,7 +89,7 @@ Report 80038 "Payroll Journal Transfer M"
 
                             //NSSF Employer Deduction*****Amos*****
                             //
-                            if PeriodTrans."Transaction Code" = 'NSSF' then begin//Pension Contrib
+                            if PeriodTrans."Transaction Code" = 'D015' then begin//Pension Contrib
 
                                 PostingGroup.Reset;
                                 PostingGroup.SetRange(PostingGroup."Posting Code", "Payroll Employee_AU"."Posting Group");
@@ -100,7 +102,7 @@ Report 80038 "Payroll Journal Transfer M"
 
                                 end;
 
-                                CreateJnlEntry(0, PostingGroup."SSF Employee Account",
+                                CreateJnlEntry(0, '8540',
                                 GlobalDim1, GlobalDim2, PeriodTrans."Transaction Name" + '-' + PeriodTrans."No." + '' + 'EmpDed', 0, PeriodTrans.Amount,
                                 PeriodTrans."Posting Type", '', SaccoTransactionType, "Payroll Employee_AU"."No.");
 
@@ -526,91 +528,16 @@ Report 80038 "Payroll Journal Transfer M"
         GLS: Record "General Ledger Setup";
         GLAC: Code[30];
         PayrollProjectAllocation: Record "Payroll Project Allocation";
+        OriginalAccountNo: Code[20];
 
 
 
-    // procedure CreateJnlEntry(AccountType: Option "G/L Account",Customer,Vendor,"Bank Account","Fixed Asset","IC Partner"; AccountNo: Code[20]; GlobalDime1: Code[20]; GlobalDime2: Code[20]; Description: Text[50]; DebitAmount: Decimal; CreditAmount: Decimal; PostAs: Option " ",Debit,Credit; LoanNo: Code[20]; TransType: Option " ","Registration Fee",Loan,Repayment,Withdrawal,"Interest Due","Interest Paid","Welfare Contribution","Deposit Contribution","Loan Penalty","Application Fee","Appraisal Fee",Investment,"Unallocated Funds","Shares Capital","Loan Adjustment",Dividend,"Withholding Tax","Administration Fee","Welfare Contribution 2"; "Employee Code": Code[100])
-    // var
-    //     TotalDebit: Decimal;
-    //     TotalCredit: Decimal;
-    //     RoundingAmount: Decimal;
-    //     RoundingAccount: Code[20];
-    // begin
-    //     TotalDebit := 0;
-    //     TotalCredit := 0;
-
-    //     PayrollProjectAllocation.RESET;
-    //     PayrollProjectAllocation.SETRANGE("Employee No", "Payroll Employee_AU"."No.");
-    //     PayrollProjectAllocation.SETRANGE(Period, PeriodDate);
-    //     IF PayrollProjectAllocation.FINDSET THEN BEGIN
-    //         REPEAT
-    //             LineNumber := LineNumber + 100;
-    //             GeneraljnlLine.Init;
-    //             GeneraljnlLine."Journal Template Name" := 'GENERAL';
-    //             GeneraljnlLine."Journal Batch Name" := 'SALARIES';
-    //             GeneraljnlLine."Line No." := LineNumber;
-    //             GeneraljnlLine."Document No." := "Slip/Receipt No";
-    //             GeneraljnlLine."Posting Date" := PostingDate;
-    //             GeneraljnlLine."Account Type" := AccountType;
-    //             GeneraljnlLine."Account No." := AccountNo;
-    //             GeneraljnlLine.Validate(GeneraljnlLine."Account No.");
-    //             GeneraljnlLine."Currency Code" := "Payroll Employee_AU"."Currency Code";
-    //             GeneraljnlLine."Currency Factor" := Currenc;
-    //             GeneraljnlLine.Description := "Slip/Receipt No";
-
-    //             if PostAs = PostAs::Debit then begin
-    //                 GeneraljnlLine.Amount := Round(DebitAmount * (PayrollProjectAllocation.Allocation / 100), 0.00001);
-    //                 GeneraljnlLine."Debit Amount" := GeneraljnlLine.Amount;
-    //                 TotalDebit += GeneraljnlLine.Amount;
-    //             end else begin
-    //                 GeneraljnlLine.Amount := -1 * Round(CreditAmount * (PayrollProjectAllocation.Allocation / 100), 0.00001);
-    //                 GeneraljnlLine."Credit Amount" := Abs(GeneraljnlLine.Amount);
-    //                 TotalCredit += Abs(GeneraljnlLine.Amount);
-    //             end;
-
-    //             GeneraljnlLine."Shortcut Dimension 1 Code" := GlobalDime1;
-    //             GeneraljnlLine.Validate(GeneraljnlLine."Shortcut Dimension 1 Code");
-    //             GeneraljnlLine."Shortcut Dimension 2 Code" := PayrollProjectAllocation."Project Code";
-    //             GeneraljnlLine.Validate(GeneraljnlLine."Shortcut Dimension 2 Code");
-
-    //             GeneraljnlLine.Validate(GeneraljnlLine.Amount);
-    //             if GeneraljnlLine.Amount <> 0 then
-    //                 GeneraljnlLine.Insert;
-
-    //         UNTIL PayrollProjectAllocation.Next() = 0;
-
-    //         // Calculate Rounding Difference
-    //         RoundingAmount := TotalDebit - TotalCredit;
-    //         if Abs(RoundingAmount) > 0.00001 then begin
-    //             // Insert Rounding Adjustment Line
-    //             RoundingAccount := '3620'; // Replace with actual rounding account
-    //             LineNumber := LineNumber + 100;
-    //             GeneraljnlLine.Init;
-    //             GeneraljnlLine."Journal Template Name" := 'GENERAL';
-    //             GeneraljnlLine."Journal Batch Name" := 'SALARIES';
-    //             GeneraljnlLine."Line No." := LineNumber;
-    //             GeneraljnlLine."Document No." := "Slip/Receipt No";
-    //             GeneraljnlLine."Posting Date" := PostingDate;
-    //             GeneraljnlLine."Account Type" := GeneraljnlLine."Account Type"::"G/L Account";
-    //             GeneraljnlLine."Account No." := RoundingAccount;
-    //             GeneraljnlLine.Validate(GeneraljnlLine."Account No.");
-    //             GeneraljnlLine.Description := 'Rounding Adjustment';
-    //             GeneraljnlLine.Amount := -RoundingAmount;
-
-    //             GeneraljnlLine."Shortcut Dimension 1 Code" := GlobalDime1;
-    //             GeneraljnlLine.Validate(GeneraljnlLine."Shortcut Dimension 1 Code");
-    //             GeneraljnlLine."Shortcut Dimension 2 Code" := GlobalDime2;
-    //             GeneraljnlLine.Validate(GeneraljnlLine."Shortcut Dimension 2 Code");
-
-    //             GeneraljnlLine.Validate(GeneraljnlLine.Amount);
-    //             GeneraljnlLine.Insert();
-    //         end;
-    //     end;
-    // end;
 
 
     procedure CreateJnlEntry(AccountType: Option "G/L Account",Customer,Vendor,"Bank Account","Fixed Asset","IC Partner"; AccountNo: Code[20]; GlobalDime1: Code[20]; GlobalDime2: Code[20]; Description: Text[50]; DebitAmount: Decimal; CreditAmount: Decimal; PostAs: Option " ",Debit,Credit; LoanNo: Code[20]; TransType: Option " ","Registration Fee",Loan,Repayment,Withdrawal,"Interest Due","Interest Paid","Welfare Contribution","Deposit Contribution","Loan Penalty","Application Fee","Appraisal Fee",Investment,"Unallocated Funds","Shares Capital","Loan Adjustment",Dividend,"Withholding Tax","Administration Fee","Welfare Contribution 2"; "Employee Code": Code[100])
     begin
+        OriginalAccountNo := AccountNo;
+
         PayrollProjectAllocation.RESET;
         PayrollProjectAllocation.SETRANGE("Employee No", "Payroll Employee_AU"."No.");
         PayrollProjectAllocation.SETRANGE(Period, PeriodDate);
@@ -626,6 +553,23 @@ Report 80038 "Payroll Journal Transfer M"
                 GeneraljnlLine."Posting Date" := PostingDate;
                 // GeneraljnlLine."Posting Date":=TODAY;
                 GeneraljnlLine."Account Type" := AccountType;
+
+                // Reset AccountNo on every loop using the original
+                AccountNo := OriginalAccountNo;
+
+                // Only override AccountNo if it's originally 4002
+                if (AccountNo = '4002') then begin
+                    case PayrollProjectAllocation."Project Code" of
+                        'AD03', 'RM2025', 'RP01':
+                            AccountNo := '4002';  // Admin/Research
+                        'CD05':
+                            AccountNo := '3015';  // Comms
+                        else
+                            AccountNo := '3000';  // Technical/Others
+                    end;
+                end;
+
+
                 GeneraljnlLine."Account No." := AccountNo;
                 GeneraljnlLine.Validate(GeneraljnlLine."Account No.");
                 GeneraljnlLine."Currency Code" := "Payroll Employee_AU"."Currency Code";

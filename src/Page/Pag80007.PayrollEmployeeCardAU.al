@@ -60,6 +60,12 @@ Page 80007 "Payroll Employee Card_AU"
                 {
                     ApplicationArea = Basic;
                 }
+                field("Department Code"; Rec."Department Code")
+                {
+                    Caption = 'Department Code';
+                    ApplicationArea = Basic;
+                    NotBlank = true;
+                }
                 field("Posting Group"; Rec."Posting Group")
                 {
                     ApplicationArea = Basic;
@@ -314,7 +320,7 @@ Page 80007 "Payroll Employee Card_AU"
                         PayrollEmp."Pays NSSF" := false;
                         PayrollEmp.Modify(true);
                     end;
-
+                    RemoveTrans(PayrollEmp."No.", "Payroll Period");
 
                     PayrollEmp.Reset;
                     PayrollEmp.SetRange(PayrollEmp.Status, PayrollEmp.Status::Active);
@@ -368,7 +374,7 @@ Page 80007 "Payroll Employee Card_AU"
 
                             RemoveTrans(PayrollEmp."No.", "Payroll Period");
                             //End Remove Transactions
-                            if PayrollEmp."Joining Date" <> 0D then begin
+                            if (PayrollEmp."Joining Date" <> 0D) and (PayrollEmp.Status = PayrollEmp.Status::Active) then begin
                                 //Message('%1-%2', PayrollEmp."Joining Date", PayrollEmp."Posting Group", PayrollEmp."Basic Pay");
                                 PayrollManager.ProcessPayroll(PayrollEmp."No.", "Payroll Period", PayrollEmp."Posting Group", PayrollEmp."Basic Pay", PayrollEmp."Basic Pay(LCY)",
                                                               PayrollEmp."Currency Code", PayrollEmp."Currency Factor", PayrollEmp."Joining Date", PayrollEmp."Date of Leaving",
@@ -405,6 +411,8 @@ Page 80007 "Payroll Employee Card_AU"
                     end;
                     if "Payroll Period" = 0D then
                         Error('No Open Payroll Period');
+
+                    RemoveTrans1(PayrollEmp."No.", "Payroll Period");
                     PayrollEmp.Reset;
                     // PayrollEmp.SetRange(PayrollEmp.Status, PayrollEmp.Status::Active);
                     PayrollEmp.SETRANGE(PayrollEmp.Branch, 'MALAWI');
@@ -415,7 +423,7 @@ Page 80007 "Payroll Employee Card_AU"
                         PayrollEmp."Pays NSSF" := false;
                         PayrollEmp.Modify(true);
                     end;
-                    RemoveTrans1(PayrollEmp."No.", "Payroll Period");
+
 
                     PayrollEmp.Reset;
                     PayrollEmp.SetRange(PayrollEmp.Status, PayrollEmp.Status::Active);
@@ -439,13 +447,6 @@ Page 80007 "Payroll Employee Card_AU"
                                 end;
                             end;
 
-
-
-                            // if PayrollEmp."Currency Code" = 'KES' then begin
-                            //     // Message('curencey %1-%2', PayrollEmp."Currency Factor", Rec."Currency Factor");
-                            //     PayrollEmp.Validate("Basic Pay");
-                            // end
-                            // else begin
 
                             PayrollEmp.Validate("Basic Pay(LCY)");
 

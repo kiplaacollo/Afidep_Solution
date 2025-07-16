@@ -198,5 +198,8 @@ table 172767 "Personal development Tracker"
         setup.get();
         Code := noseries.GetNextNo(setup.Professionaldevelopment, TODAY, TRUE);
 
+        if Status <> Status::New then
+            Error('Yo cannot edit Records that Status is not new');
+
     end;
 }

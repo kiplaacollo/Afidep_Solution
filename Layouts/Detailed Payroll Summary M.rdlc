@@ -539,6 +539,11 @@
                           <GroupExpression>=Fields!TransactionName_PayrollMonthlyTransAU.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
+                      <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!Grouping_PayrollMonthlyTransAU.Value</Value>
+                        </SortExpression>
+                      </SortExpressions>
                       <TablixHeader>
                         <Size>0.25in</Size>
                         <CellContents>

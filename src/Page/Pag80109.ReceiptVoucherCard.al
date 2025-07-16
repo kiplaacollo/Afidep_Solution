@@ -345,7 +345,7 @@ Page 80109 "Receipt Voucher Card"
                         // Rec.TestField("Approval Status", Rec."Approval Status"::New);
                         // Rec.TestField(Amount);
 
-                        if Rec.Status = Rec.Status::Released then
+                        if (Rec.Status = Rec.Status::Released) OR (Rec.Status = Rec.Status::"Pending Approval") then
                             Rec.Status := Rec.Status::Open;
                         Rec.Modify;
 
@@ -355,23 +355,20 @@ Page 80109 "Receipt Voucher Card"
                 action("Update A&pproval Request")
                 {
                     ApplicationArea = Basic;
-                    Caption = 'Update A&pproval Request';
+                    Caption = 'Unpost Receipts';
                     Image = SendApprovalRequest;
                     Promoted = true;
                     PromotedCategory = Category4;
                     PromotedIsBig = true;
-                    // Visible = false;
+                    Visible = true;
 
                     trigger OnAction()
                     var
                         Text001: label 'This Batch is already pending approval';
                         ApprovalsMgmt: Codeunit "Approvals Mgmt.";
                     begin
-                        // Rec.TestField("Approval Status", Rec."Approval Status"::New);
-                        // Rec.TestField(Amount);
-
-                        if Rec.Status = Rec.Status::Open then
-                            Rec.Status := Rec.Status::Released;
+                        if Rec.Posted = true then
+                            Rec.Posted := false;
                         Rec.Modify;
 
                     end;
@@ -422,223 +419,224 @@ Page 80109 "Receipt Voucher Card"
                     Image = Post;
                     Promoted = true;
                     PromotedCategory = Process;
+                    Visible = false;
 
                     trigger OnAction()
                     begin
-                        Rec.TestField("Posting Date");
-                        //TESTFIELD(Rec.Status,Rec.Status::Open);
-                        if Rec.Status <> Rec.Status::Released then
-                            Error('The document has not been Approved');
+                        // Rec.TestField("Posting Date");
+                        // //TESTFIELD(Rec.Status,Rec.Status::Open);
+                        // if Rec.Status <> Rec.Status::Released then
+                        //     Error('The document has not been Approved');
 
-                        if Confirm('Are you sure you want to post the Receipt') then begin
-                            //TESTFIELD(Status,Status::Released);
+                        // if Confirm('Are you sure you want to post the Receipt') then begin
+                        //     //TESTFIELD(Status,Status::Released);
 
-                            GenJnlLine.Reset;
-                            GenJnlLine.SetRange("Journal Template Name", 'CASH RECE');
-                            GenJnlLine.SetRange("Journal Batch Name", 'RECEIPTS');
-                            if GenJnlLine.Find then begin
-                                GenJnlLine.DeleteAll;
-                            end;
-                            GenJournalBatch.Reset;
-                            GenJournalBatch.SetRange(GenJournalBatch."Journal Template Name", 'CASH RECE');
-                            GenJournalBatch.SetRange(GenJournalBatch.Name, 'RECEIPTS');
-                            if GenJournalBatch.Find('-') = false then begin
-                                GenJournalBatch.Init;
-                                GenJournalBatch."Journal Template Name" := 'CASH RECE';
-                                GenJournalBatch.Name := 'RECEIPTS';
-                                GenJournalBatch.Insert(true);
-                            end;
-                            /*GenJnlLine.INIT;
-                            GenJnlLine."Journal Template Name":='PAYMENTS';
-                            GenJnlLine."Journal Batch Name":='Paymentvoucher';
-                            GenJnlLine2.RESET;
-                            GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
-                            GenJnlLine2.SETRANGE("Journal Batch Name",'Paymentvoucher');
-                            IF GenJnlLine2.FINDLAST THEN
-                            GenJnlLine."Line No.":=GenJnlLine2."Line No."+10000;
-                            GenJnlLine."Source Code":='PAYMENTJNL';
-                            GenJnlLine."Posting Date":=TODAY;
-                            //GenJnlLine."Document Type":=GenJnlLine."Document Type"::Payment;
-                            GenJnlLine."Document No.":="No.";
-                            GenJnlLine."External Document No.":="Cheque No";
-                            GenJnlLine."Account Type":=GenJnlLine."Account Type"::Customer;
-                            GenJnlLine."Account No.":="Account No";
-                            GenJnlLine.VALIDATE(GenJnlLine."Account No.");
-                            GenJnlLine.Description:='Paymentvoucher: '+"Account No"+' '+"Imprest No";
-                            Amt:=0;
-                            PurchLine.RESET;
-                            PurchLine.SETRANGE("Document No.","No.");
-                            IF PurchLine.FINDSET THEN BEGIN
-                              REPEAT
-                                Amt:=Amt+PurchLine."Line Amount";
-                                UNTIL PurchLine.NEXT=0;
-                              END;
-                            GenJnlLine.Amount:=-1*Amt;
-                            GenJnlLine.VALIDATE(GenJnlLine.Amount);
-                           // GenJnlLine."Bal. Account Type":=GenJnlLine."Bal. Account Type"::"Bank Account";
-                           // GenJnlLine."Bal. Account No.":="Paying Account No";
-                           // GenJnlLine.VALIDATE(GenJnlLine."Bal. Account No.");
-                            //Added for Currency Codes
-                            GenJnlLine."Currency Code":="Currency Code";
-                            GenJnlLine.VALIDATE("Currency Code");
-                            GenJnlLine."Currency Factor":="Currency Factor";
-                            GenJnlLine.VALIDATE("Currency Factor");
-                            GenJnlLine."Shortcut Dimension 1 Code":="Shortcut Dimension 1 Code";
-                            GenJnlLine.VALIDATE(GenJnlLine."Shortcut Dimension 1 Code");
-                            GenJnlLine."Shortcut Dimension 2 Code":="Shortcut Dimension 2 Code";
-                            GenJnlLine.VALIDATE(GenJnlLine."Shortcut Dimension 2 Code");
-                        
-                        
-                            IF GenJnlLine.Amount<>0 THEN
-                            GenJnlLine.INSERT;*/
-                            //
-                            //
-                            //    PurchLine6.RESET;
-                            //    PurchLine6.SETRANGE("Document No.",PurchaseHeader."No.");
-                            //    //PurchLine6.SETFILTER("Amount Spent",'<>%1',0);
-                            //    IF PurchLine6.FINDSET THEN BEGIN
-                            //      REPEAT
-                            LineNo := LineNo + 1000;
-                            GenJnlLine.Reset;
-                            GenJnlLine.SetRange(GenJnlLine."Journal Template Name", 'CASH RECE');
-                            GenJnlLine.SetRange(GenJnlLine."Journal Batch Name", 'RECEIPTS');
-                            if GenJnlLine.Find('-') then begin
-                                GenJnlLine.DeleteAll;
-                            end;
-                            GenJnlLine.Init;
-                            GenJnlLine."Journal Template Name" := 'CASH RECE';
-                            GenJnlLine."Journal Batch Name" := 'RECEIPTS';
-                            //MESSAGE('tuko hapa');
-                            //          GenJnlLine2.RESET;
-                            //          GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
-                            //          GenJnlLine2.SETRANGE("Journal Batch Name",'PVS');
-                            //          IF GenJnlLine2.FINDLAST THEN
-                            GenJnlLine."Line No." := LineNo;
-                            GenJnlLine."Source Code" := 'RCPTJNL';
-                            GenJnlLine."Posting Date" := Rec."Posting Date";
-                            //GenJnlLine."Document Type":=GenJnlLine."Document Type"::Payment;
-                            GenJnlLine."Document No." := Rec."No.";
-                            GenJnlLine."External Document No." := Rec."No.";
-                            GenJnlLine."Account Type" := GenJnlLine."account type"::"Bank Account";
-                            GenJnlLine."Account No." := Rec."Paying Account No";
-                            GenJnlLine.Validate(GenJnlLine."Account No.");
-                            GenJnlLine.Description := Rec."Posting Description";
-                            //'Paymentvoucher: '+"Account No"+' '+"Imprest No";
-                            GenJnlLine.Amount := -Rec.Amount;
-                            GenJnlLine.Validate(GenJnlLine.Amount);
-                            //          GenJnlLine."Bal. Account Type":=GenJnlLine."Bal. Account Type"::"G/L Account";
-                            //          GenJnlLine."Bal. Account No.":=PurchLine6."No.";
-                            //          GenJnlLine.VALIDATE(GenJnlLine."Bal. Account No.");
-                            //           GenJnlLine."Bal. Gen. Posting Type":=GenJnlLine."Bal. Gen. Posting Type"::Sale;
-                            //Added for Currency Codes
-                            GenJnlLine."Currency Code" := Rec."Currency Code";
-                            GenJnlLine.Validate("Currency Code");
-                            GenJnlLine."Currency Factor" := Rec."Currency Factor";
-                            // GenJnlLine.Validate("Currency Factor");
-                            GenJnlLine."Shortcut Dimension 1 Code" := Rec."Shortcut Dimension 1 Code";
-                            GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
-                            GenJnlLine."Shortcut Dimension 2 Code" := Rec."Shortcut Dimension 2 Code";
-                            GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 2 Code");
-                            //   GenJnlLine.ValidateShortcutDimCode(3,Rec."Shortcut Dimension 3 Code");
-                            //  GenJnlLine.ValidateShortcutDimCode(4,Rec."Shortcut Dimension 4 Code");
-                            // GenJnlLine.ValidateShortcutDimCode(5,Rec."Shortcut Dimension 5 Code");
-                            if GenJnlLine.Amount <> 0 then
-                                GenJnlLine.Insert;
-                            //              UNTIL PurchLine6.NEXT=0;
-                            //            END;
+                        //     GenJnlLine.Reset;
+                        //     GenJnlLine.SetRange("Journal Template Name", 'PAYMENTS');
+                        //     GenJnlLine.SetRange("Journal Batch Name", 'RECE');
+                        //     if GenJnlLine.Find then begin
+                        //         GenJnlLine.DeleteAll;
+                        //     end;
+                        //     GenJournalBatch.Reset;
+                        //     GenJournalBatch.SetRange(GenJournalBatch."Journal Template Name", 'PAYMENTS');
+                        //     GenJournalBatch.SetRange(GenJournalBatch.Name, 'RECE');
+                        //     if GenJournalBatch.Find('-') = false then begin
+                        //         GenJournalBatch.Init;
+                        //         GenJournalBatch."Journal Template Name" := 'PAYMENTS';
+                        //         GenJournalBatch.Name := 'RECE';
+                        //         GenJournalBatch.Insert(true);
+                        //     end;
+                        //     /*GenJnlLine.INIT;
+                        //     GenJnlLine."Journal Template Name":='PAYMENTS';
+                        //     GenJnlLine."Journal Batch Name":='Paymentvoucher';
+                        //     GenJnlLine2.RESET;
+                        //     GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
+                        //     GenJnlLine2.SETRANGE("Journal Batch Name",'Paymentvoucher');
+                        //     IF GenJnlLine2.FINDLAST THEN
+                        //     GenJnlLine."Line No.":=GenJnlLine2."Line No."+10000;
+                        //     GenJnlLine."Source Code":='PAYMENTJNL';
+                        //     GenJnlLine."Posting Date":=TODAY;
+                        //     //GenJnlLine."Document Type":=GenJnlLine."Document Type"::Payment;
+                        //     GenJnlLine."Document No.":="No.";
+                        //     GenJnlLine."External Document No.":="Cheque No";
+                        //     GenJnlLine."Account Type":=GenJnlLine."Account Type"::Customer;
+                        //     GenJnlLine."Account No.":="Account No";
+                        //     GenJnlLine.VALIDATE(GenJnlLine."Account No.");
+                        //     GenJnlLine.Description:='Paymentvoucher: '+"Account No"+' '+"Imprest No";
+                        //     Amt:=0;
+                        //     PurchLine.RESET;
+                        //     PurchLine.SETRANGE("Document No.","No.");
+                        //     IF PurchLine.FINDSET THEN BEGIN
+                        //       REPEAT
+                        //         Amt:=Amt+PurchLine."Line Amount";
+                        //         UNTIL PurchLine.NEXT=0;
+                        //       END;
+                        //     GenJnlLine.Amount:=-1*Amt;
+                        //     GenJnlLine.VALIDATE(GenJnlLine.Amount);
+                        //    // GenJnlLine."Bal. Account Type":=GenJnlLine."Bal. Account Type"::"Bank Account";
+                        //    // GenJnlLine."Bal. Account No.":="Paying Account No";
+                        //    // GenJnlLine.VALIDATE(GenJnlLine."Bal. Account No.");
+                        //     //Added for Currency Codes
+                        //     GenJnlLine."Currency Code":="Currency Code";
+                        //     GenJnlLine.VALIDATE("Currency Code");
+                        //     GenJnlLine."Currency Factor":="Currency Factor";
+                        //     GenJnlLine.VALIDATE("Currency Factor");
+                        //     GenJnlLine."Shortcut Dimension 1 Code":="Shortcut Dimension 1 Code";
+                        //     GenJnlLine.VALIDATE(GenJnlLine."Shortcut Dimension 1 Code");
+                        //     GenJnlLine."Shortcut Dimension 2 Code":="Shortcut Dimension 2 Code";
+                        //     GenJnlLine.VALIDATE(GenJnlLine."Shortcut Dimension 2 Code");
 
-                            PurchLine6.Reset;
-                            PurchLine6.SetRange(PurchLine6."Document No.", Rec."No.");
-                            //PurchLine6.SETFILTER("Amount Spent",'<>%1',0);
-                            if PurchLine6.FindSet then begin
-                                repeat
-                                    LineNo2 := LineNo2 + 2000;
-                                    GenJnlLine.Init;
-                                    GenJnlLine."Journal Template Name" := 'CASH RECE';
-                                    GenJnlLine."Journal Batch Name" := 'RECEIPTS';
-                                    //MESSAGE('tuko hapa');
-                                    //          GenJnlLine2.RESET;
-                                    //          GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
-                                    //          GenJnlLine2.SETRANGE("Journal Batch Name",'PVS');
-                                    //          IF GenJnlLine2.FINDLAST THEN
-                                    GenJnlLine."Line No." := LineNo2;
-                                    GenJnlLine."Source Code" := 'RCPTJNL';
-                                    GenJnlLine."Posting Date" := Rec."Posting Date";
-                                    //GenJnlLine."Document Type":=GenJnlLine."Document Type"::Payment;
-                                    GenJnlLine."Document No." := Rec."No.";
-                                    GenJnlLine."External Document No." := Rec."No.";
-                                    IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::"G/L Account" THEN
-                                        GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
-                                    GenJnlLine."Account No." := PurchLine6."Account No New";
-                                    IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::Supplier THEN
-                                        GenJnlLine."Account Type" := GenJnlLine."Account Type"::Vendor;
-                                    IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::Customer THEN BEGIN
-                                        GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
-                                        //    GenJnlLine."Account No." := PurchLine6."Imprest Account No";
-                                    END;
-                                    //GenJnlLine."Account No." := PurchLine6."Account No New";
 
-                                    GenJnlLine.Validate(GenJnlLine."Account No.");
-                                    GenJnlLine.Description := PurchLine6."Description 2";
-                                    GenJnlLine.Payee := Rec."Payee Naration";
+                        //     IF GenJnlLine.Amount<>0 THEN
+                        //     GenJnlLine.INSERT;*/
+                        //     //
+                        //     //
+                        //     //    PurchLine6.RESET;
+                        //     //    PurchLine6.SETRANGE("Document No.",PurchaseHeader."No.");
+                        //     //    //PurchLine6.SETFILTER("Amount Spent",'<>%1',0);
+                        //     //    IF PurchLine6.FINDSET THEN BEGIN
+                        //     //      REPEAT
+                        //     LineNo := LineNo + 1000;
+                        //     GenJnlLine.Reset;
+                        //     GenJnlLine.SetRange(GenJnlLine."Journal Template Name", 'PAYMENTS');
+                        //     GenJnlLine.SetRange(GenJnlLine."Journal Batch Name", 'RECE');
+                        //     if GenJnlLine.Find('-') then begin
+                        //         GenJnlLine.DeleteAll;
+                        //     end;
+                        //     GenJnlLine.Init;
+                        //     GenJnlLine."Journal Template Name" := 'PAYMENTS';
+                        //     GenJnlLine."Journal Batch Name" := 'RECE';
+                        //     //MESSAGE('tuko hapa');
+                        //     //          GenJnlLine2.RESET;
+                        //     //          GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
+                        //     //          GenJnlLine2.SETRANGE("Journal Batch Name",'RECE');
+                        //     //          IF GenJnlLine2.FINDLAST THEN
+                        //     GenJnlLine."Line No." := LineNo;
+                        //     GenJnlLine."Source Code" := 'RCPTJNL';
+                        //     GenJnlLine."Posting Date" := Rec."Posting Date";
+                        //     //GenJnlLine."Document Type":=GenJnlLine."Document Type"::Payment;
+                        //     GenJnlLine."Document No." := Rec."No.";
+                        //     GenJnlLine."External Document No." := Rec."No.";
+                        //     GenJnlLine."Account Type" := GenJnlLine."account type"::"Bank Account";
+                        //     GenJnlLine."Account No." := Rec."Paying Account No";
+                        //     GenJnlLine.Validate(GenJnlLine."Account No.");
+                        //     GenJnlLine.Description := Rec."Posting Description";
+                        //     //'Paymentvoucher: '+"Account No"+' '+"Imprest No";
+                        //     GenJnlLine.Amount := -Rec.Amount;
+                        //     GenJnlLine.Validate(GenJnlLine.Amount);
+                        //     //          GenJnlLine."Bal. Account Type":=GenJnlLine."Bal. Account Type"::"G/L Account";
+                        //     //          GenJnlLine."Bal. Account No.":=PurchLine6."No.";
+                        //     //          GenJnlLine.VALIDATE(GenJnlLine."Bal. Account No.");
+                        //     //           GenJnlLine."Bal. Gen. Posting Type":=GenJnlLine."Bal. Gen. Posting Type"::Sale;
+                        //     //Added for Currency Codes
+                        //     GenJnlLine."Currency Code" := Rec."Currency Code";
+                        //     GenJnlLine.Validate("Currency Code");
+                        //     GenJnlLine."Currency Factor" := Rec."Currency Factor";
+                        //     // GenJnlLine.Validate("Currency Factor");
+                        //     GenJnlLine."Shortcut Dimension 1 Code" := Rec."Shortcut Dimension 1 Code";
+                        //     GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
+                        //     GenJnlLine."Shortcut Dimension 2 Code" := Rec."Shortcut Dimension 2 Code";
+                        //     GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 2 Code");
+                        //     //   GenJnlLine.ValidateShortcutDimCode(3,Rec."Shortcut Dimension 3 Code");
+                        //     //  GenJnlLine.ValidateShortcutDimCode(4,Rec."Shortcut Dimension 4 Code");
+                        //     // GenJnlLine.ValidateShortcutDimCode(5,Rec."Shortcut Dimension 5 Code");
+                        //     if GenJnlLine.Amount <> 0 then
+                        //         GenJnlLine.Insert;
+                        //     //              UNTIL PurchLine6.NEXT=0;
+                        //     //            END;
 
-                                    GenJnlLine.Amount := PurchLine6.Amount;
+                        //     PurchLine6.Reset;
+                        //     PurchLine6.SetRange(PurchLine6."Document No.", Rec."No.");
+                        //     //PurchLine6.SETFILTER("Amount Spent",'<>%1',0);
+                        //     if PurchLine6.FindSet then begin
+                        //         repeat
+                        //             LineNo2 := LineNo2 + 2000;
+                        //             GenJnlLine.Init;
+                        //             GenJnlLine."Journal Template Name" := 'PAYMENTS';
+                        //             GenJnlLine."Journal Batch Name" := 'RECE';
+                        //             //MESSAGE('tuko hapa');
+                        //             //          GenJnlLine2.RESET;
+                        //             //          GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
+                        //             //          GenJnlLine2.SETRANGE("Journal Batch Name",'RECE');
+                        //             //          IF GenJnlLine2.FINDLAST THEN
+                        //             GenJnlLine."Line No." := LineNo2;
+                        //             GenJnlLine."Source Code" := 'RCPTJNL';
+                        //             GenJnlLine."Posting Date" := Rec."Posting Date";
+                        //             //GenJnlLine."Document Type":=GenJnlLine."Document Type"::Payment;
+                        //             GenJnlLine."Document No." := Rec."No.";
+                        //             GenJnlLine."External Document No." := Rec."No.";
+                        //             IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::"G/L Account" THEN
+                        //                 GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+                        //             GenJnlLine."Account No." := PurchLine6."Account No New";
+                        //             IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::Supplier THEN
+                        //                 GenJnlLine."Account Type" := GenJnlLine."Account Type"::Vendor;
+                        //             IF PurchLine6."Claim Type" = PurchLine6."Claim Type"::Customer THEN BEGIN
+                        //                 GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
+                        //                 //    GenJnlLine."Account No." := PurchLine6."Imprest Account No";
+                        //             END;
+                        //             //GenJnlLine."Account No." := PurchLine6."Account No New";
 
-                                    GenJnlLine.Validate(Amount);
+                        //             GenJnlLine.Validate(GenJnlLine."Account No.");
+                        //             GenJnlLine.Description := PurchLine6."Description 2";
+                        //             GenJnlLine.Payee := Rec."Payee Naration";
 
-                                    GenJnlLine."Currency Code" := Rec."Currency Code";
-                                    GenJnlLine.Validate("Currency Code");
-                                    GenJnlLine."Currency Factor" := Rec."Currency Factor";
-                                    //  GenJnlLine.Validate("Currency Factor");
+                        //             GenJnlLine.Amount := PurchLine6.Amount;
 
-                                    GenJnlLine."Shortcut Dimension 1 Code" := PurchLine6."Shortcut Dimension 1 Code";
-                                    GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
-                                    GenJnlLine."Shortcut Dimension 2 Code" := PurchLine6."Shortcut Dimension 2 Code";
-                                    GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 2 Code");
-                                    GenJnlLine.ValidateShortcutDimCode(3, PurchLine6."ShortcutDimCode[3]");
-                                    GenJnlLine.ValidateShortcutDimCode(4, PurchLine6."ShortcutDimCode[4]");
-                                    GenJnlLine.ValidateShortcutDimCode(5, Rec."Shortcut Dimension 5 Code");
-                                    GenJnlLine.ValidateShortcutDimCode(6, PurchLine6."ShortcutDimCode[6]");
-                                    GenJnlLine.ValidateShortcutDimCode(7, PurchLine6."ShortcutDimCode[7]");
-                                    GenJnlLine.ValidateShortcutDimCode(8, PurchLine6."ShortcutDimCode[8]");
-                                    if GenJnlLine.Amount <> 0 then
-                                        GenJnlLine.Insert;
-                                until PurchLine6.Next = 0;
-                            end;
-                            MESSAGE('HOME %1|%2', GenJnlLine."Journal Batch Name", GenJnlLine."Journal Template Name");
-                            EXIT;
-                            GenJnlLine.Reset;
-                            GenJnlLine."Journal Template Name" := 'CASH RECE';
-                            GenJnlLine."Journal Batch Name" := 'RECEIPTS';
-                            if GenJnlLine.Find('-') then begin
-                                //   Message('HOME');
-                                Codeunit.Run(Codeunit::"Gen. Jnl.-Post Batch", GenJnlLine);
-                                Rec.Completed := true;
-                            end;
-                            PurchaseHeader2.Reset;
-                            PurchaseHeader2.SetRange("No.", Rec."Linked Document");
-                            if PurchaseHeader2.Findset then begin
-                                repeat
-                                    PurchaseHeader2.Completed := true;
-                                    PurchaseHeader2.Posted := true;
-                                    PurchaseHeader2.Modify;
-                                until PurchaseHeader2.Next = 0;
-                            end;
+                        //             GenJnlLine.Validate(Amount);
 
-                            Rec.Posted := true;
-                            Rec.Modify(true);
-                            CurrPage.Close();
+                        //             GenJnlLine."Currency Code" := Rec."Currency Code";
+                        //             GenJnlLine.Validate("Currency Code");
+                        //             GenJnlLine."Currency Factor" := Rec."Currency Factor";
+                        //             //  GenJnlLine.Validate("Currency Factor");
 
-                            //  Rec.Modify;
+                        //             GenJnlLine."Shortcut Dimension 1 Code" := PurchLine6."Shortcut Dimension 1 Code";
+                        //             GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
+                        //             GenJnlLine."Shortcut Dimension 2 Code" := PurchLine6."Shortcut Dimension 2 Code";
+                        //             GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 2 Code");
+                        //             GenJnlLine.ValidateShortcutDimCode(3, PurchLine6."ShortcutDimCode[3]");
+                        //             GenJnlLine.ValidateShortcutDimCode(4, PurchLine6."ShortcutDimCode[4]");
+                        //             GenJnlLine.ValidateShortcutDimCode(5, Rec."Shortcut Dimension 5 Code");
+                        //             GenJnlLine.ValidateShortcutDimCode(6, PurchLine6."ShortcutDimCode[6]");
+                        //             GenJnlLine.ValidateShortcutDimCode(7, PurchLine6."ShortcutDimCode[7]");
+                        //             GenJnlLine.ValidateShortcutDimCode(8, PurchLine6."ShortcutDimCode[8]");
+                        //             if GenJnlLine.Amount <> 0 then
+                        //                 GenJnlLine.Insert;
+                        //         until PurchLine6.Next = 0;
+                        //     end;
+                        //     MESSAGE('HOME %1|%2', GenJnlLine."Journal Batch Name", GenJnlLine."Journal Template Name");
+                        //     EXIT;
+                        //     GenJnlLine.Reset;
+                        //     GenJnlLine."Journal Template Name" := 'PAYMENTS';
+                        //     GenJnlLine."Journal Batch Name" := 'RECE';
+                        //     if GenJnlLine.Find('-') then begin
+                        //         //   Message('HOME');
+                        //         Codeunit.Run(Codeunit::"Gen. Jnl.-Post Batch", GenJnlLine);
+                        //         Rec.Completed := true;
+                        //     end;
+                        //     PurchaseHeader2.Reset;
+                        //     PurchaseHeader2.SetRange("No.", Rec."Linked Document");
+                        //     if PurchaseHeader2.Findset then begin
+                        //         repeat
+                        //             PurchaseHeader2.Completed := true;
+                        //             PurchaseHeader2.Posted := true;
+                        //             PurchaseHeader2.Modify;
+                        //         until PurchaseHeader2.Next = 0;
+                        //     end;
 
-                            //   GenJnlLine2.RESET;
-                            //   GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
-                            //   GenJnlLine2.SETRANGE("Journal Batch Name",'PVS');
-                            //   IF GenJnlLine2.FINDFIRST THEN
-                            //   GenJnlLine2.DELETEALL;
+                        //     Rec.Posted := true;
+                        //     Rec.Modify(true);
+                        //     CurrPage.Close();
 
-                            Message('Receipt posted Successfully');
-                        end;
+                        //     //  Rec.Modify;
+
+                        //     //   GenJnlLine2.RESET;
+                        //     //   GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
+                        //     //   GenJnlLine2.SETRANGE("Journal Batch Name",'RECE');
+                        //     //   IF GenJnlLine2.FINDFIRST THEN
+                        //     //   GenJnlLine2.DELETEALL;
+
+                        //     Message('Receipt posted Successfully');
+                        // end;
 
                     end;
                 }
@@ -666,84 +664,35 @@ Page 80109 "Receipt Voucher Card"
                             //TESTFIELD(Status,Status::Released);
 
                             GenJnlLine.Reset;
-                            GenJnlLine.SetRange("Journal Template Name", 'CASH RECE');
-                            GenJnlLine.SetRange("Journal Batch Name", 'RECEIPTS');
+                            GenJnlLine.SetRange("Journal Template Name", 'PAYMENTS');
+                            GenJnlLine.SetRange("Journal Batch Name", 'RECE');
                             if GenJnlLine.Find then begin
                                 GenJnlLine.DeleteAll;
                             end;
                             GenJournalBatch.Reset;
-                            GenJournalBatch.SetRange(GenJournalBatch."Journal Template Name", 'CASH RECE');
-                            GenJournalBatch.SetRange(GenJournalBatch.Name, 'RECEIPTS');
+                            GenJournalBatch.SetRange(GenJournalBatch."Journal Template Name", 'PAYMENTS');
+                            GenJournalBatch.SetRange(GenJournalBatch.Name, 'RECE');
                             if GenJournalBatch.Find('-') = false then begin
                                 GenJournalBatch.Init;
-                                GenJournalBatch."Journal Template Name" := 'CASH RECE';
-                                GenJournalBatch.Name := 'RECEIPTS';
+                                GenJournalBatch."Journal Template Name" := 'PAYMENTS';
+                                GenJournalBatch.Name := 'RECE';
                                 GenJournalBatch.Insert(true);
                             end;
-                            /*GenJnlLine.INIT;
-                            GenJnlLine."Journal Template Name":='PAYMENTS';
-                            GenJnlLine."Journal Batch Name":='Paymentvoucher';
-                            GenJnlLine2.RESET;
-                            GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
-                            GenJnlLine2.SETRANGE("Journal Batch Name",'Paymentvoucher');
-                            IF GenJnlLine2.FINDLAST THEN
-                            GenJnlLine."Line No.":=GenJnlLine2."Line No."+10000;
-                            GenJnlLine."Source Code":='PAYMENTJNL';
-                            GenJnlLine."Posting Date":=TODAY;
-                            //GenJnlLine."Document Type":=GenJnlLine."Document Type"::Payment;
-                            GenJnlLine."Document No.":="No.";
-                            GenJnlLine."External Document No.":="Cheque No";
-                            GenJnlLine."Account Type":=GenJnlLine."Account Type"::Customer;
-                            GenJnlLine."Account No.":="Account No";
-                            GenJnlLine.VALIDATE(GenJnlLine."Account No.");
-                            GenJnlLine.Description:='Paymentvoucher: '+"Account No"+' '+"Imprest No";
-                            Amt:=0;
-                            PurchLine.RESET;
-                            PurchLine.SETRANGE("Document No.","No.");
-                            IF PurchLine.FINDSET THEN BEGIN
-                              REPEAT
-                                Amt:=Amt+PurchLine."Line Amount";
-                                UNTIL PurchLine.NEXT=0;
-                              END;
-                            GenJnlLine.Amount:=-1*Amt;
-                            GenJnlLine.VALIDATE(GenJnlLine.Amount);
-                           // GenJnlLine."Bal. Account Type":=GenJnlLine."Bal. Account Type"::"Bank Account";
-                           // GenJnlLine."Bal. Account No.":="Paying Account No";
-                           // GenJnlLine.VALIDATE(GenJnlLine."Bal. Account No.");
-                            //Added for Currency Codes
-                            GenJnlLine."Currency Code":="Currency Code";
-                            GenJnlLine.VALIDATE("Currency Code");
-                            GenJnlLine."Currency Factor":="Currency Factor";
-                            GenJnlLine.VALIDATE("Currency Factor");
-                            GenJnlLine."Shortcut Dimension 1 Code":="Shortcut Dimension 1 Code";
-                            GenJnlLine.VALIDATE(GenJnlLine."Shortcut Dimension 1 Code");
-                            GenJnlLine."Shortcut Dimension 2 Code":="Shortcut Dimension 2 Code";
-                            GenJnlLine.VALIDATE(GenJnlLine."Shortcut Dimension 2 Code");
-                        
-                        
-                            IF GenJnlLine.Amount<>0 THEN
-                            GenJnlLine.INSERT;*/
-                            //
-                            //
-                            //    PurchLine6.RESET;
-                            //    PurchLine6.SETRANGE("Document No.",PurchaseHeader."No.");
-                            //    //PurchLine6.SETFILTER("Amount Spent",'<>%1',0);
-                            //    IF PurchLine6.FINDSET THEN BEGIN
                             //      REPEAT
                             LineNo := LineNo + 1000;
                             GenJnlLine.Reset;
-                            GenJnlLine.SetRange(GenJnlLine."Journal Template Name", 'CASH RECE');
-                            GenJnlLine.SetRange(GenJnlLine."Journal Batch Name", 'RECEIPTS');
+                            GenJnlLine.SetRange(GenJnlLine."Journal Template Name", 'PAYMENTS');
+                            GenJnlLine.SetRange(GenJnlLine."Journal Batch Name", 'RECE');
                             if GenJnlLine.Find('-') then begin
                                 GenJnlLine.DeleteAll;
                             end;
                             GenJnlLine.Init;
-                            GenJnlLine."Journal Template Name" := 'CASH RECE';
-                            GenJnlLine."Journal Batch Name" := 'RECEIPTS';
+                            GenJnlLine."Journal Template Name" := 'PAYMENTS';
+                            GenJnlLine."Journal Batch Name" := 'RECE';
                             //MESSAGE('tuko hapa');
                             //          GenJnlLine2.RESET;
                             //          GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
-                            //          GenJnlLine2.SETRANGE("Journal Batch Name",'PVS');
+                            //          GenJnlLine2.SETRANGE("Journal Batch Name",'RECE');
                             //          IF GenJnlLine2.FINDLAST THEN
                             GenJnlLine."Line No." := LineNo;
                             GenJnlLine."Source Code" := 'RCPTJNL';
@@ -786,12 +735,12 @@ Page 80109 "Receipt Voucher Card"
                                 repeat
                                     LineNo2 := LineNo2 + 2000;
                                     GenJnlLine.Init;
-                                    GenJnlLine."Journal Template Name" := 'CASH RECE';
-                                    GenJnlLine."Journal Batch Name" := 'RECEIPTS';
+                                    GenJnlLine."Journal Template Name" := 'PAYMENTS';
+                                    GenJnlLine."Journal Batch Name" := 'RECE';
                                     //MESSAGE('tuko hapa');
                                     //          GenJnlLine2.RESET;
                                     //          GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
-                                    //          GenJnlLine2.SETRANGE("Journal Batch Name",'PVS');
+                                    //          GenJnlLine2.SETRANGE("Journal Batch Name",'RECE');
                                     //          IF GenJnlLine2.FINDLAST THEN
                                     GenJnlLine."Line No." := LineNo2;
                                     GenJnlLine."Source Code" := 'RCPTJNL';
@@ -837,21 +786,61 @@ Page 80109 "Receipt Voucher Card"
                                         GenJnlLine.Insert;
                                 until PurchLine6.Next = 0;
                             end;
-                            //MESSAGE('HOME %1|%2',GenJnlLine."Journal Batch Name",GenJnlLine."Journal Template Name");
-                            //EXIT;
-                            GenJnlLine.Reset;
-                            GenJnlLine."Journal Template Name" := 'CASH RECE';
-                            GenJnlLine."Journal Batch Name" := 'RECEIPTS';
-                            if GenJnlLine.Find('-') then begin
-                                //   Message('HOME');
-                                Codeunit.Run(Codeunit::"Gen. Jnl.-Post Batch", GenJnlLine);
-                                Rec.Completed := true;
-                                Rec.Posted := true;
-                                Rec.Modify(true);
+                            // MESSAGE('HOME %1|%2 ko kokinde journals', GenJnlLine."Journal Batch Name", GenJnlLine."Journal Template Name");
+                            // EXIT;
+                            BAL := 0;
+                            GenJnlLine.RESET;
+                            GenJnlLine.SetRange(GenJnlLine."Journal Template Name", 'PAYMENTS');
+                            GenJnlLine.SetRange(GenJnlLine."Journal Batch Name", 'RECE');
+                            IF GenJnlLine.FINDSET THEN BEGIN
+                                REPEAT
+                                    BAL := BAL + GenJnlLine."Amount (LCY)";
+                                UNTIL GenJnlLine.NEXT = 0;
+                            END;
+                            ///Message('ba%1', BAL);
 
-                                CurrPage.Close();
-                                CurrPage.Update();
+
+                            IF (BAL < 0) AND (BAL > -1) THEN BEGIN
+                                GenJnlLine.RESET;
+                                GenJnlLine.SetRange(GenJnlLine."Journal Template Name", 'PAYMENTS');
+                                GenJnlLine.SetRange(GenJnlLine."Journal Batch Name", 'RECE');
+                                GenJnlLine.SETFILTER("Amount (LCY)", '<%1', 0);
+                                IF GenJnlLine.FINDFIRST THEN BEGIN
+                                    GenJnlLine.VALIDATE("Amount (LCY)", GenJnlLine."Amount (LCY)" + ABS(BAL));
+                                    GenJnlLine.MODIFY(TRUE);
+                                END;
+                            END;
+
+                            IF (BAL > 0) AND (BAL < 1) THEN BEGIN
+                                GenJnlLine.RESET;
+                                GenJnlLine.SetRange(GenJnlLine."Journal Template Name", 'PAYMENTS');
+                                GenJnlLine.SetRange(GenJnlLine."Journal Batch Name", 'RECE');
+                                GenJnlLine.SETFILTER("Amount (LCY)", '<%1', 0);
+                                IF GenJnlLine.FINDFIRST THEN BEGIN
+                                    GenJnlLine.VALIDATE("Amount (LCY)", GenJnlLine."Amount (LCY)" - BAL);
+                                    GenJnlLine.MODIFY(TRUE);
+                                END;
+                            END;
+                            COMMIT;
+                            // Rec.Posted := true;
+                            // Rec.Modify(true);
+                            // //  CurrPage.Close();
+                            // Message('Journals Inserted Successfully');
+                            // exit;
+
+                            GenJnlLine.Reset;
+                            GenJnlLine.SetRange(GenJnlLine."Journal Template Name", 'PAYMENTS');
+                            GenJnlLine.SetRange(GenJnlLine."Journal Batch Name", 'RECE');
+                            if GenJnlLine.Find('-') then begin
+                                Codeunit.Run(Codeunit::"Gen. Jnl.-Post Batch", GenJnlLine);//auto posting of payment voucher
                             end;
+                            // GenJnlLine.Reset;
+                            // GenJnlLine."Journal Template Name" := 'PAYMENTS';
+                            // GenJnlLine."Journal Batch Name" := 'RECE';
+                            // if GenJnlLine.Find('-') then begin
+                            //     //   Message('HOME');
+                            //     Codeunit.Run(Codeunit::"Gen. Jnl.-Post Batch", GenJnlLine);
+                            // end;
                             PurchaseHeader2.Reset;
                             PurchaseHeader2.SetRange("No.", Rec."Linked Document");
                             if PurchaseHeader2.Findset then begin
@@ -862,15 +851,15 @@ Page 80109 "Receipt Voucher Card"
                                 until PurchaseHeader2.Next = 0;
                             end;
 
-                            // Rec.Posted := true;
-                            // Rec.Modify(true);
-                            // CurrPage.Close();
+                            Rec.Posted := true;
+                            Rec.Modify(true);
+                            CurrPage.Close();
 
                             //  Rec.Modify;
 
                             //   GenJnlLine2.RESET;
                             //   GenJnlLine2.SETRANGE("Journal Template Name",'PAYMENTS');
-                            //   GenJnlLine2.SETRANGE("Journal Batch Name",'PVS');
+                            //   GenJnlLine2.SETRANGE("Journal Batch Name",'RECE');
                             //   IF GenJnlLine2.FINDFIRST THEN
                             //   GenJnlLine2.DELETEALL;
 
@@ -1059,6 +1048,7 @@ Page 80109 "Receipt Voucher Card"
         UserMgt: Codeunit "User Setup Management";
         ArchiveManagement: Codeunit ArchiveManagement;
         PurchLine: Record "Purchase Line";
+        BAL: Decimal;
         StatusEditable: Boolean;
         Vendor: Record Vendor;
         PurchHeader: Record "Purchase Header";

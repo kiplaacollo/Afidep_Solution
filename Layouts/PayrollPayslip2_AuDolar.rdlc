@@ -1390,6 +1390,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2973,6 +2974,13 @@
                         <Operator>Equal</Operator>
                         <FilterValues>
                           <FilterValue DataType="Integer">3</FilterValue>
+                        </FilterValues>
+                      </Filter>
+                      <Filter>
+                        <FilterExpression>=Fields!TCode.Value</FilterExpression>
+                        <Operator>NotEqual</Operator>
+                        <FilterValues>
+                          <FilterValue>E012</FilterValue>
                         </FilterValues>
                       </Filter>
                     </Filters>

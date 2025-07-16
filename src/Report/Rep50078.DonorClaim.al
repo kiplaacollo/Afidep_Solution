@@ -7,7 +7,7 @@ Report 50078 "Donor Claim"
     {
         dataitem("Payroll Project Allocation"; "Payroll Project Allocation")
         {
-            RequestFilterFields = "Project Code";
+            RequestFilterFields = "Project Code", "Employee No";
 
 
 
@@ -20,6 +20,7 @@ Report 50078 "Donor Claim"
             {
 
             }
+            column(Employee_No; "Employee No") { }
             column(Project_Code; "Project Code")
             {
                 Caption = 'Project Code';
@@ -68,7 +69,7 @@ Report 50078 "Donor Claim"
                 {
                     // Caption = 'Total Actual Amount (Adjusted)';
                 }
-                column(Total_Budgeted_Amount; TotalBudgetedAmount)
+                column(Total_Budgeted_Amount; CalcBudgetAmount)
                 {
                     // Caption = 'Total Budgeted Amount (Adjusted)';
                 }
@@ -77,7 +78,7 @@ Report 50078 "Donor Claim"
                 {
                     Caption = 'Actual Amount (Adjusted)';
                 }
-                column(Budgeted_Amount; GetAdjustedAmount("Budgeted Amount", StartDateFilter, EndDateFilter))
+                column(Budgeted_Amount; GetAdjustedAmount(CalcBudgetAmount(), StartDateFilter, EndDateFilter))
                 {
                     Caption = 'Budgeted Amount (Adjusted)';
                 }
@@ -173,9 +174,25 @@ Report 50078 "Donor Claim"
                 // Message('Total Actual: %1, Total Budgeted: %2, NumMonths: %3',
                 //         TotalActualAmount, TotalBudgetedAmount, NumMonths);
 
+                if EmployeeNo <> '' then
+                    SetRange("Payroll Project Allocation"."Employee No", EmployeeNo);
 
 
 
+
+            end;
+
+            trigger OnAfterGetRecord()
+            begin
+                PeriodTrans.Reset();
+                PeriodTrans.SetRange(PeriodTrans."No.", "Employee No");
+                PeriodTrans.SetRange(PeriodTrans."Payroll Period", Period);
+                // PeriodTrans.SetFilter(PeriodTrans."Transaction Name", '<>%1&<>%2&<>%3&<>%4', 'Education Allowance', 'Education Allowance deduction', 'Excess Pension', 'Salary Arrears Excess Pension'); // Corrected syntax
+                if PeriodTrans.Find('-') then begin
+                    repeat
+                    until PeriodTrans.next = 0;
+
+                end;
             end;
         }
 
@@ -197,6 +214,13 @@ Report 50078 "Donor Claim"
                     {
                         ApplicationArea = All;
                     }
+                    field(EmployeeNo; EmployeeNo)
+                    {
+                        Caption = 'Employee No.';
+                        ApplicationArea = All;
+                        TableRelation = "HR Employees"."No."; // Assuming you’re using HREmployee table
+                    }
+
                     // Caption = 'Options';
                     // field(ProjectFilter; FilterField)
                     // {
@@ -243,6 +267,8 @@ Report 50078 "Donor Claim"
     end;
 
 
+
+
     var
         CompanyInfo: Record "Company Information";
         CI: Record "Company Information";
@@ -253,6 +279,8 @@ Report 50078 "Donor Claim"
         EmployeeNo: Code[20];
         TotalActualAmount: Decimal;
         TotalBudgetedAmount: Decimal;
+        PeriodTrans: Record "Payroll Monthly Trans_AU";
+        SelectedPeriod: Date;
 
     local procedure CalcPercentage(HoursWorked: Decimal): Decimal
     var
@@ -364,6 +392,12 @@ Report 50078 "Donor Claim"
         EndMonth := Date2DMY(EndDate, 2);
 
         exit((EndYear - StartYear) * 12 + (EndMonth - StartMonth) + 1);
+    end;
+
+
+    procedure CalcBudgetAmount(): Decimal
+    begin
+        exit(("Proposal Team"."Allocation %" / 100) * "Proposal Team"."Daily Rate" * (220 / 12));
     end;
 
 

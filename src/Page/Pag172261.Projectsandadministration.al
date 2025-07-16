@@ -191,6 +191,7 @@ page 172261 "Projects and administration RC"
                 }
                 action("Donor Claim Report G")
                 {
+                    Visible = false;
                     ApplicationArea = Basic, Suite;
                     Caption = 'Donor Claim Report';
 

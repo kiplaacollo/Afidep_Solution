@@ -91,7 +91,9 @@ table 172076 Payroll
 
     trigger OnModify()
     begin
-
+        IF Status = Status::Approved then begin
+            NotifyFinancePerson();
+        end;
     end;
 
     trigger OnDelete()
@@ -103,5 +105,46 @@ table 172076 Payroll
     begin
 
     end;
+
+
+    local procedure NotifyFinancePerson()
+    var
+        EmailMessage: Codeunit "Email Message";
+        Email: Codeunit Email;
+        EmailBody: Text;
+        EmailSubject: Text;
+        Recipients: Text;
+        Country: Code[30];
+    begin
+        // Ensure the document is approved
+        if Status <> Status::Approved then
+            exit;
+
+        // Set the country (can also use "Shortcut Dimension 1 Code" if available)
+        Country := 'KENYA'; // Replace with dynamic country if needed
+
+        // Set recipient list as a semicolon-separated string
+        case Country of
+            'KENYA':
+                Recipients := 'edward.njenga@afidep.org;john.kuyeli@afidep.org;wicklife.okinda@afidep.org';
+            'MALAWI':
+                Recipients := 'hector.mvula@afidep.org;john.kuyeli@afidep.org;wicklife.okinda@afidep.org';
+            else
+                exit;
+        end;
+
+        // Compose email content
+        EmailSubject := 'Payroll Approved';
+        EmailBody := StrSubstNo(
+            'The payroll with document number %1 for country %2 has been fully approved.<br><br>Please proceed accordingly.',
+            "Document No", Country
+        );
+
+        // Create and send email
+        EmailMessage.Create(Recipients, EmailSubject, EmailBody, true);
+        Email.Send(EmailMessage);
+    end;
+
+
 
 }

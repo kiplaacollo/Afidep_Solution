@@ -25,6 +25,10 @@ Page 17251 "HR Job Applications Card"
                     Editable = false;
                     Importance = Promoted;
                 }
+                // field("Job Applied For"; Rec."Job Applied For")
+                // {
+                //     ApplicationArea = Basic;
+                // }
                 field("First Name"; Rec."First Name")
                 {
                     ApplicationArea = Basic;
@@ -406,6 +410,17 @@ Page 17251 "HR Job Applications Card"
                     RunObject = Page "HR Employee Attachments SF";
                     RunPageLink = "Employee No" = field("Application No");
                     Visible = false;
+                }
+                action("Attachments Portal")
+                {
+                    ApplicationArea = Basic;
+                    Ellipsis = true;
+                    Image = Attachments;
+                    Promoted = true;
+                    Visible = true;
+                    PromotedCategory = Process;
+                    RunObject = page "Job App Attachments List";
+                    RunPageLink = "Job ID" = field("Application No");
                 }
             }
             group("&Functions")

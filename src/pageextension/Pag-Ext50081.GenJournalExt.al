@@ -3,6 +3,17 @@ pageextension 50081 "General Journal Ext" extends "General Journal"
 
     layout
     {
+        addafter(Amount)
+        {
+            field("VAT Base Amount"; Rec."VAT Base Amount")
+            {
+                ApplicationArea = Basic;
+            }
+            // field("VAT Amount_"; Rec."VAT Amount")
+            // {
+            //     ApplicationArea = Basic;
+            // }
+        }
         addafter("Currency Code")
         {
             field("Currency Factor"; Rec."Currency Factor")
@@ -18,6 +29,7 @@ pageextension 50081 "General Journal Ext" extends "General Journal"
     }
     actions
     {
+
         addafter(Post)
         {
             action(PostNew)
@@ -47,139 +59,57 @@ pageextension 50081 "General Journal Ext" extends "General Journal"
         {
             trigger OnBeforeAction()
             begin
-                //             if Rec."Approval Status" <> Rec."Approval Status"::Approved then
-                //                 Error('Status Must be approved before posting');
-                //             // Call the simple approval check before posting
-                //             //  CheckApprovalStatusBeforePosting();
-
-                //             // Continue with posting if the journal is approved
-                //             // CurrPage.SaveRecord;
-                //             //Action::Post.Run();
+                AdjustSmallRoundingDifference(Rec);
             end;
         }
     }
+
+    procedure AdjustSmallRoundingDifference(GenJournalLine: Record "Gen. Journal Line")
+    var
+        GenJnlLineLocal: Record "Gen. Journal Line";
+        TotalAmount: Decimal;
+        AdjustmentAmount: Decimal;
+    begin
+        TotalAmount := 0;
+
+        // Loop through lines for the same document
+        GenJnlLineLocal.SetRange("Journal Template Name", GenJournalLine."Journal Template Name");
+        GenJnlLineLocal.SetRange("Journal Batch Name", GenJournalLine."Journal Batch Name");
+        GenJnlLineLocal.SetRange("Document No.", GenJournalLine."Document No.");
+        GenJnlLineLocal.SetRange("Posting Date", GenJournalLine."Posting Date");
+
+        if GenJnlLineLocal.FindSet() then begin
+            repeat
+                if GenJnlLineLocal."Amount" <> 0 then
+                    TotalAmount += GenJnlLineLocal."Amount";
+            until GenJnlLineLocal.Next() = 0;
+        end;
+
+        // Check if out of balance by a small rounding difference (within +/-5)
+        if (Abs(TotalAmount) > 0) and (Abs(TotalAmount) <= 5) then begin
+            AdjustmentAmount := -TotalAmount;
+
+            // Apply adjustment to the first line
+            if GenJnlLineLocal.FindFirst() then begin
+                GenJnlLineLocal."Amount" := GenJnlLineLocal."Amount" + AdjustmentAmount;
+
+                // Adjust Debit or Credit accordingly
+                if GenJnlLineLocal."Debit Amount" <> 0 then
+                    GenJnlLineLocal."Debit Amount" := GenJnlLineLocal."Debit Amount" + AdjustmentAmount
+                else
+                    if GenJnlLineLocal."Credit Amount" <> 0 then
+                        GenJnlLineLocal."Credit Amount" := GenJnlLineLocal."Credit Amount" + (-AdjustmentAmount);
+
+                // Optional: Also adjust VAT Base Amount if needed (use same logic as amount)
+                GenJnlLineLocal."VAT Base Amount" := GenJnlLineLocal."VAT Base Amount" + AdjustmentAmount;
+
+                GenJnlLineLocal.Modify();
+            end;
+        end;
+    end;
+
 }
-//     layout
-//     {
-//         // Add changes to page layout here
-//         addafter(Comment)
-//         {
-//             field("Approval Status"; Rec."Approval Status")
-//             {
-//                 ApplicationArea = Basic;
-//             }
 
-//         }
-//     }
-
-
-//     actions
-//     {
-//         addafter(CancelApprovalRequest)
-//         {
-//             action(ApprovalsNew)
-//             {
-//                 ApplicationArea = Basic;
-//                 Caption = 'Approvals';
-//                 Image = Approval;
-//                 Promoted = true;
-//                 PromotedCategory = Category6;
-//                 PromotedIsBig = true;
-
-//                 trigger OnAction()
-//                 var
-//                     ApprovalEntries: Page "Approval Entries";
-//                 begin
-//                     //      DocumentType := DocumentType::" ";
-
-//                     // ApprovalEntries.SetRecordFilters(Database::"Bank Acc. Reconciliation", Rec."Statement Type", Rec."Bank Account No.");
-//                     // ApprovalEntries.Run;
-
-//                     // ApprovalEntry.reset;
-
-
-//                 end;
-//             }
-
-//             action("Send A&pproval Request")
-//             {
-//                 ApplicationArea = Basic;
-//                 Caption = 'Send A&pproval Request New';
-//                 Image = SendApprovalRequest;
-//                 Promoted = true;
-//                 PromotedCategory = Category6;
-//                 PromotedIsBig = true;
-
-//                 trigger OnAction()
-//                 var
-//                     Text001: label 'This Batch is already pending approval';
-//                     ApprovalsMgmt: Codeunit "Approvals Mgmt.";
-//                 begin
-//                     // Rec.TestField("Approval Status", Rec."Approval Status"::New);
-//                     // Rec.TestField(Amount);
-
-//                     // varrvariant := Rec;
-
-//                     // if CustomApprovalsCodeunit.CheckApprovalsWorkflowEnabled(varrvariant) then
-//                     //     CustomApprovalsCodeunit.OnSendDocForApproval(varrvariant);
-//                     if ApprovalsMgmt.CheckGeneralJournalLineApprovalsWorkflowEnabled(Rec) then
-//                         ApprovalsMgmt.OnSendGeneralJournalLineForApproval(Rec);
-
-//                 end;
-//             }
-//             action("Cancel Approval Request")
-//             {
-//                 ApplicationArea = Basic;
-//                 Image = Cancel;
-//                 Promoted = true;
-//                 PromotedCategory = Category6;
-//                 PromotedIsBig = true;
-
-//                 trigger OnAction()
-//                 var
-//                     ApprovalMgt: Codeunit "Approvals Mgmt.";
-//                 begin
-//                     //IF ApprovalMgt.CancelBatchAppr(Rec,TRUE,TRUE) THEN;
-//                     //varrvariant:=Rec;
-//                     //CustomApprovalsCodeunit.OnCancelDocApprovalRequest(varrvariant);
-//                     // if Rec."Approval Status" = Rec."Approval Status"::"Pending Approval" then begin
-//                     //     ApprovalEntry.Reset;
-//                     //     ApprovalEntry.SetRange("Document No.", Rec."No.");
-//                     //     if ApprovalEntry.FindSet then begin
-//                     //         repeat
-//                     //             ApprovalEntry.Status := ApprovalEntry.Status::Canceled;
-//                     //             ApprovalEntry."Approver ID" := '';
-//                     //             ApprovalEntry.Modify;
-//                     //         until ApprovalEntry.Next = 0;
-//                     //     end;
-//                     //     Rec."Approval Status" := Rec."Approval Status"::New;
-//                     //     Rec.Modify;
-//                     // end;
-//                 end;
-//             }
-//         }
-
-
-//     }
-
-//     local procedure CheckApprovalStatusBeforePosting()
-//     var
-//         ApprovalEntry: Record "Approval Entry";
-//     begin
-//         // Find the approval entry for the current General Journal Line
-//         ApprovalEntry.SetRange("Table ID", DATABASE::"Gen. Journal Line");
-//         ApprovalEntry.SetRange("Document No.", Rec."Document No.");
-
-//         if ApprovalEntry.FindFirst() then begin
-//             // Ensure the approval status is "Approved" before posting
-//             ApprovalEntry.TESTFIELD(Status, ApprovalEntry.Status::Approved);
-//         end
-//         else begin
-//             // Throw an error if no approval entry is found
-//             Error('The journal has not been submitted for approval.');
-//         end;
-//     end;
-// }
 
 
 

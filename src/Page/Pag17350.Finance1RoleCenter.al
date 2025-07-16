@@ -194,14 +194,59 @@ page 17350 "Finance 1 Role Center"
 
                     RunObject = report "Trial Balancever2";
                 }
-                action("Financial reports")
+                group("Financial Reports")
                 {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Financial Reports';
+                    action("Financial reports1")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Financial Reports';
 
-                    Visible = true;
+                        Visible = true;
 
-                    RunObject = page 108;
+                        RunObject = page 108;
+                    }
+                    group("Monthly Staff Cost Report")
+                    {
+                        action("Staff Cost Report")
+                        {
+                            ApplicationArea = Basic, Suite;
+                            Caption = 'Staff Cost Report Per Project';
+
+                            Visible = true;
+
+                            RunObject = report "Staff Cost Report";
+                        }
+                        action("Staff Cost Report1")
+                        {
+                            ApplicationArea = Basic, Suite;
+                            Caption = 'Staff Cost Report Per Employee';
+
+                            Visible = true;
+
+                            RunObject = report "Staff Cost Report Per employee";
+                        }
+                    }
+                    group("Selected Range Staff Cost")
+                    {
+                        action("Staff Cost Report2")
+                        {
+                            ApplicationArea = Basic, Suite;
+                            Caption = 'Staff Cost Range Per Employee';
+
+                            Visible = true;
+
+                            RunObject = report "Staff Cost Report Range";
+                        }
+                        action("Staff Cost Report3")
+                        {
+                            ApplicationArea = Basic, Suite;
+                            Caption = 'Staff Cost Range Per Project';
+
+                            Visible = true;
+
+                            RunObject = report "Staff Cost Report P Range";
+                        }
+                    }
                 }
                 action("General Ledger Report")
                 {
@@ -342,18 +387,62 @@ page 17350 "Finance 1 Role Center"
                                         Recurring = const(false));
                     ToolTip = 'Register received payments by manually applying them to the related customer, vendor, or bank ledger entries. Then, post the payments to G/L accounts and thereby close the related ledger entries.';
                 }
-                action(Receipts)
+                group(Receipts)
                 {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Receipts';
-                    Image = List;
+                    action(ReceiptsNew)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Receipts New';
+                        Image = List;
 
-                    // Visible = false;
+                        // Visible = false;
 
-                    RunObject = Page "Receipt Lists";
-                    // RunPageView = where("Template Type" = const(Payments),
-                    //                     Recurring = const(false));
-                    ToolTip = 'Register payments to vendors. A payment journal is a type of general journal that is used to post outgoing payment transactions to G/L, bank, customer, vendor, employee, and fixed assets accounts. The Suggest Vendor Payments functions automatically fills the journal with payments that are due. When payments are posted, you can export the payments to a bank file for upload to your bank if your system is set up for electronic banking. You can also issue computer checks from the payment journal.';
+                        RunObject = Page "Receipt Lists";
+                        RunPageView = where(Status = filter(Open));//,
+                                                                   //                     Recurring = const(false));
+                        ToolTip = 'Register payments to vendors. A payment journal is a type of general journal that is used to post outgoing payment transactions to G/L, bank, customer, vendor, employee, and fixed assets accounts. The Suggest Vendor Payments functions automatically fills the journal with payments that are due. When payments are posted, you can export the payments to a bank file for upload to your bank if your system is set up for electronic banking. You can also issue computer checks from the payment journal.';
+                    }
+                    action(ReceiptsPending)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Receipts Pending';
+                        Image = List;
+
+                        // Visible = false;
+
+                        RunObject = Page "Receipt Lists";
+                        RunPageView = where(Status = filter("Pending Approval"));//,
+                                                                                 //                     Recurring = const(false));
+                        ToolTip = 'Register payments to vendors. A payment journal is a type of general journal that is used to post outgoing payment transactions to G/L, bank, customer, vendor, employee, and fixed assets accounts. The Suggest Vendor Payments functions automatically fills the journal with payments that are due. When payments are posted, you can export the payments to a bank file for upload to your bank if your system is set up for electronic banking. You can also issue computer checks from the payment journal.';
+                    }
+                    action(ReceiptsApproved)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Approved Receipts';
+                        Image = List;
+
+                        // Visible = false;
+
+                        RunObject = Page "Receipt Lists";
+                        RunPageView = where(Status = filter(Released), Posted = const(false));//,
+                                                                                              //                     Recurring = const(false));
+                        ToolTip = 'Register payments to vendors. A payment journal is a type of general journal that is used to post outgoing payment transactions to G/L, bank, customer, vendor, employee, and fixed assets accounts. The Suggest Vendor Payments functions automatically fills the journal with payments that are due. When payments are posted, you can export the payments to a bank file for upload to your bank if your system is set up for electronic banking. You can also issue computer checks from the payment journal.';
+                    }
+                    action(ReceiptsPosted)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Posted Receipts';
+                        Image = List;
+
+                        // Visible = false;
+
+                        RunObject = Page "Receipt Lists";
+                        RunPageView = where(Status = filter(Released), Posted = const(true));//,
+                                                                                             //                     Recurring = const(false));
+                        ToolTip = 'Register payments to vendors. A payment journal is a type of general journal that is used to post outgoing payment transactions to G/L, bank, customer, vendor, employee, and fixed assets accounts. The Suggest Vendor Payments functions automatically fills the journal with payments that are due. When payments are posted, you can export the payments to a bank file for upload to your bank if your system is set up for electronic banking. You can also issue computer checks from the payment journal.';
+                    }
+
+
                 }
                 action(PaymentJournals)
                 {
@@ -582,16 +671,93 @@ page 17350 "Finance 1 Role Center"
             }
             group("Purchase Invoices ")
             {
-                action("New Purchase Invoice")
+                group("New Invoices")
                 {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'New Purchase Invoice';
+                    action("New Purchase Invoice")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'New Purchase Invoice Malawi';
 
-                    RunObject = page "Purchase Invoice List";
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Open'), "Shortcut Dimension 1 Code" = const('MALAWI'));
 
+                    }
+                    action("New Purchase Invoice K")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'New Purchase Invoice Kenya';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Open'), "Shortcut Dimension 1 Code" = const('Kenya'));
+
+                    }
+                }
+                group("Pending Invoices")
+                {
+                    action("Pend Purchase Invoice")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Pending Purchase Invoice Malawi';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Pending Approval'), "Shortcut Dimension 1 Code" = const('MALAWI'));
+
+                    }
+                    action("Pend Purchase Invoice K")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Pending Purchase Invoice Kenya';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Pending Approval'), "Shortcut Dimension 1 Code" = const('Kenya'));
+
+                    }
+                }
+                group("Approved Invoices")
+                {
+                    action("Appr Purchase Invoice")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Approved Purchase Invoice Malawi';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Released'), Posted = const(false), "Shortcut Dimension 1 Code" = const('MALAWI'));
+
+                    }
+                    action("Appr Purchase Invoice K")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Approved Purchase Invoice Kenya';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Released'), Posted = const(false), "Shortcut Dimension 1 Code" = const('Kenya'));
+
+                    }
+                }
+                group("Posted Invoices")
+                {
+                    action("Posted Purchase Invoice")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Posted Purchase Invoice Malawi';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Released'), Posted = const(true), "Shortcut Dimension 1 Code" = const('MALAWI'));
+
+                    }
+                    action("Posted Purchase Invoice K")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Posted Purchase Invoice Kenya';
+
+                        RunObject = page "Purchase Invoice List";
+                        RunPageView = order(ascending) where(Status = filter('Released'), Posted = const(true), "Shortcut Dimension 1 Code" = const('Kenya'));
+
+                    }
                 }
                 action("Purchase Invoice Pending Approval")
                 {
+                    Visible = false;
                     ApplicationArea = Basic, Suite;
                     Caption = 'Purchase Invoice Pending Approval';
 
@@ -600,6 +766,7 @@ page 17350 "Finance 1 Role Center"
                 }
                 action("Purchase Invoice Approved List")
                 {
+                    Visible = false;
                     ApplicationArea = Basic, Suite;
                     Caption = 'Purchase Invoice Approved List';
 
@@ -1330,10 +1497,20 @@ page 17350 "Finance 1 Role Center"
                 }
                 action("Donor Claim Report G")
                 {
+                    Visible = false;
                     ApplicationArea = Basic, Suite;
                     Caption = 'Donor Claim Report';
 
                     RunObject = report "Donor Claim";
+                }
+
+                action("Donor Claim Report R")
+                {
+                    Visible = false;
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Donor Claim Report Rev';
+
+                    RunObject = report "Donor Claim Revised";
                 }
 
                 action("Active Projects")

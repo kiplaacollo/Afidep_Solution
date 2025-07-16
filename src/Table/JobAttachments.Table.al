@@ -27,6 +27,9 @@ table 50030 "Job Attachments"
             DataClassification = CustomerContent;
             Caption = 'Description';
         }
+        // field(1; "Application No."; Code[20]) { }
+        // field(2; "File Name"; Text[250]) { }
+        // field(3; "File Path"; Text[250]) { }
     }
 
     keys

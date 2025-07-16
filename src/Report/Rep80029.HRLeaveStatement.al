@@ -83,6 +83,7 @@ Report 80029 "HR Leave Statement"
             column(Name; Name)
             {
             }
+
             dataitem("HR Leave Ledger Entries"; "HR Leave Ledger Entries")
             {
                 DataItemLink = "Staff No." = field("No.");
@@ -131,6 +132,12 @@ Report 80029 "HR Leave Statement"
                 }
                 column(HR_Leave_Ledger_Entries_Staff_No_; "Staff No.")
                 {
+                }
+                dataitem("HR Leave Application"; "HR Leave Application")
+                {
+                    DataItemLink = "Employee No" = field("Staff No."), "Application Code" = field("Document No.");
+                    column(Start_Date; "Start Date") { }
+                    column(Return_Date; "Return Date") { }
                 }
                 trigger OnAfterGetRecord();
                 begin
@@ -186,6 +193,12 @@ Report 80029 "HR Leave Statement"
                 column(HR_Leave_Ledger_Entries_Staff_No_2; "Staff No.")
                 {
                 }
+                dataitem("HR Leave Application2"; "HR Leave Application")
+                {
+                    DataItemLink = "Employee No" = field("Staff No."), "Application Code" = field("Document No.");
+                    column(Start_Date_2; "Start Date") { }
+                    column(Return_Date_2; "Return Date") { }
+                }
                 // trigger OnAfterGetRecord();
                 // begin
                 //     No := No + 1;
@@ -237,8 +250,17 @@ Report 80029 "HR Leave Statement"
                 column(HR_Leave_Ledger_Entries_Entry_No_1; "Entry No.")
                 {
                 }
+                column(Document_No_; "Document No.")
+                {
+                }
                 column(HR_Leave_Ledger_Entries_Staff_No_1; "Staff No.")
                 {
+                }
+                dataitem("HR Leave Application1"; "HR Leave Application")
+                {
+                    DataItemLink = "Employee No" = field("Staff No."), "Application Code" = field("Document No.");
+                    column(Start_Date_1; "Start Date") { }
+                    column(Return_Date_1; "Return Date") { }
                 }
                 // trigger OnAfterGetRecord();
                 // begin

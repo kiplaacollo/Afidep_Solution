@@ -114,6 +114,8 @@ Codeunit 80009 "AU factory"
             GenJnlLine."Currency Factor" := FundsLine."Currency Factor";
         end;
         GenJnlLine.Validate(GenJnlLine."Bal. Account No.");
+        GenJnlLine."Currency Factor" := FundsLine."Currency Factor";
+        GenJnlLine.Validate(GenJnlLine."Currency Factor");
         GenJnlLine."Shortcut Dimension 1 Code" := FundsHeader."Global Dimension 1 Code";
         GenJnlLine.Validate(GenJnlLine."Shortcut Dimension 1 Code");
         GenJnlLine."Shortcut Dimension 2 Code" := FundsHeader."Global Dimension 2 Code";

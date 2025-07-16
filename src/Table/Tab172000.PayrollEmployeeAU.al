@@ -478,6 +478,13 @@ Table 172000 "Payroll Employee_AU"
         {
 
         }
+        field(113; "Department Code"; Code[100])
+        {
+            //   CaptionClass = 'Depart';
+            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(0),
+                                                          "Dimension Value Type" = const(Standard));
+        }
+
 
     }
 

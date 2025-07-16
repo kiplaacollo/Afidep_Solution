@@ -151,8 +151,8 @@ Page 50074 "Imprest Requisition Lines"
                         //  Rec."Amount Including VAT" := Rec."Direct Unit Cost" * Rec.Rate * Rec.Quantity;
                         //rec.Quantity := rec."No of days" * rec."No of pax";
                         //rec.Validate(Quantity);
-                        Rec."Amount New" := Rec."Unit Cost (LCY) New" * Rec.Quantity;
-                        Rec.Modify();
+                        //    Rec."Amount New" := Rec."Unit Cost (LCY) New" * Rec.Quantity;
+                        //  Rec.Modify();
                         // Rec."Line Amount New" := Rec."Direct Unit Cost" * Rec.Quantity;
                         // Rec.Modify();
                     END;
@@ -187,7 +187,7 @@ Page 50074 "Imprest Requisition Lines"
                 field("Unit Cost (LCY)"; Rec."Unit Cost (LCY)")
                 {
                     ApplicationArea = Basic;
-                   // Visible = false;
+                    // Visible = false;
                 }
                 field("Unit Cost (LCY) New"; Rec."Unit Cost (LCY) New")
                 {

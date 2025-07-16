@@ -139,6 +139,16 @@ table 50028 "Staff Cue"
             CalcFormula = Count("Purchase Header" WHERE(Posted = filter(false), Status = CONST(Released), "AU Form Type" = filter('Imprest Accounting'), "Shortcut Dimension 1 Code" = filter('MALAWI')));
             FieldClass = FlowField;
         }
+        field(46; "Imprest Request Approved M"; Integer)
+        {
+            CalcFormula = Count("Purchase Header" WHERE(Posted = filter(false), Status = CONST(Released), "AU Form Type" = filter('Imprest Requisition'), "Shortcut Dimension 1 Code" = filter('MALAWI')));
+            FieldClass = FlowField;
+        }
+        field(47; "Imprest Request Approved K"; Integer)
+        {
+            CalcFormula = Count("Purchase Header" WHERE(Posted = filter(false), Status = CONST(Released), "AU Form Type" = filter('Imprest Requisition'), "Shortcut Dimension 1 Code" = filter('KENYA')));
+            FieldClass = FlowField;
+        }
 
 
     }

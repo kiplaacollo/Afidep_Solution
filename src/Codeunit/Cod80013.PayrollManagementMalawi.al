@@ -181,6 +181,8 @@ Codeunit 80013 "Payroll Management_Malawi"
         PayrollEmployeeTrans_AU6: Record "Payroll Employee Trans_Malawi";
         def: Decimal;
         Voluntaryp: Decimal;
+        Medical: Decimal;
+        MedicalLCY: Decimal;
 
 
     procedure ProcessPayroll("Employee No": Code[20]; "Payroll Period": Date; "Posting Group": Code[20]; BasicPay: Decimal; "BasicPay(LCY)": Decimal; "Currency Code": Code[20]; "Currency Factor": Decimal; "Joining Date": Date; "Leaving Date": Date; BasedOnTimeSheet: Boolean; "Global Dimension 1 Code": Code[20]; "Global Dimension 2 Code": Code[20]; Department: Code[20]; PaysPAYE: Boolean; PaysNHIF: Boolean; PaysNSSF: Boolean; GetsPAYERelief: Boolean; GetsPAYEBenefit: Boolean; Secondary: Boolean; PayeBenefitPercent: Decimal; "Pension %-Employer": Decimal; "Pension Administrative Fee": Decimal; "VAT Administrative Fee": Decimal; "Group Life Assuarance": Decimal)
@@ -673,6 +675,7 @@ Codeunit 80013 "Payroll Management_Malawi"
         EmployeeTransactions.SetRange(EmployeeTransactions."Period Month", CurMonth);
         EmployeeTransactions.SetRange(EmployeeTransactions."Period Year", CurYear);
         EmployeeTransactions.SetRange(EmployeeTransactions."Transaction Type", EmployeeTransactions."transaction type"::Income);
+        EmployeeTransactions.SetFilter(EmployeeTransactions."Transaction Code", '<>%1', 'E012');
         if EmployeeTransactions.FindSet then begin
             repeat
                 currentAmount := 0;
@@ -2077,9 +2080,23 @@ Codeunit 80013 "Payroll Management_Malawi"
         end else begin
             EmpNSSF := 0;
         end;
+        // PayrollMonthlyTrans_AU.Reset;
+        // PayrollMonthlyTrans_AU.SetRange(PayrollMonthlyTrans_AU."No.", "Employee No");
+        // PayrollMonthlyTrans_AU.SetRange(PayrollMonthlyTrans_AU."Payroll Period", "Payroll Period");
+        // PayrollMonthlyTrans_AU.SetRange(PayrollMonthlyTrans_AU."Transaction Code", 'E012');
+        // if PayrollMonthlyTrans_AU.Find('-') then begin
+        //     // "EmpTaxableEarning(LCY)" := "EmpTaxableEarning(LCY)" - PayrollMonthlyTrans_AU.Amount;
+        //     // EmpTaxableEarning := EmpTaxableEarning - PayrollMonthlyTrans_AU.Amount;
+        //     // currentAmount := currentAmount - PayrollMonthlyTrans_AU.Amount;
+        //     //"currentAmount(LCY)" := "currentAmount(LCY)" - PayrollMonthlyTrans_AU.Amount;
+        //     //MESSAGE('%1',PayrollMonthly.Amount);
+        //     Medical := PayrollMonthly.Amount;
+        //     MedicalLCY := PayrollMonthly."Amount(LCY)";
+        //     // Medical
+        // end;
 
-        EmpNetPay := EmpGrossPay - (Round(EmpNSSF, 0.01, '=') + Round(EmpNHIF, 0.01, '=') + Round(EmpPaye, 0.01, '=') + Round(EmpPAYEArrears, 0.01, '=') + Round(EmpDeduction, 0.01, '=') + Round(TotEmpBenefit, 0.01, '='));//+ Round(PensionBenefit, 1, '=')
-        "EmpNetPay(LCY)" := "EmpGrossPay(LCY)" - (Round("EmpNSSF(LCY)", 0.01, '=') + Round("EmpNHIF(LCY)", 0.01, '=') + Round("EmpPaye(LCY)", 0.01, '=') + Round("EmpPAYEArrears(LCY)", 0.01, '=') + Round("EmpDeduction(LCY)", 0.01, '='));
+        EmpNetPay := EmpGrossPay - (Round(Medical, 0.01, '=') + Round(EmpNHIF, 0.01, '=') + Round(EmpPaye, 0.01, '=') + Round(EmpPAYEArrears, 0.01, '=') + Round(EmpDeduction, 0.01, '=') + Round(TotEmpBenefit, 0.01, '='));//+ Round(PensionBenefit, 1, '=')
+        "EmpNetPay(LCY)" := "EmpGrossPay(LCY)" - (Round(medicalLCY, 0.01, '=') + Round("EmpNHIF(LCY)", 0.01, '=') + Round("EmpPaye(LCY)", 0.01, '=') + Round("EmpPAYEArrears(LCY)", 0.01, '=') + Round("EmpDeduction(LCY)", 0.01, '='));
 
         //Subtract net pay
         // EmployeeTransactions.Reset;

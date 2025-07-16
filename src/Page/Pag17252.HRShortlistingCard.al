@@ -6,9 +6,9 @@ Page 17252 "HR Shortlisting Card"
     InsertAllowed = false;
     ModifyAllowed = false;
     PageType = Card;
-    PromotedActionCategories = 'New,Process,Reports,Shortlisting,Send Email Notification,Upload Employee';
+    PromotedActionCategories = 'New,Process,Reports,Longlisting,Send Email Notification,Upload Employee';
     SourceTable = "HR Employee Requisitions";
-    SourceTableView = where(Status = const(Approved),
+    SourceTableView = where(Status = const(Advertised),
                             Closed = const(false));
 
     layout
@@ -74,6 +74,7 @@ Page 17252 "HR Shortlisting Card"
             {
                 Editable = ShortlistedEditable;
                 SubPageLink = "Employee Requisition No" = field("Requisition No.");
+                Caption = 'All Applicants for the position';
             }
         }
         area(factboxes)
@@ -98,7 +99,7 @@ Page 17252 "HR Shortlisting Card"
                 action("&ShortList Applicants")
                 {
                     ApplicationArea = Basic;
-                    Caption = '&ShortList Applicants';
+                    Caption = 'Long List Applicants';
                     Image = SelectField;
                     Promoted = true;
                     PromotedCategory = Category4;
@@ -107,7 +108,7 @@ Page 17252 "HR Shortlisting Card"
 
                         Humanresoucemgt.ShortlistApplicants(Rec);
 
-                        Message('%1', 'Shortlisting Competed Successfully.');
+                        Message('%1', 'Longlisting Competed Successfully.');
                     end;
                 }
                 action("&Notify Qualified")
@@ -123,7 +124,7 @@ Page 17252 "HR Shortlisting Card"
                     begin
 
                         Humanresoucemgt.MailQualifiedShortlistApplicants(Rec);
-                        Message('Qualified Applicants notified Competed Successfully.');
+                        Message('Qualified Applicants notified Completed Successfully.');
                     end;
                 }
                 action("&Notify Un-Qualified")
@@ -139,7 +140,7 @@ Page 17252 "HR Shortlisting Card"
                     begin
 
                         Humanresoucemgt.MailUnQualifiedShortlistApplicants(Rec);
-                        Message('UnQualified Applicants notified Competed Successfully.');
+                        Message('UnQualified Applicants notified Completed Successfully.');
                     end;
                 }
                 action("Upload To Employee")

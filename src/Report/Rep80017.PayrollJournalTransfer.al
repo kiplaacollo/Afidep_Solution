@@ -48,6 +48,23 @@ Report 80017 "Payroll Journal Transfer"
                                 IntegerPostAs := 0;
                             if PeriodTrans."Account Type" = 2 then
                                 IntegerPostAs := 1;
+
+                            // // Override Account No. for Basic Pay based on Department
+                            // if PeriodTrans."Account No" = '4002' then begin
+                            //     case "Payroll Employee_AU"."Department Code" of
+                            //         'PD':
+                            //             PeriodTrans."Account No" := '3000';
+                            //         'CD':
+                            //             PeriodTrans."Account No" := '3015';
+                            //         'AD':
+                            //             PeriodTrans."Account No" := '4002';
+                            //         'FD':
+                            //             PeriodTrans."Account No" := '4002';
+                            //         'ICT':
+                            //             PeriodTrans."Account No" := '4002';
+                            //     end;
+                            // end;
+
                             //Negative NPay
                             if (PeriodTrans."Posting Type" = PeriodTrans."posting type"::Credit) and (PeriodTrans.Amount < 0) then begin
 
@@ -470,6 +487,7 @@ Report 80017 "Payroll Journal Transfer"
         TotalDebit: Decimal;
         TotalCredit: Decimal;
         RoundingAccount: Code[20];
+        OriginalAccountNo: Code[20];
 
     // procedure CreateJnlEntry(AccountType: Option "G/L Account",Customer,Vendor,"Bank Account","Fixed Asset","IC Partner"; AccountNo: Code[20]; GlobalDime1: Code[20]; GlobalDime2: Code[20]; Description: Text[50]; DebitAmount: Decimal; CreditAmount: Decimal; PostAs: Option " ",Debit,Credit; LoanNo: Code[20]; TransType: Option " ","Registration Fee",Loan,Repayment,Withdrawal,"Interest Due","Interest Paid","Welfare Contribution","Deposit Contribution","Loan Penalty","Application Fee","Appraisal Fee",Investment,"Unallocated Funds","Shares Capital","Loan Adjustment",Dividend,"Withholding Tax","Administration Fee","Welfare Contribution 2"; "Employee Code": Code[100])
     // var
@@ -552,7 +570,12 @@ Report 80017 "Payroll Journal Transfer"
 
 
     procedure CreateJnlEntry(AccountType: Option "G/L Account",Customer,Vendor,"Bank Account","Fixed Asset","IC Partner"; AccountNo: Code[20]; GlobalDime1: Code[20]; GlobalDime2: Code[20]; Description: Text[50]; DebitAmount: Decimal; CreditAmount: Decimal; PostAs: Option " ",Debit,Credit; LoanNo: Code[20]; TransType: Option " ","Registration Fee",Loan,Repayment,Withdrawal,"Interest Due","Interest Paid","Welfare Contribution","Deposit Contribution","Loan Penalty","Application Fee","Appraisal Fee",Investment,"Unallocated Funds","Shares Capital","Loan Adjustment",Dividend,"Withholding Tax","Administration Fee","Welfare Contribution 2"; "Employee Code": Code[100])
+
     begin
+        // Save original AccountNo
+        OriginalAccountNo := AccountNo;
+
+        // Loop through project allocations
         PayrollProjectAllocation.RESET;
         PayrollProjectAllocation.SETRANGE("Employee No", "Payroll Employee_AU"."No.");
         PayrollProjectAllocation.SETRANGE(Period, PeriodDate);
@@ -568,6 +591,23 @@ Report 80017 "Payroll Journal Transfer"
                 GeneraljnlLine."Posting Date" := PostingDate;
                 // GeneraljnlLine."Posting Date":=TODAY;
                 GeneraljnlLine."Account Type" := AccountType;
+
+                // Reset AccountNo on every loop using the original
+                AccountNo := OriginalAccountNo;
+
+                // Only override AccountNo if it's originally 4002
+                if AccountNo = '4002' then begin
+                    case PayrollProjectAllocation."Project Code" of
+                        'AD03', 'RM2025', 'RP01':
+                            AccountNo := '4002';  // Admin/Research
+                        'CD05':
+                            AccountNo := '3015';  // Comms
+                        else
+                            AccountNo := '3000';  // Technical/Others
+                    end;
+                end;
+
+
                 GeneraljnlLine."Account No." := AccountNo;
                 GeneraljnlLine.Validate(GeneraljnlLine."Account No.");
                 GeneraljnlLine."Currency Code" := "Payroll Employee_AU"."Currency Code";
